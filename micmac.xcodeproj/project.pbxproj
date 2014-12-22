@@ -10,11 +10,10 @@
 		022889A21A48BD47008A7D30 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 022889A11A48BD47008A7D30 /* main.m */; };
 		022889A51A48BD47008A7D30 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 022889A41A48BD47008A7D30 /* AppDelegate.m */; };
 		022889A81A48BD47008A7D30 /* micmac.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 022889A61A48BD47008A7D30 /* micmac.xcdatamodeld */; };
-		022889AB1A48BD47008A7D30 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 022889AA1A48BD47008A7D30 /* ViewController.m */; };
-		022889AE1A48BD47008A7D30 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 022889AC1A48BD47008A7D30 /* Main.storyboard */; };
-		022889B01A48BD47008A7D30 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 022889AF1A48BD47008A7D30 /* Images.xcassets */; };
-		022889B31A48BD47008A7D30 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 022889B11A48BD47008A7D30 /* LaunchScreen.xib */; };
+		022889AB1A48BD47008A7D30 /* MCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 022889AA1A48BD47008A7D30 /* MCViewController.m */; };
 		022889BF1A48BD47008A7D30 /* micmacTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 022889BE1A48BD47008A7D30 /* micmacTests.m */; };
+		022889CB1A48BF2A008A7D30 /* MCCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 022889CA1A48BF2A008A7D30 /* MCCommon.m */; };
+		022889CD1A48BFED008A7D30 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 022889CC1A48BFED008A7D30 /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,14 +33,15 @@
 		022889A31A48BD47008A7D30 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		022889A41A48BD47008A7D30 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		022889A71A48BD47008A7D30 /* micmac.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = micmac.xcdatamodel; sourceTree = "<group>"; };
-		022889A91A48BD47008A7D30 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		022889AA1A48BD47008A7D30 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		022889AD1A48BD47008A7D30 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		022889AF1A48BD47008A7D30 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		022889B21A48BD47008A7D30 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		022889A91A48BD47008A7D30 /* MCViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCViewController.h; sourceTree = "<group>"; };
+		022889AA1A48BD47008A7D30 /* MCViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCViewController.m; sourceTree = "<group>"; };
 		022889B81A48BD47008A7D30 /* micmacTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = micmacTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		022889BD1A48BD47008A7D30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		022889BE1A48BD47008A7D30 /* micmacTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = micmacTests.m; sourceTree = "<group>"; };
+		022889C81A48BE77008A7D30 /* MicMac-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MicMac-Prefix.pch"; sourceTree = "<group>"; };
+		022889C91A48BF2A008A7D30 /* MCCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCCommon.h; sourceTree = "<group>"; };
+		022889CA1A48BF2A008A7D30 /* MCCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCCommon.m; sourceTree = "<group>"; };
+		022889CC1A48BFED008A7D30 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +65,7 @@
 		022889931A48BD47008A7D30 = {
 			isa = PBXGroup;
 			children = (
+				022889CC1A48BFED008A7D30 /* Default-568h@2x.png */,
 				0228899E1A48BD47008A7D30 /* micmac */,
 				022889BB1A48BD47008A7D30 /* micmacTests */,
 				0228899D1A48BD47008A7D30 /* Products */,
@@ -85,11 +86,10 @@
 			children = (
 				022889A31A48BD47008A7D30 /* AppDelegate.h */,
 				022889A41A48BD47008A7D30 /* AppDelegate.m */,
-				022889A91A48BD47008A7D30 /* ViewController.h */,
-				022889AA1A48BD47008A7D30 /* ViewController.m */,
-				022889AC1A48BD47008A7D30 /* Main.storyboard */,
-				022889AF1A48BD47008A7D30 /* Images.xcassets */,
-				022889B11A48BD47008A7D30 /* LaunchScreen.xib */,
+				022889C91A48BF2A008A7D30 /* MCCommon.h */,
+				022889CA1A48BF2A008A7D30 /* MCCommon.m */,
+				022889A91A48BD47008A7D30 /* MCViewController.h */,
+				022889AA1A48BD47008A7D30 /* MCViewController.m */,
 				022889A61A48BD47008A7D30 /* micmac.xcdatamodeld */,
 				0228899F1A48BD47008A7D30 /* Supporting Files */,
 			);
@@ -101,6 +101,7 @@
 			children = (
 				022889A01A48BD47008A7D30 /* Info.plist */,
 				022889A11A48BD47008A7D30 /* main.m */,
+				022889C81A48BE77008A7D30 /* MicMac-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -202,9 +203,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				022889AE1A48BD47008A7D30 /* Main.storyboard in Resources */,
-				022889B31A48BD47008A7D30 /* LaunchScreen.xib in Resources */,
-				022889B01A48BD47008A7D30 /* Images.xcassets in Resources */,
+				022889CD1A48BFED008A7D30 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,7 +223,8 @@
 			files = (
 				022889A81A48BD47008A7D30 /* micmac.xcdatamodeld in Sources */,
 				022889A51A48BD47008A7D30 /* AppDelegate.m in Sources */,
-				022889AB1A48BD47008A7D30 /* ViewController.m in Sources */,
+				022889AB1A48BD47008A7D30 /* MCViewController.m in Sources */,
+				022889CB1A48BF2A008A7D30 /* MCCommon.m in Sources */,
 				022889A21A48BD47008A7D30 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -246,25 +246,6 @@
 			targetProxy = 022889B91A48BD47008A7D30 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		022889AC1A48BD47008A7D30 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				022889AD1A48BD47008A7D30 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		022889B11A48BD47008A7D30 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				022889B21A48BD47008A7D30 /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		022889C01A48BD47008A7D30 /* Debug */ = {
@@ -349,7 +330,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$SRCROOT/$PROJECT_NAME/MicMac-Prefix.pch";
 				INFOPLIST_FILE = micmac/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -359,7 +343,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$SRCROOT/$PROJECT_NAME/MicMac-Prefix.pch";
 				INFOPLIST_FILE = micmac/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

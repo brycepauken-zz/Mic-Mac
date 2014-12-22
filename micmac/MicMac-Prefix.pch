@@ -1,0 +1,17 @@
+//
+//  MicMac-Prefix.pch
+//  micmac
+//
+//  Created by Bryce Pauken on 12/22/14.
+//  Copyright (c) 2014 Kingfish. All rights reserved.
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iOS SDK 3.0 and later."
+#endif
+
+#ifdef __OBJC__
+#import "MCCommon.h"
+#endif

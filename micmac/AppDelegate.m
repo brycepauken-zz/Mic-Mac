@@ -8,7 +8,11 @@
 
 #import "AppDelegate.h"
 
+#import "MCViewController.h"
+
 @interface AppDelegate ()
+
+@property (nonatomic, strong) MCViewController *viewController;
 
 @end
 
@@ -16,7 +20,13 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    [self.window setBackgroundColor:[UIColor blackColor]];
+    
+    self.viewController = [[MCViewController alloc] init];
+    [self.window setRootViewController:self.viewController];
+    
+    [self.window makeKeyAndVisible];
     return YES;
 }
 
