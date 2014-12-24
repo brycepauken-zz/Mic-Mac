@@ -7,42 +7,42 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		022889A21A48BD47008A7D30 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 022889A11A48BD47008A7D30 /* main.m */; };
-		022889A51A48BD47008A7D30 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 022889A41A48BD47008A7D30 /* AppDelegate.m */; };
-		022889A81A48BD47008A7D30 /* micmac.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 022889A61A48BD47008A7D30 /* micmac.xcdatamodeld */; };
-		022889AB1A48BD47008A7D30 /* MCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 022889AA1A48BD47008A7D30 /* MCViewController.m */; };
-		022889CB1A48BF2A008A7D30 /* MCCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 022889CA1A48BF2A008A7D30 /* MCCommon.m */; };
-		022889CD1A48BFED008A7D30 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 022889CC1A48BFED008A7D30 /* Default-568h@2x.png */; };
-		022889D01A48C41C008A7D30 /* MCMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 022889CF1A48C41C008A7D30 /* MCMainView.m */; };
-		022889D31A48C6D9008A7D30 /* MCStartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 022889D21A48C6D9008A7D30 /* MCStartView.m */; };
-		022889D61A48C95E008A7D30 /* UIColor+MCColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 022889D51A48C95E008A7D30 /* UIColor+MCColors.m */; };
-		02B1B50B1A4B779F00474F4C /* Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 02B1B5091A4B779F00474F4C /* Logo.png */; };
-		02B1B50C1A4B779F00474F4C /* Logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02B1B50A1A4B779F00474F4C /* Logo@2x.png */; };
+		02B1B51A1A4B780E00474F4C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B1B50F1A4B780E00474F4C /* AppDelegate.m */; };
+		02B1B51B1A4B780E00474F4C /* MCCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B1B5111A4B780E00474F4C /* MCCommon.m */; };
+		02B1B51C1A4B780E00474F4C /* MCMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B1B5131A4B780E00474F4C /* MCMainView.m */; };
+		02B1B51D1A4B780E00474F4C /* MCStartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B1B5151A4B780E00474F4C /* MCStartView.m */; };
+		02B1B51E1A4B780E00474F4C /* MCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B1B5171A4B780E00474F4C /* MCViewController.m */; };
+		02B1B51F1A4B780E00474F4C /* UIColor+MCColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B1B5191A4B780E00474F4C /* UIColor+MCColors.m */; };
+		02B1B5271A4B783E00474F4C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B1B5221A4B783E00474F4C /* main.m */; };
+		02B1B5281A4B783E00474F4C /* micmac.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 02B1B5241A4B783E00474F4C /* micmac.xcdatamodeld */; };
+		02B1B52D1A4B786300474F4C /* Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 02B1B52B1A4B786300474F4C /* Logo.png */; };
+		02B1B52E1A4B786300474F4C /* Logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02B1B52C1A4B786300474F4C /* Logo@2x.png */; };
+		02B1B5311A4B78AE00474F4C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02B1B5301A4B78AE00474F4C /* Default-568h@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0228899C1A48BD47008A7D30 /* micmac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = micmac.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		022889A01A48BD47008A7D30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		022889A11A48BD47008A7D30 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		022889A31A48BD47008A7D30 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		022889A41A48BD47008A7D30 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		022889A71A48BD47008A7D30 /* micmac.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = micmac.xcdatamodel; sourceTree = "<group>"; };
-		022889A91A48BD47008A7D30 /* MCViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCViewController.h; sourceTree = "<group>"; };
-		022889AA1A48BD47008A7D30 /* MCViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCViewController.m; sourceTree = "<group>"; };
 		022889BD1A48BD47008A7D30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		022889BE1A48BD47008A7D30 /* micmacTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = micmacTests.m; sourceTree = "<group>"; };
-		022889C81A48BE77008A7D30 /* MicMac-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MicMac-Prefix.pch"; sourceTree = "<group>"; };
-		022889C91A48BF2A008A7D30 /* MCCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCCommon.h; sourceTree = "<group>"; };
-		022889CA1A48BF2A008A7D30 /* MCCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCCommon.m; sourceTree = "<group>"; };
-		022889CC1A48BFED008A7D30 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		022889CE1A48C41C008A7D30 /* MCMainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCMainView.h; sourceTree = "<group>"; };
-		022889CF1A48C41C008A7D30 /* MCMainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCMainView.m; sourceTree = "<group>"; };
-		022889D11A48C6D9008A7D30 /* MCStartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCStartView.h; sourceTree = "<group>"; };
-		022889D21A48C6D9008A7D30 /* MCStartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCStartView.m; sourceTree = "<group>"; };
-		022889D41A48C95E008A7D30 /* UIColor+MCColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MCColors.h"; sourceTree = "<group>"; };
-		022889D51A48C95E008A7D30 /* UIColor+MCColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MCColors.m"; sourceTree = "<group>"; };
-		02B1B5091A4B779F00474F4C /* Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Logo.png; sourceTree = "<group>"; };
-		02B1B50A1A4B779F00474F4C /* Logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Logo@2x.png"; sourceTree = "<group>"; };
+		02B1B50E1A4B780E00474F4C /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		02B1B50F1A4B780E00474F4C /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		02B1B5101A4B780E00474F4C /* MCCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCCommon.h; sourceTree = "<group>"; };
+		02B1B5111A4B780E00474F4C /* MCCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCCommon.m; sourceTree = "<group>"; };
+		02B1B5121A4B780E00474F4C /* MCMainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCMainView.h; sourceTree = "<group>"; };
+		02B1B5131A4B780E00474F4C /* MCMainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCMainView.m; sourceTree = "<group>"; };
+		02B1B5141A4B780E00474F4C /* MCStartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCStartView.h; sourceTree = "<group>"; };
+		02B1B5151A4B780E00474F4C /* MCStartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCStartView.m; sourceTree = "<group>"; };
+		02B1B5161A4B780E00474F4C /* MCViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCViewController.h; sourceTree = "<group>"; };
+		02B1B5171A4B780E00474F4C /* MCViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCViewController.m; sourceTree = "<group>"; };
+		02B1B5181A4B780E00474F4C /* UIColor+MCColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MCColors.h"; sourceTree = "<group>"; };
+		02B1B5191A4B780E00474F4C /* UIColor+MCColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MCColors.m"; sourceTree = "<group>"; };
+		02B1B5211A4B783E00474F4C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		02B1B5221A4B783E00474F4C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		02B1B5231A4B783E00474F4C /* MicMac-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MicMac-Prefix.pch"; sourceTree = "<group>"; };
+		02B1B5251A4B783E00474F4C /* micmac.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = micmac.xcdatamodel; sourceTree = "<group>"; };
+		02B1B52B1A4B786300474F4C /* Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Logo.png; sourceTree = "<group>"; };
+		02B1B52C1A4B786300474F4C /* Logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Logo@2x.png"; sourceTree = "<group>"; };
+		02B1B5301A4B78AE00474F4C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,7 +59,6 @@
 		022889931A48BD47008A7D30 = {
 			isa = PBXGroup;
 			children = (
-				022889CC1A48BFED008A7D30 /* Default-568h@2x.png */,
 				0228899E1A48BD47008A7D30 /* micmac */,
 				022889BB1A48BD47008A7D30 /* micmacTests */,
 				0228899D1A48BD47008A7D30 /* Products */,
@@ -77,34 +76,11 @@
 		0228899E1A48BD47008A7D30 /* micmac */ = {
 			isa = PBXGroup;
 			children = (
-				022889A31A48BD47008A7D30 /* AppDelegate.h */,
-				022889A41A48BD47008A7D30 /* AppDelegate.m */,
-				022889C91A48BF2A008A7D30 /* MCCommon.h */,
-				022889CA1A48BF2A008A7D30 /* MCCommon.m */,
-				022889CE1A48C41C008A7D30 /* MCMainView.h */,
-				022889CF1A48C41C008A7D30 /* MCMainView.m */,
-				022889D11A48C6D9008A7D30 /* MCStartView.h */,
-				022889D21A48C6D9008A7D30 /* MCStartView.m */,
-				022889A91A48BD47008A7D30 /* MCViewController.h */,
-				022889AA1A48BD47008A7D30 /* MCViewController.m */,
-				022889D41A48C95E008A7D30 /* UIColor+MCColors.h */,
-				022889D51A48C95E008A7D30 /* UIColor+MCColors.m */,
-				022889A61A48BD47008A7D30 /* micmac.xcdatamodeld */,
-				0228899F1A48BD47008A7D30 /* Supporting Files */,
+				02B1B50D1A4B780E00474F4C /* Classes */,
+				02B1B5291A4B786300474F4C /* Images */,
+				02B1B5201A4B783E00474F4C /* Supporting Files */,
 			);
 			path = micmac;
-			sourceTree = "<group>";
-		};
-		0228899F1A48BD47008A7D30 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				02B1B5091A4B779F00474F4C /* Logo.png */,
-				02B1B50A1A4B779F00474F4C /* Logo@2x.png */,
-				022889A01A48BD47008A7D30 /* Info.plist */,
-				022889A11A48BD47008A7D30 /* main.m */,
-				022889C81A48BE77008A7D30 /* MicMac-Prefix.pch */,
-			);
-			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		022889BB1A48BD47008A7D30 /* micmacTests */ = {
@@ -122,6 +98,62 @@
 				022889BD1A48BD47008A7D30 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		02B1B50D1A4B780E00474F4C /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				02B1B50E1A4B780E00474F4C /* AppDelegate.h */,
+				02B1B50F1A4B780E00474F4C /* AppDelegate.m */,
+				02B1B5101A4B780E00474F4C /* MCCommon.h */,
+				02B1B5111A4B780E00474F4C /* MCCommon.m */,
+				02B1B5121A4B780E00474F4C /* MCMainView.h */,
+				02B1B5131A4B780E00474F4C /* MCMainView.m */,
+				02B1B5141A4B780E00474F4C /* MCStartView.h */,
+				02B1B5151A4B780E00474F4C /* MCStartView.m */,
+				02B1B5161A4B780E00474F4C /* MCViewController.h */,
+				02B1B5171A4B780E00474F4C /* MCViewController.m */,
+				02B1B5181A4B780E00474F4C /* UIColor+MCColors.h */,
+				02B1B5191A4B780E00474F4C /* UIColor+MCColors.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		02B1B5201A4B783E00474F4C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				02B1B5211A4B783E00474F4C /* Info.plist */,
+				02B1B5221A4B783E00474F4C /* main.m */,
+				02B1B5231A4B783E00474F4C /* MicMac-Prefix.pch */,
+				02B1B5241A4B783E00474F4C /* micmac.xcdatamodeld */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		02B1B5291A4B786300474F4C /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				02B1B52A1A4B786300474F4C /* Logo */,
+				02B1B52F1A4B78AE00474F4C /* Supporting */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		02B1B52A1A4B786300474F4C /* Logo */ = {
+			isa = PBXGroup;
+			children = (
+				02B1B52B1A4B786300474F4C /* Logo.png */,
+				02B1B52C1A4B786300474F4C /* Logo@2x.png */,
+			);
+			path = Logo;
+			sourceTree = "<group>";
+		};
+		02B1B52F1A4B78AE00474F4C /* Supporting */ = {
+			isa = PBXGroup;
+			children = (
+				02B1B5301A4B78AE00474F4C /* Default-568h@2x.png */,
+			);
+			path = Supporting;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -181,9 +213,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				02B1B50B1A4B779F00474F4C /* Logo.png in Resources */,
-				02B1B50C1A4B779F00474F4C /* Logo@2x.png in Resources */,
-				022889CD1A48BFED008A7D30 /* Default-568h@2x.png in Resources */,
+				02B1B52D1A4B786300474F4C /* Logo.png in Resources */,
+				02B1B5311A4B78AE00474F4C /* Default-568h@2x.png in Resources */,
+				02B1B52E1A4B786300474F4C /* Logo@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,14 +226,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				022889A81A48BD47008A7D30 /* micmac.xcdatamodeld in Sources */,
-				022889A51A48BD47008A7D30 /* AppDelegate.m in Sources */,
-				022889AB1A48BD47008A7D30 /* MCViewController.m in Sources */,
-				022889D01A48C41C008A7D30 /* MCMainView.m in Sources */,
-				022889CB1A48BF2A008A7D30 /* MCCommon.m in Sources */,
-				022889D31A48C6D9008A7D30 /* MCStartView.m in Sources */,
-				022889A21A48BD47008A7D30 /* main.m in Sources */,
-				022889D61A48C95E008A7D30 /* UIColor+MCColors.m in Sources */,
+				02B1B51E1A4B780E00474F4C /* MCViewController.m in Sources */,
+				02B1B51D1A4B780E00474F4C /* MCStartView.m in Sources */,
+				02B1B51C1A4B780E00474F4C /* MCMainView.m in Sources */,
+				02B1B51B1A4B780E00474F4C /* MCCommon.m in Sources */,
+				02B1B51A1A4B780E00474F4C /* AppDelegate.m in Sources */,
+				02B1B5281A4B783E00474F4C /* micmac.xcdatamodeld in Sources */,
+				02B1B5271A4B783E00474F4C /* main.m in Sources */,
+				02B1B51F1A4B780E00474F4C /* UIColor+MCColors.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,8 +323,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$SRCROOT/$PROJECT_NAME/MicMac-Prefix.pch";
-				INFOPLIST_FILE = micmac/Info.plist;
+				GCC_PREFIX_HEADER = "$SRCROOT/$PROJECT_NAME/Supporting Files/MicMac-Prefix.pch";
+				INFOPLIST_FILE = "micmac/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -304,8 +336,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "$SRCROOT/$PROJECT_NAME/MicMac-Prefix.pch";
-				INFOPLIST_FILE = micmac/Info.plist;
+				GCC_PREFIX_HEADER = "$SRCROOT/$PROJECT_NAME/Supporting Files/MicMac-Prefix.pch";
+				INFOPLIST_FILE = "micmac/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -336,12 +368,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		022889A61A48BD47008A7D30 /* micmac.xcdatamodeld */ = {
+		02B1B5241A4B783E00474F4C /* micmac.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				022889A71A48BD47008A7D30 /* micmac.xcdatamodel */,
+				02B1B5251A4B783E00474F4C /* micmac.xcdatamodel */,
 			);
-			currentVersion = 022889A71A48BD47008A7D30 /* micmac.xcdatamodel */;
+			currentVersion = 02B1B5251A4B783E00474F4C /* micmac.xcdatamodel */;
 			path = micmac.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
