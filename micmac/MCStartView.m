@@ -19,6 +19,9 @@
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) NSMutableArray *smallBubbles;
 @property (nonatomic, strong) UIView *smallBubblesContainer;
+@property (nonatomic, strong) UIDynamicAnimator *smallBubblesDynamicAnimator;
+@property (nonatomic, strong) UIDynamicItemBehavior *smallBubblesDynamicBehavior;
+@property (nonatomic, strong) UIGravityBehavior *smallBubblesGravityBehavior;
 @property (nonatomic, strong) NSLock *smallBubblesLock;
 @property (nonatomic) CGPoint smallBubblesNextCenter;
 
@@ -48,8 +51,8 @@
                 [text addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Avenir-Heavy" size:20] range:NSMakeRange(0, text.length)];
                 [text addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, 8)];
                 [text addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Avenir-Black" size:20] range:NSMakeRange(0, 8)];
-                [text addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(61, 5)];
-                [text addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Avenir-Black" size:20] range:NSMakeRange(61, 5)];
+                [text addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(59, 5)];
+                [text addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Avenir-Black" size:20] range:NSMakeRange(59, 5)];
                 [text endEditing];
                 UIView *labelContainer = [self createLabelInContainerWithText:text];
                 [labelContainer setCenter:CGPointMake(page.bounds.size.width/2, page.bounds.size.height*3/4)];
@@ -87,16 +90,23 @@
         [_largeBubblesContainer setAutoresizingMask:UIViewAutoResizingFlexibleSize];
         _largeBubblesLock = [[NSLock alloc] init];
         _largeBubblesNextCenter = CGPointZero;
+        
         _smallBubbles = [[NSMutableArray alloc] init];
         _smallBubblesContainer = [[UIView alloc] initWithFrame:self.bounds];
         [_smallBubblesContainer setAlpha:0];
         [_smallBubblesContainer setAutoresizingMask:UIViewAutoResizingFlexibleSize];
+        _smallBubblesDynamicAnimator = [[UIDynamicAnimator alloc] initWithReferenceView:_smallBubblesContainer];
+        _smallBubblesDynamicBehavior = [[UIDynamicItemBehavior alloc] init];
+        _smallBubblesGravityBehavior = [[UIGravityBehavior alloc] init];
+        [_smallBubblesGravityBehavior setMagnitude:0.5];
+        [_smallBubblesDynamicAnimator addBehavior:_smallBubblesDynamicBehavior];
+        [_smallBubblesDynamicAnimator addBehavior:_smallBubblesGravityBehavior];
         _smallBubblesLock = [[NSLock alloc] init];
         _smallBubblesNextCenter = CGPointZero;
         
         [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(createLargeBubble) userInfo:nil repeats:YES];
         [self createLargeBubble];
-        [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(createSmallBubble) userInfo:nil repeats:YES];
+        [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(createSmallBubble) userInfo:nil repeats:YES];
         [self createSmallBubble];
         
         [self setBackgroundColor:[UIColor MCLightBlueColor]];
@@ -179,10 +189,10 @@
 }
 
 - (void)createSmallBubble {
-    static const int bubbleSize = 20;
+    static const int bubbleSize = 25;
     
     CGPoint bubbleCenter = CGPointMake(self.smallBubblesNextCenter.x, self.smallBubblesNextCenter.y);
-    self.smallBubblesNextCenter = CGPointMake(bubbleSize/4+arc4random_uniform(self.bounds.size.width-bubbleSize/2), bubbleSize/4+arc4random_uniform(self.bounds.size.height-bubbleSize/2));
+    self.smallBubblesNextCenter = CGPointMake(bubbleSize/4+arc4random_uniform(self.bounds.size.width-bubbleSize/2), bubbleSize/4+arc4random_uniform(self.bounds.size.height/2-bubbleSize/2));
     if(CGPointEqualToPoint(bubbleCenter, CGPointZero)) {
         bubbleCenter = CGPointMake(self.smallBubblesNextCenter.x, self.smallBubblesNextCenter.y);
     }
@@ -194,24 +204,24 @@
     NSArray *bubbles = [self.smallBubbles copy];
     [self.smallBubblesLock unlock];
     
-    [bubble setAlpha:0];
     [bubble setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
-    [bubble setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.5, 0.5)];
+    [bubble setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0, 0)];
     [bubble setUserInteractionEnabled:NO];
     [bubble.layer setBorderColor:[UIColor MCOffWhiteColor].CGColor];
-    [bubble.layer setBorderWidth:4];
+    [bubble.layer setBorderWidth:2];
     [bubble.layer setCornerRadius:bubbleSize/2];
     [self.smallBubblesContainer addSubview:bubble];
+    [self.smallBubblesDynamicBehavior addItem:bubble];
+    [self.smallBubblesGravityBehavior addItem:bubble];
     
-    CGFloat duration = 1+drand48()*4;
-    [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
-        [bubble setAlpha:0.5];
-        [bubble setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.75, 0.75)];
+    [self.smallBubblesDynamicBehavior addLinearVelocity:CGPointMake(((int)arc4random_uniform(100))-50, ((int)arc4random_uniform(100))-300) forItem:bubble];
+    
+    [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+        [bubble setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
     } completion:^(BOOL finished) {
         if(finished) {
-            [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+            [UIView animateWithDuration:2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
                 [bubble setAlpha:0];
-                [bubble setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 1)];
             } completion:^(BOOL finished) {
                 if(finished) {
                     [self.smallBubblesLock lock];
@@ -227,7 +237,7 @@
         CGFloat bubbleY = 0;
         while(true) {
             bubbleX = bubbleSize/4+arc4random_uniform(self.bounds.size.width-bubbleSize/2);
-            bubbleY = bubbleSize/4+arc4random_uniform(self.bounds.size.height-bubbleSize/2);
+            bubbleY = bubbleSize/4+arc4random_uniform(self.bounds.size.height*3/4-bubbleSize/2);
             CGFloat maxDist = 0;
             for(UIView *bubble in bubbles) {
                 CGFloat dx = fabsf(bubbleX - bubble.center.x);

@@ -11,23 +11,14 @@
 		022889A51A48BD47008A7D30 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 022889A41A48BD47008A7D30 /* AppDelegate.m */; };
 		022889A81A48BD47008A7D30 /* micmac.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 022889A61A48BD47008A7D30 /* micmac.xcdatamodeld */; };
 		022889AB1A48BD47008A7D30 /* MCViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 022889AA1A48BD47008A7D30 /* MCViewController.m */; };
-		022889BF1A48BD47008A7D30 /* micmacTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 022889BE1A48BD47008A7D30 /* micmacTests.m */; };
 		022889CB1A48BF2A008A7D30 /* MCCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 022889CA1A48BF2A008A7D30 /* MCCommon.m */; };
 		022889CD1A48BFED008A7D30 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 022889CC1A48BFED008A7D30 /* Default-568h@2x.png */; };
 		022889D01A48C41C008A7D30 /* MCMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 022889CF1A48C41C008A7D30 /* MCMainView.m */; };
 		022889D31A48C6D9008A7D30 /* MCStartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 022889D21A48C6D9008A7D30 /* MCStartView.m */; };
 		022889D61A48C95E008A7D30 /* UIColor+MCColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 022889D51A48C95E008A7D30 /* UIColor+MCColors.m */; };
+		02B1B50B1A4B779F00474F4C /* Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 02B1B5091A4B779F00474F4C /* Logo.png */; };
+		02B1B50C1A4B779F00474F4C /* Logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02B1B50A1A4B779F00474F4C /* Logo@2x.png */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		022889B91A48BD47008A7D30 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 022889941A48BD47008A7D30 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0228899B1A48BD47008A7D30;
-			remoteInfo = micmac;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		0228899C1A48BD47008A7D30 /* micmac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = micmac.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -38,7 +29,6 @@
 		022889A71A48BD47008A7D30 /* micmac.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = micmac.xcdatamodel; sourceTree = "<group>"; };
 		022889A91A48BD47008A7D30 /* MCViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MCViewController.h; sourceTree = "<group>"; };
 		022889AA1A48BD47008A7D30 /* MCViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MCViewController.m; sourceTree = "<group>"; };
-		022889B81A48BD47008A7D30 /* micmacTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = micmacTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		022889BD1A48BD47008A7D30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		022889BE1A48BD47008A7D30 /* micmacTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = micmacTests.m; sourceTree = "<group>"; };
 		022889C81A48BE77008A7D30 /* MicMac-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MicMac-Prefix.pch"; sourceTree = "<group>"; };
@@ -51,17 +41,12 @@
 		022889D21A48C6D9008A7D30 /* MCStartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCStartView.m; sourceTree = "<group>"; };
 		022889D41A48C95E008A7D30 /* UIColor+MCColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MCColors.h"; sourceTree = "<group>"; };
 		022889D51A48C95E008A7D30 /* UIColor+MCColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MCColors.m"; sourceTree = "<group>"; };
+		02B1B5091A4B779F00474F4C /* Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Logo.png; sourceTree = "<group>"; };
+		02B1B50A1A4B779F00474F4C /* Logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Logo@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		022889991A48BD47008A7D30 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		022889B51A48BD47008A7D30 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -85,7 +70,6 @@
 			isa = PBXGroup;
 			children = (
 				0228899C1A48BD47008A7D30 /* micmac.app */,
-				022889B81A48BD47008A7D30 /* micmacTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -114,6 +98,8 @@
 		0228899F1A48BD47008A7D30 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				02B1B5091A4B779F00474F4C /* Logo.png */,
+				02B1B50A1A4B779F00474F4C /* Logo@2x.png */,
 				022889A01A48BD47008A7D30 /* Info.plist */,
 				022889A11A48BD47008A7D30 /* main.m */,
 				022889C81A48BE77008A7D30 /* MicMac-Prefix.pch */,
@@ -158,24 +144,6 @@
 			productReference = 0228899C1A48BD47008A7D30 /* micmac.app */;
 			productType = "com.apple.product-type.application";
 		};
-		022889B71A48BD47008A7D30 /* micmacTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 022889C51A48BD47008A7D30 /* Build configuration list for PBXNativeTarget "micmacTests" */;
-			buildPhases = (
-				022889B41A48BD47008A7D30 /* Sources */,
-				022889B51A48BD47008A7D30 /* Frameworks */,
-				022889B61A48BD47008A7D30 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				022889BA1A48BD47008A7D30 /* PBXTargetDependency */,
-			);
-			name = micmacTests;
-			productName = micmacTests;
-			productReference = 022889B81A48BD47008A7D30 /* micmacTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -187,10 +155,6 @@
 				TargetAttributes = {
 					0228899B1A48BD47008A7D30 = {
 						CreatedOnToolsVersion = 6.1.1;
-					};
-					022889B71A48BD47008A7D30 = {
-						CreatedOnToolsVersion = 6.1.1;
-						TestTargetID = 0228899B1A48BD47008A7D30;
 					};
 				};
 			};
@@ -208,7 +172,6 @@
 			projectRoot = "";
 			targets = (
 				0228899B1A48BD47008A7D30 /* micmac */,
-				022889B71A48BD47008A7D30 /* micmacTests */,
 			);
 		};
 /* End PBXProject section */
@@ -218,14 +181,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02B1B50B1A4B779F00474F4C /* Logo.png in Resources */,
+				02B1B50C1A4B779F00474F4C /* Logo@2x.png in Resources */,
 				022889CD1A48BFED008A7D30 /* Default-568h@2x.png in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		022889B61A48BD47008A7D30 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,23 +205,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		022889B41A48BD47008A7D30 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				022889BF1A48BD47008A7D30 /* micmacTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		022889BA1A48BD47008A7D30 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 0228899B1A48BD47008A7D30 /* micmac */;
-			targetProxy = 022889B91A48BD47008A7D30 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		022889C01A48BD47008A7D30 /* Debug */ = {
@@ -370,40 +312,6 @@
 			};
 			name = Release;
 		};
-		022889C61A48BD47008A7D30 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = micmacTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/micmac.app/micmac";
-			};
-			name = Debug;
-		};
-		022889C71A48BD47008A7D30 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = micmacTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/micmac.app/micmac";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -423,14 +331,7 @@
 				022889C41A48BD47008A7D30 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-		};
-		022889C51A48BD47008A7D30 /* Build configuration list for PBXNativeTarget "micmacTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				022889C61A48BD47008A7D30 /* Debug */,
-				022889C71A48BD47008A7D30 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
