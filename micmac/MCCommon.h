@@ -7,6 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
+#import "UIColor+MCColors.h"
+
+extern UIViewAutoresizing UIViewAutoResizingFlexibleAll;
+extern UIViewAutoresizing UIViewAutoResizingFlexibleMargins;
+extern UIViewAutoresizing UIViewAutoResizingFlexibleSize;
 
 @interface MCCommon : NSObject
 

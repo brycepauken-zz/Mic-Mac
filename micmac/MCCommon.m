@@ -8,6 +8,10 @@
 
 #import "MCCommon.h"
 
+UIViewAutoresizing UIViewAutoResizingFlexibleAll = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+UIViewAutoresizing UIViewAutoResizingFlexibleMargins = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin;
+UIViewAutoresizing UIViewAutoResizingFlexibleSize = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+
 @implementation MCCommon
 
 @end

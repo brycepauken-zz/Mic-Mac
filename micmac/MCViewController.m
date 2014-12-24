@@ -8,7 +8,11 @@
 
 #import "MCViewController.h"
 
+#import "MCMainView.h"
+
 @interface MCViewController ()
+
+@property (nonatomic, strong) MCMainView *mainView;
 
 @end
 
@@ -17,9 +21,17 @@
 - (instancetype)init {
     self = [super init];
     if(self) {
+        _mainView = [[MCMainView alloc] initWithFrame:self.view.bounds];
+        [_mainView setAutoresizingMask:UIViewAutoResizingFlexibleSize];
+        [self.view addSubview:_mainView];
         
+        [self setNeedsStatusBarAppearanceUpdate];
     }
     return self;
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 @end

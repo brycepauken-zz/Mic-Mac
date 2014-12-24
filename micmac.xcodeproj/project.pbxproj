@@ -14,6 +14,9 @@
 		022889BF1A48BD47008A7D30 /* micmacTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 022889BE1A48BD47008A7D30 /* micmacTests.m */; };
 		022889CB1A48BF2A008A7D30 /* MCCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 022889CA1A48BF2A008A7D30 /* MCCommon.m */; };
 		022889CD1A48BFED008A7D30 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 022889CC1A48BFED008A7D30 /* Default-568h@2x.png */; };
+		022889D01A48C41C008A7D30 /* MCMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 022889CF1A48C41C008A7D30 /* MCMainView.m */; };
+		022889D31A48C6D9008A7D30 /* MCStartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 022889D21A48C6D9008A7D30 /* MCStartView.m */; };
+		022889D61A48C95E008A7D30 /* UIColor+MCColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 022889D51A48C95E008A7D30 /* UIColor+MCColors.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +45,12 @@
 		022889C91A48BF2A008A7D30 /* MCCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCCommon.h; sourceTree = "<group>"; };
 		022889CA1A48BF2A008A7D30 /* MCCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCCommon.m; sourceTree = "<group>"; };
 		022889CC1A48BFED008A7D30 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		022889CE1A48C41C008A7D30 /* MCMainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCMainView.h; sourceTree = "<group>"; };
+		022889CF1A48C41C008A7D30 /* MCMainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCMainView.m; sourceTree = "<group>"; };
+		022889D11A48C6D9008A7D30 /* MCStartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCStartView.h; sourceTree = "<group>"; };
+		022889D21A48C6D9008A7D30 /* MCStartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCStartView.m; sourceTree = "<group>"; };
+		022889D41A48C95E008A7D30 /* UIColor+MCColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MCColors.h"; sourceTree = "<group>"; };
+		022889D51A48C95E008A7D30 /* UIColor+MCColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MCColors.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,8 +97,14 @@
 				022889A41A48BD47008A7D30 /* AppDelegate.m */,
 				022889C91A48BF2A008A7D30 /* MCCommon.h */,
 				022889CA1A48BF2A008A7D30 /* MCCommon.m */,
+				022889CE1A48C41C008A7D30 /* MCMainView.h */,
+				022889CF1A48C41C008A7D30 /* MCMainView.m */,
+				022889D11A48C6D9008A7D30 /* MCStartView.h */,
+				022889D21A48C6D9008A7D30 /* MCStartView.m */,
 				022889A91A48BD47008A7D30 /* MCViewController.h */,
 				022889AA1A48BD47008A7D30 /* MCViewController.m */,
+				022889D41A48C95E008A7D30 /* UIColor+MCColors.h */,
+				022889D51A48C95E008A7D30 /* UIColor+MCColors.m */,
 				022889A61A48BD47008A7D30 /* micmac.xcdatamodeld */,
 				0228899F1A48BD47008A7D30 /* Supporting Files */,
 			);
@@ -224,8 +239,11 @@
 				022889A81A48BD47008A7D30 /* micmac.xcdatamodeld in Sources */,
 				022889A51A48BD47008A7D30 /* AppDelegate.m in Sources */,
 				022889AB1A48BD47008A7D30 /* MCViewController.m in Sources */,
+				022889D01A48C41C008A7D30 /* MCMainView.m in Sources */,
 				022889CB1A48BF2A008A7D30 /* MCCommon.m in Sources */,
+				022889D31A48C6D9008A7D30 /* MCStartView.m in Sources */,
 				022889A21A48BD47008A7D30 /* main.m in Sources */,
+				022889D61A48C95E008A7D30 /* UIColor+MCColors.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
