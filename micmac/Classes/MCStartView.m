@@ -116,7 +116,7 @@
         
         [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(createLargeBubble) userInfo:nil repeats:YES];
         [self createLargeBubble];
-        [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(createSmallBubble) userInfo:nil repeats:YES];
+        [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(createSmallBubble) userInfo:nil repeats:YES];
         [self createSmallBubble];
         
         [self setBackgroundColor:[UIColor MCLightBlueColor]];
@@ -215,7 +215,6 @@
     NSArray *bubbles = [self.smallBubbles copy];
     [self.smallBubblesLock unlock];
     
-    [bubble setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
     [bubble setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0, 0)];
     [bubble setUserInteractionEnabled:NO];
     [bubble.layer setBorderColor:[UIColor MCOffWhiteColor].CGColor];
@@ -297,10 +296,13 @@
         CGFloat offset = scrollView.contentOffset.x/scrollView.frame.size.width;
         [self.largeBubblesContainer setAlpha:MIN(1, MAX(0, 1-offset))];
         [self.smallBubblesContainer setAlpha:MIN(1, MAX(0, offset<=1?offset:2-offset))];
+        [self.logo setCenter:CGPointMake((MAX(1, offset)-1)*-self.scrollView.bounds.size.width, 0)];
+        
         [self.logo setAlpha:MIN(1, MAX(0, 2-offset))];
         NSInteger page = lround(offset);
         if(previousPage != page) {
             previousPage = page;
+            [self.scrollView setTag:page];
             [self.pageControl setCurrentPage:page];
         }
     }
@@ -308,6 +310,7 @@
 
 - (void)updateScrollView {
     [self.scrollView setContentSize:CGSizeMake(self.scrollView.bounds.size.width*self.pages.count, self.scrollView.bounds.size.height)];
+    [self.scrollView setContentOffset:CGPointMake(self.scrollView.bounds.size.width*self.scrollView.tag, 0)];
     for(UIView *page in self.pages) {
         [page setFrame:CGRectMake(page.tag*self.scrollView.bounds.size.width, 0, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height)];
     }
