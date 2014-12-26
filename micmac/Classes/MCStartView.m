@@ -14,6 +14,8 @@
 @property (nonatomic, strong) UIView *largeBubblesContainer;
 @property (nonatomic, strong) NSLock *largeBubblesLock;
 @property (nonatomic) CGPoint largeBubblesNextCenter;
+@property (nonatomic, strong) UIImageView *logo;
+@property (nonatomic, strong) UIView *logoContainer;
 @property (nonatomic, strong) NSArray *pages;
 @property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic, strong) UIScrollView *scrollView;
@@ -104,6 +106,14 @@
         _smallBubblesLock = [[NSLock alloc] init];
         _smallBubblesNextCenter = CGPointZero;
         
+        _logoContainer = [[UIView alloc] initWithFrame:CGRectZero];
+        [_logoContainer setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height/3)];
+        [_logoContainer setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
+        _logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Logo"]];
+        int logoSize = MIN(self.bounds.size.width, self.bounds.size.height)/2;
+        [_logo setFrame:CGRectMake(-logoSize/2, -logoSize/2, logoSize, logoSize)];
+        [_logoContainer addSubview:_logo];
+        
         [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(createLargeBubble) userInfo:nil repeats:YES];
         [self createLargeBubble];
         [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(createSmallBubble) userInfo:nil repeats:YES];
@@ -114,6 +124,7 @@
         [self addSubview:_smallBubblesContainer];
         [self addSubview:_scrollView];
         [self addSubview:pageControlContainer];
+        [self addSubview:_logoContainer];
     }
     return self;
 }
@@ -286,6 +297,7 @@
         CGFloat offset = scrollView.contentOffset.x/scrollView.frame.size.width;
         [self.largeBubblesContainer setAlpha:MIN(1, MAX(0, 1-offset))];
         [self.smallBubblesContainer setAlpha:MIN(1, MAX(0, offset<=1?offset:2-offset))];
+        [self.logo setAlpha:MIN(1, MAX(0, 2-offset))];
         NSInteger page = lround(offset);
         if(previousPage != page) {
             previousPage = page;
