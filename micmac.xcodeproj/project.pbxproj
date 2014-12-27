@@ -18,6 +18,10 @@
 		02B1B52D1A4B786300474F4C /* Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 02B1B52B1A4B786300474F4C /* Logo.png */; };
 		02B1B52E1A4B786300474F4C /* Logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02B1B52C1A4B786300474F4C /* Logo@2x.png */; };
 		02B1B5311A4B78AE00474F4C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02B1B5301A4B78AE00474F4C /* Default-568h@2x.png */; };
+		02B1B53A1A4E31F100474F4C /* Location.png in Resources */ = {isa = PBXBuildFile; fileRef = 02B1B5361A4E31F100474F4C /* Location.png */; };
+		02B1B53B1A4E31F100474F4C /* Location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02B1B5371A4E31F100474F4C /* Location@2x.png */; };
+		02B1B53C1A4E31F100474F4C /* School.png in Resources */ = {isa = PBXBuildFile; fileRef = 02B1B5381A4E31F100474F4C /* School.png */; };
+		02B1B53D1A4E31F100474F4C /* School@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02B1B5391A4E31F100474F4C /* School@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +47,10 @@
 		02B1B52B1A4B786300474F4C /* Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Logo.png; sourceTree = "<group>"; };
 		02B1B52C1A4B786300474F4C /* Logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Logo@2x.png"; sourceTree = "<group>"; };
 		02B1B5301A4B78AE00474F4C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		02B1B5361A4E31F100474F4C /* Location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Location.png; sourceTree = "<group>"; };
+		02B1B5371A4E31F100474F4C /* Location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Location@2x.png"; sourceTree = "<group>"; };
+		02B1B5381A4E31F100474F4C /* School.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = School.png; sourceTree = "<group>"; };
+		02B1B5391A4E31F100474F4C /* School@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "School@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				02B1B52A1A4B786300474F4C /* Logo */,
+				02B1B5351A4E31F100474F4C /* Starting */,
 				02B1B52F1A4B78AE00474F4C /* Supporting */,
 			);
 			path = Images;
@@ -154,6 +163,18 @@
 				02B1B5301A4B78AE00474F4C /* Default-568h@2x.png */,
 			);
 			path = Supporting;
+			sourceTree = "<group>";
+		};
+		02B1B5351A4E31F100474F4C /* Starting */ = {
+			isa = PBXGroup;
+			children = (
+				02B1B5361A4E31F100474F4C /* Location.png */,
+				02B1B5371A4E31F100474F4C /* Location@2x.png */,
+				02B1B5381A4E31F100474F4C /* School.png */,
+				02B1B5391A4E31F100474F4C /* School@2x.png */,
+			);
+			name = Starting;
+			path = Logo/Starting;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,9 +234,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02B1B53A1A4E31F100474F4C /* Location.png in Resources */,
+				02B1B53D1A4E31F100474F4C /* School@2x.png in Resources */,
 				02B1B52D1A4B786300474F4C /* Logo.png in Resources */,
 				02B1B5311A4B78AE00474F4C /* Default-568h@2x.png in Resources */,
 				02B1B52E1A4B786300474F4C /* Logo@2x.png in Resources */,
+				02B1B53B1A4E31F100474F4C /* Location@2x.png in Resources */,
+				02B1B53C1A4E31F100474F4C /* School.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

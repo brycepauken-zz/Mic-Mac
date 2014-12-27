@@ -26,6 +26,7 @@
 @property (nonatomic, strong) UIGravityBehavior *smallBubblesGravityBehavior;
 @property (nonatomic, strong) NSLock *smallBubblesLock;
 @property (nonatomic) CGPoint smallBubblesNextCenter;
+@property (nonatomic) NSInteger visiblePages;
 
 @end
 
@@ -41,7 +42,8 @@
         [_scrollView setShowsHorizontalScrollIndicator:NO];
         [_scrollView setShowsVerticalScrollIndicator:NO];
         
-        _pages = @[[[UIView alloc] init], [[UIView alloc] init], [[UIView alloc] init]];
+        int logoSize = MIN(self.bounds.size.width, self.bounds.size.height)/2;
+        _pages = @[[[UIView alloc] init], [[UIView alloc] init], [[UIView alloc] init], [[UIView alloc] init]];
         for(int i=0;i<_pages.count;i++) {
             UIView *page = [_pages objectAtIndex:i];
             [page setFrame:CGRectMake(i*_scrollView.bounds.size.width, 0, _scrollView.bounds.size.width, _scrollView.bounds.size.height)];
@@ -73,16 +75,25 @@
                 [labelContainer setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
                 [page addSubview:labelContainer];
             }
+            else if(i==2 || i==3) {
+                UIView *imageContainer = [[UIView alloc] initWithFrame:CGRectZero];
+                [imageContainer setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height/3)];
+                [imageContainer setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
+                UIImageView *image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:(i==2?@"Location":@"School")]];
+                [image setFrame:CGRectMake(-logoSize/2, -logoSize/2, logoSize, logoSize)];
+                [imageContainer addSubview:image];
+                [page addSubview:imageContainer];
+            }
             
             [_scrollView addSubview:page];
         }
-        
+        _visiblePages = 3;
         
         UIView *pageControlContainer = [[UIView alloc] initWithFrame:CGRectZero];
         [pageControlContainer setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
         [pageControlContainer setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height*13/14)];
         _pageControl = [[UIPageControl alloc] init];
-        [_pageControl setNumberOfPages:_pages.count];
+        [_pageControl setNumberOfPages:_visiblePages];
         [_pageControl sizeToFit];
         [_pageControl setCenter:CGPointZero];
         [pageControlContainer addSubview:_pageControl];
@@ -110,7 +121,6 @@
         [_logoContainer setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height/3)];
         [_logoContainer setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
         _logo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Logo"]];
-        int logoSize = MIN(self.bounds.size.width, self.bounds.size.height)/2;
         [_logo setFrame:CGRectMake(-logoSize/2, -logoSize/2, logoSize, logoSize)];
         [_logoContainer addSubview:_logo];
         
@@ -309,7 +319,7 @@
 }
 
 - (void)updateScrollView {
-    [self.scrollView setContentSize:CGSizeMake(self.scrollView.bounds.size.width*self.pages.count, self.scrollView.bounds.size.height)];
+    [self.scrollView setContentSize:CGSizeMake(self.scrollView.bounds.size.width*self.visiblePages, self.scrollView.bounds.size.height)];
     [self.scrollView setContentOffset:CGPointMake(self.scrollView.bounds.size.width*self.scrollView.tag, 0)];
     for(UIView *page in self.pages) {
         [page setFrame:CGRectMake(page.tag*self.scrollView.bounds.size.width, 0, self.scrollView.bounds.size.width, self.scrollView.bounds.size.height)];
