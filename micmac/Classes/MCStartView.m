@@ -49,31 +49,10 @@
             [page setFrame:CGRectMake(i*_scrollView.bounds.size.width, 0, _scrollView.bounds.size.width, _scrollView.bounds.size.height)];
             [page setTag:i];
             
+            NSString *descriptionText;
+            NSArray *boldRanges;
             if(i==0) {
-                NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:@"Mic Mac lets you talk\nanonymously about topics\non a large, Macro level..."];
-                [text beginEditing];
-                [text addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Avenir-Heavy" size:20] range:NSMakeRange(0, text.length)];
-                [text addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0, 8)];
-                [text addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Avenir-Black" size:20] range:NSMakeRange(0, 8)];
-                [text addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(59, 5)];
-                [text addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Avenir-Black" size:20] range:NSMakeRange(59, 5)];
-                [text endEditing];
-                UIView *labelContainer = [self createLabelInContainerWithText:text];
-                [labelContainer setCenter:CGPointMake(page.bounds.size.width/2, page.bounds.size.height*3/4)];
-                [labelContainer setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
-                [page addSubview:labelContainer];
-            }
-            else if(i==1) {
-                NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:@"... and about subjects that\nare local to you in your\nown Micro community."];
-                [text beginEditing];
-                [text addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Avenir-Heavy" size:20] range:NSMakeRange(0, text.length)];
-                [text addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(57, 5)];
-                [text addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Avenir-Black" size:20] range:NSMakeRange(57, 5)];
-                [text endEditing];
-                UIView *labelContainer = [self createLabelInContainerWithText:text];
-                [labelContainer setCenter:CGPointMake(page.bounds.size.width/2, page.bounds.size.height*3/4)];
-                [labelContainer setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
-                [page addSubview:labelContainer];
+                
             }
             else if(i==2 || i==3) {
                 UIView *imageContainer = [[UIView alloc] initWithFrame:CGRectZero];
@@ -83,6 +62,39 @@
                 [image setFrame:CGRectMake(-logoSize/2, -logoSize/2, logoSize, logoSize)];
                 [imageContainer addSubview:image];
                 [page addSubview:imageContainer];
+            }
+            switch(i) {
+                case 0:
+                    descriptionText = @"Mic Mac lets you talk\nanonymously about topics\non a large, Macro level...";
+                    boldRanges = @[[NSValue valueWithRange:NSMakeRange(0, 8)], [NSValue valueWithRange:NSMakeRange(59, 5)]];
+                    break;
+                case 1:
+                    descriptionText = @"... and about subjects that\nare local to you in your\nown Micro community.";
+                    boldRanges = @[[NSValue valueWithRange:NSMakeRange(57, 5)]];
+                    break;
+                case 2:
+                    descriptionText = @"First, we need you to enable\nLocation Services so we can\n show you relevant topics.";
+                    boldRanges = @[[NSValue valueWithRange:NSMakeRange(30, 17)]];
+                    break;
+                default:
+                    break;
+            }
+            if(descriptionText) {
+                NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:descriptionText];
+                [text beginEditing];
+                [text addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Avenir-Heavy" size:20] range:NSMakeRange(0, text.length)];
+                if(boldRanges) {
+                    for(NSValue *rangeValue in boldRanges) {
+                        NSRange range = [rangeValue rangeValue];
+                        [text addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:range];
+                        [text addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"Avenir-Black" size:20] range:range];
+                    }
+                }
+                [text endEditing];
+                UIView *labelContainer = [self createLabelInContainerWithText:text];
+                [labelContainer setCenter:CGPointMake(page.bounds.size.width/2, page.bounds.size.height*3/4)];
+                [labelContainer setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
+                [page addSubview:labelContainer];
             }
             
             [_scrollView addSubview:page];
