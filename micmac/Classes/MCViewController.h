@@ -10,6 +10,8 @@
 
 @interface MCViewController : UIViewController <CLLocationManagerDelegate>
 
+@property (nonatomic, strong) CLLocation *lastLocation;
+
 - (void)startLocationManager;
 
 @end

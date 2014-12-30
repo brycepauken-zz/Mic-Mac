@@ -36,7 +36,8 @@
 }
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
-    
+    self.lastLocation = [locations lastObject];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"MCLocationUpdated" object:nil];
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
@@ -55,7 +56,6 @@
     }
     [self locationManager:self.locationManager didChangeAuthorizationStatus:[CLLocationManager authorizationStatus]];
     [self.locationManager startUpdatingLocation];
-    NSLog(@"started");
 }
 
 @end

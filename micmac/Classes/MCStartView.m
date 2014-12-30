@@ -226,6 +226,7 @@
                     [self.largeBubblesLock lock];
                     [self.largeBubbles removeObject:bubble];
                     [self.largeBubblesLock unlock];
+                    [bubble removeFromSuperview];
                 }
             }];
         }
@@ -281,7 +282,6 @@
     [self.smallBubblesContainer addSubview:bubble];
     [self.smallBubblesDynamicBehavior addItem:bubble];
     [self.smallBubblesGravityBehavior addItem:bubble];
-    
     [self.smallBubblesDynamicBehavior addLinearVelocity:CGPointMake(((int)arc4random_uniform(100))-50, ((int)arc4random_uniform(100))-300) forItem:bubble];
     
     [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
@@ -295,6 +295,7 @@
                     [self.smallBubblesLock lock];
                     [self.smallBubbles removeObject:bubble];
                     [self.smallBubblesLock unlock];
+                    [bubble removeFromSuperview];
                 }
             }];
         }
@@ -347,6 +348,9 @@
     if(self.locationButton.alpha == 1 && CGRectContainsPoint(CGRectInset([self convertRect:self.locationButton.frame fromView:self.locationButton.superview], -20, -20), point)) {
         return self.locationButton;
     }
+    if(self.collegePicker.alpha == 1 && CGRectContainsPoint([self convertRect:self.collegePicker.frame fromCoordinateSpace:self.collegePicker.superview], point)) {
+        return self.collegePicker;
+    }
     return [super hitTest:point withEvent:event];
 }
 
@@ -355,14 +359,15 @@
 }
 
 - (void)locationButtonTapped {
-    [[NSNotificationCenter defaultCenter] addObserverForName:@"MCLocationAuthorizationChanged" object:nil queue:nil usingBlock:^(NSNotification *notification) {
+    __block __weak id observer = [[NSNotificationCenter defaultCenter] addObserverForName:@"MCLocationAuthorizationChanged" object:nil queue:nil usingBlock:^(NSNotification *notification) {
         if(notification.userInfo) {
             NSNumber *statusObject = [notification.userInfo objectForKey:@"status"];
             if(statusObject) {
                 CLAuthorizationStatus status = (CLAuthorizationStatus)[statusObject integerValue];
                 if(status==kCLAuthorizationStatusAuthorized || ([[[UIDevice currentDevice] systemVersion] floatValue]>=8.0 && status==kCLAuthorizationStatusAuthorizedWhenInUse)) {
-                    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"MCLocationAuthorizationChanged" object:nil];
+                    [[NSNotificationCenter defaultCenter] removeObserver:observer];
                     self.visiblePages = 4;
+                    [self.scrollView setScrollEnabled:NO];
                     [UIView animateWithDuration:0.3 animations:^{
                         [self.scrollView setContentOffset:CGPointMake((self.visiblePages-1)*self.scrollView.bounds.size.width, 0)];
                         [self.locationButton setAlpha:0];
