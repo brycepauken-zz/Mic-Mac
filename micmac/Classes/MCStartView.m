@@ -8,12 +8,15 @@
 
 #import "MCStartView.h"
 
+#import "MCButton.h"
+
 @interface MCStartView()
 
 @property (nonatomic, strong) NSMutableArray *largeBubbles;
 @property (nonatomic, strong) UIView *largeBubblesContainer;
 @property (nonatomic, strong) NSLock *largeBubblesLock;
 @property (nonatomic) CGPoint largeBubblesNextCenter;
+@property (nonatomic, strong) MCButton *locationButton;
 @property (nonatomic, strong) UIImageView *logo;
 @property (nonatomic, strong) UIView *logoContainer;
 @property (nonatomic, strong) NSArray *pages;
@@ -136,6 +139,15 @@
         [_logo setFrame:CGRectMake(-logoSize/2, -logoSize/2, logoSize, logoSize)];
         [_logoContainer addSubview:_logo];
         
+        UIView *locationButtonContainer = [[UIView alloc] initWithFrame:CGRectZero];
+        [locationButtonContainer setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
+        [locationButtonContainer setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height*13/14)];
+        _locationButton = [[MCButton alloc] initWithFrame:CGRectMake(-50, -20, 100, 40)];
+        [_locationButton addTarget:self action:@selector(locationButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+        [_locationButton setAlpha:0];
+        [_locationButton setTitle:@"I Will"];
+        [locationButtonContainer addSubview:_locationButton];
+        
         [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(createLargeBubble) userInfo:nil repeats:YES];
         [self createLargeBubble];
         [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(createSmallBubble) userInfo:nil repeats:YES];
@@ -147,6 +159,7 @@
         [self addSubview:_scrollView];
         [self addSubview:pageControlContainer];
         [self addSubview:_logoContainer];
+        [self addSubview:locationButtonContainer];
     }
     return self;
 }
@@ -307,8 +320,19 @@
     return container;
 }
 
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    if(self.locationButton.alpha == 1 && CGRectContainsPoint(CGRectInset([self convertRect:self.locationButton.frame fromView:self.locationButton.superview], -20, -20), point)) {
+        return self.locationButton;
+    }
+    return [super hitTest:point withEvent:event];
+}
+
 - (void)layoutSubviews {
     [self updateScrollView];
+}
+
+- (void)locationButtonTapped {
+    
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -318,6 +342,7 @@
         CGFloat offset = scrollView.contentOffset.x/scrollView.frame.size.width;
         [self.largeBubblesContainer setAlpha:MIN(1, MAX(0, 1-offset))];
         [self.smallBubblesContainer setAlpha:MIN(1, MAX(0, offset<=1?offset:2-offset))];
+        [self.locationButton setAlpha:MIN(1, MAX(0, offset<=2?offset-1:3-offset))];
         [self.logo setCenter:CGPointMake((MAX(1, offset)-1)*-self.scrollView.bounds.size.width, 0)];
         
         [self.logo setAlpha:MIN(1, MAX(0, 2-offset))];

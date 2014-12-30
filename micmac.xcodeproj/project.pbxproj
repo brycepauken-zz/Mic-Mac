@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		025718821A52325F00916FEB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025718811A52325F00916FEB /* CoreLocation.framework */; };
 		02B1B51A1A4B780E00474F4C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B1B50F1A4B780E00474F4C /* AppDelegate.m */; };
 		02B1B51B1A4B780E00474F4C /* MCCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B1B5111A4B780E00474F4C /* MCCommon.m */; };
 		02B1B51C1A4B780E00474F4C /* MCMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B1B5131A4B780E00474F4C /* MCMainView.m */; };
@@ -22,12 +23,12 @@
 		02B1B53B1A4E31F100474F4C /* Location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02B1B5371A4E31F100474F4C /* Location@2x.png */; };
 		02B1B53C1A4E31F100474F4C /* School.png in Resources */ = {isa = PBXBuildFile; fileRef = 02B1B5381A4E31F100474F4C /* School.png */; };
 		02B1B53D1A4E31F100474F4C /* School@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02B1B5391A4E31F100474F4C /* School@2x.png */; };
+		02B1B5401A51249000474F4C /* MCButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B1B53F1A51249000474F4C /* MCButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0228899C1A48BD47008A7D30 /* micmac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = micmac.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		022889BD1A48BD47008A7D30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		022889BE1A48BD47008A7D30 /* micmacTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = micmacTests.m; sourceTree = "<group>"; };
+		025718811A52325F00916FEB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		02B1B50E1A4B780E00474F4C /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		02B1B50F1A4B780E00474F4C /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		02B1B5101A4B780E00474F4C /* MCCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCCommon.h; sourceTree = "<group>"; };
@@ -51,6 +52,8 @@
 		02B1B5371A4E31F100474F4C /* Location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Location@2x.png"; sourceTree = "<group>"; };
 		02B1B5381A4E31F100474F4C /* School.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = School.png; sourceTree = "<group>"; };
 		02B1B5391A4E31F100474F4C /* School@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "School@2x.png"; sourceTree = "<group>"; };
+		02B1B53E1A51249000474F4C /* MCButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCButton.h; sourceTree = "<group>"; };
+		02B1B53F1A51249000474F4C /* MCButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				025718821A52325F00916FEB /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,7 +72,6 @@
 			isa = PBXGroup;
 			children = (
 				0228899E1A48BD47008A7D30 /* micmac */,
-				022889BB1A48BD47008A7D30 /* micmacTests */,
 				0228899D1A48BD47008A7D30 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -91,28 +94,13 @@
 			path = micmac;
 			sourceTree = "<group>";
 		};
-		022889BB1A48BD47008A7D30 /* micmacTests */ = {
-			isa = PBXGroup;
-			children = (
-				022889BE1A48BD47008A7D30 /* micmacTests.m */,
-				022889BC1A48BD47008A7D30 /* Supporting Files */,
-			);
-			path = micmacTests;
-			sourceTree = "<group>";
-		};
-		022889BC1A48BD47008A7D30 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				022889BD1A48BD47008A7D30 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		02B1B50D1A4B780E00474F4C /* Classes */ = {
 			isa = PBXGroup;
 			children = (
 				02B1B50E1A4B780E00474F4C /* AppDelegate.h */,
 				02B1B50F1A4B780E00474F4C /* AppDelegate.m */,
+				02B1B53E1A51249000474F4C /* MCButton.h */,
+				02B1B53F1A51249000474F4C /* MCButton.m */,
 				02B1B5101A4B780E00474F4C /* MCCommon.h */,
 				02B1B5111A4B780E00474F4C /* MCCommon.m */,
 				02B1B5121A4B780E00474F4C /* MCMainView.h */,
@@ -130,6 +118,7 @@
 		02B1B5201A4B783E00474F4C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				025718811A52325F00916FEB /* CoreLocation.framework */,
 				02B1B5211A4B783E00474F4C /* Info.plist */,
 				02B1B5221A4B783E00474F4C /* main.m */,
 				02B1B5231A4B783E00474F4C /* MicMac-Prefix.pch */,
@@ -256,6 +245,7 @@
 				02B1B51C1A4B780E00474F4C /* MCMainView.m in Sources */,
 				02B1B51B1A4B780E00474F4C /* MCCommon.m in Sources */,
 				02B1B51A1A4B780E00474F4C /* AppDelegate.m in Sources */,
+				02B1B5401A51249000474F4C /* MCButton.m in Sources */,
 				02B1B5281A4B783E00474F4C /* micmac.xcdatamodeld in Sources */,
 				02B1B5271A4B783E00474F4C /* main.m in Sources */,
 				02B1B51F1A4B780E00474F4C /* UIColor+MCColors.m in Sources */,
