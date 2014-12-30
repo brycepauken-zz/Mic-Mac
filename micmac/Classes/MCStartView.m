@@ -9,10 +9,12 @@
 #import "MCStartView.h"
 
 #import "MCButton.h"
+#import "MCCollegePicker.h"
 #import "MCViewController.h"
 
 @interface MCStartView()
 
+@property (nonatomic, strong) MCCollegePicker *collegePicker;
 @property (nonatomic, strong) NSMutableArray *largeBubbles;
 @property (nonatomic, strong) UIView *largeBubblesContainer;
 @property (nonatomic, strong) NSLock *largeBubblesLock;
@@ -106,6 +108,27 @@
                 [labelContainer setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
                 [page addSubview:labelContainer];
             }
+            if(i==2) {
+                UIView *locationButtonContainer = [[UIView alloc] initWithFrame:CGRectZero];
+                [locationButtonContainer setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
+                [locationButtonContainer setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height*13/14)];
+                _locationButton = [[MCButton alloc] initWithFrame:CGRectMake(-50, -20, 100, 40)];
+                [_locationButton addTarget:self action:@selector(locationButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+                [_locationButton setAlpha:0];
+                [_locationButton setTitle:@"I Will"];
+                [locationButtonContainer addSubview:_locationButton];
+                [page addSubview:locationButtonContainer];
+            }
+            else if(i==3) {
+                UIView *collegePickerContainer = [[UIView alloc] initWithFrame:CGRectZero];
+                [collegePickerContainer setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
+                [collegePickerContainer setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height*11/14)];
+                CGFloat collegePickerWidth = MIN(self.bounds.size.width,self.bounds.size.height)-80;
+                _collegePicker = [[MCCollegePicker alloc] initWithFrame:CGRectMake(-collegePickerWidth/2, -30, collegePickerWidth, 60)];
+                [_collegePicker setAlpha:0];
+                [collegePickerContainer addSubview:_collegePicker];
+                [page addSubview:collegePickerContainer];
+            }
             
             [_scrollView addSubview:page];
         }
@@ -149,15 +172,6 @@
         [_logo setFrame:CGRectMake(-logoSize/2, -logoSize/2, logoSize, logoSize)];
         [_logoContainer addSubview:_logo];
         
-        UIView *locationButtonContainer = [[UIView alloc] initWithFrame:CGRectZero];
-        [locationButtonContainer setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
-        [locationButtonContainer setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height*13/14)];
-        _locationButton = [[MCButton alloc] initWithFrame:CGRectMake(-50, -20, 100, 40)];
-        [_locationButton addTarget:self action:@selector(locationButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-        [_locationButton setAlpha:0];
-        [_locationButton setTitle:@"I Will"];
-        [locationButtonContainer addSubview:_locationButton];
-        
         [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(createLargeBubble) userInfo:nil repeats:YES];
         [self createLargeBubble];
         [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(createSmallBubble) userInfo:nil repeats:YES];
@@ -166,10 +180,9 @@
         [self setBackgroundColor:[UIColor MCLightBlueColor]];
         [self addSubview:_largeBubblesContainer];
         [self addSubview:_smallBubblesContainer];
-        [self addSubview:_scrollView];
         [self addSubview:pageControlContainer];
+        [self addSubview:_scrollView];
         [self addSubview:_logoContainer];
-        [self addSubview:locationButtonContainer];
     }
     return self;
 }
@@ -371,6 +384,7 @@
         [self.largeBubblesContainer setAlpha:MIN(1, MAX(0, 1-offset))];
         [self.smallBubblesContainer setAlpha:MIN(1, MAX(0, offset<=1?offset:2-offset))];
         [self.locationButton setAlpha:MIN(1, MAX(0, offset<=2?offset-1:3-offset))];
+        [self.collegePicker setAlpha:self.visiblePages<4?0:MIN(1, MAX(0, offset<=3?offset-2:4-offset))];
         [self.logo setCenter:CGPointMake((MAX(1, offset)-1)*-self.scrollView.bounds.size.width, 0)];
         
         [self.logo setAlpha:MIN(1, MAX(0, 2-offset))];
