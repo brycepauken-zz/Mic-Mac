@@ -11,6 +11,8 @@
 
 #import "UIColor+MCColors.h"
 
+#define ViewController (MCViewController *)[[[[UIApplication sharedApplication] delegate] window] rootViewController]
+
 extern UIViewAutoresizing UIViewAutoResizingFlexibleAll;
 extern UIViewAutoresizing UIViewAutoResizingFlexibleMargins;
 extern UIViewAutoresizing UIViewAutoResizingFlexibleSize;

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		025718821A52325F00916FEB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025718811A52325F00916FEB /* CoreLocation.framework */; };
+		025718841A52472700916FEB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 025718831A52472700916FEB /* Images.xcassets */; };
 		02B1B51A1A4B780E00474F4C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B1B50F1A4B780E00474F4C /* AppDelegate.m */; };
 		02B1B51B1A4B780E00474F4C /* MCCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B1B5111A4B780E00474F4C /* MCCommon.m */; };
 		02B1B51C1A4B780E00474F4C /* MCMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B1B5131A4B780E00474F4C /* MCMainView.m */; };
@@ -29,6 +30,7 @@
 /* Begin PBXFileReference section */
 		0228899C1A48BD47008A7D30 /* micmac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = micmac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		025718811A52325F00916FEB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		025718831A52472700916FEB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		02B1B50E1A4B780E00474F4C /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		02B1B50F1A4B780E00474F4C /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		02B1B5101A4B780E00474F4C /* MCCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCCommon.h; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				02B1B5301A4B78AE00474F4C /* Default-568h@2x.png */,
+				025718831A52472700916FEB /* Images.xcassets */,
 			);
 			path = Supporting;
 			sourceTree = "<group>";
@@ -224,6 +227,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				02B1B53A1A4E31F100474F4C /* Location.png in Resources */,
+				025718841A52472700916FEB /* Images.xcassets in Resources */,
 				02B1B53D1A4E31F100474F4C /* School@2x.png in Resources */,
 				02B1B52D1A4B786300474F4C /* Logo.png in Resources */,
 				02B1B5311A4B78AE00474F4C /* Default-568h@2x.png in Resources */,

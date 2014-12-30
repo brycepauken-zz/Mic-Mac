@@ -12,6 +12,7 @@
 
 @interface MCViewController ()
 
+@property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) MCMainView *mainView;
 
 @end
@@ -30,8 +31,31 @@
     return self;
 }
 
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"MCLocationAuthorizationChanged" object:nil userInfo:@{@"status":[NSNumber numberWithInteger:status]}];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    
+}
+
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
+}
+
+- (void)startLocationManager {
+    if(!self.locationManager) {
+        self.locationManager = [[CLLocationManager alloc] init];
+        [self.locationManager setDelegate:self];
+        [self.locationManager setDesiredAccuracy:kCLLocationAccuracyKilometer];
+        [self.locationManager setDistanceFilter:kCLDistanceFilterNone];
+    }
+    if([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+        [self.locationManager requestWhenInUseAuthorization];
+    }
+    [self locationManager:self.locationManager didChangeAuthorizationStatus:[CLLocationManager authorizationStatus]];
+    [self.locationManager startUpdatingLocation];
+    NSLog(@"started");
 }
 
 @end

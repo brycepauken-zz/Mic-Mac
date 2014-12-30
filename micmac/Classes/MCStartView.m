@@ -9,6 +9,7 @@
 #import "MCStartView.h"
 
 #import "MCButton.h"
+#import "MCViewController.h"
 
 @interface MCStartView()
 
@@ -54,10 +55,11 @@
             
             NSString *descriptionText;
             NSArray *boldRanges;
+            CGFloat horizontalOffsetFactor = 0.72;
             if(i==0) {
                 
             }
-            else if(i==2 || i==3) {
+            else if(i==2||i==3) {
                 UIView *imageContainer = [[UIView alloc] initWithFrame:CGRectZero];
                 [imageContainer setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height/3)];
                 [imageContainer setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
@@ -79,6 +81,11 @@
                     descriptionText = @"First, we need you to enable\nLocation Services so we can\n show you relevant topics.";
                     boldRanges = @[[NSValue valueWithRange:NSMakeRange(30, 17)]];
                     break;
+                case 3:
+                    descriptionText = @"Which college do you attend?";
+                    boldRanges = @[[NSValue valueWithRange:NSMakeRange(6, 7)]];
+                    horizontalOffsetFactor = 0.65;
+                    break;
                 default:
                     break;
             }
@@ -95,7 +102,7 @@
                 }
                 [text endEditing];
                 UIView *labelContainer = [self createLabelInContainerWithText:text];
-                [labelContainer setCenter:CGPointMake(page.bounds.size.width/2, page.bounds.size.height*3/4)];
+                [labelContainer setCenter:CGPointMake(page.bounds.size.width/2, page.bounds.size.height*horizontalOffsetFactor)];
                 [labelContainer setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
                 [page addSubview:labelContainer];
             }
@@ -103,6 +110,9 @@
             [_scrollView addSubview:page];
         }
         _visiblePages = 3;
+        for(int i=(int)_visiblePages;i<_pages.count;i++) {
+            [[_pages objectAtIndex:i] setHidden:YES];
+        }
         
         UIView *pageControlContainer = [[UIView alloc] initWithFrame:CGRectZero];
         [pageControlContainer setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
@@ -332,7 +342,25 @@
 }
 
 - (void)locationButtonTapped {
-    
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"MCLocationAuthorizationChanged" object:nil queue:nil usingBlock:^(NSNotification *notification) {
+        if(notification.userInfo) {
+            NSNumber *statusObject = [notification.userInfo objectForKey:@"status"];
+            if(statusObject) {
+                CLAuthorizationStatus status = (CLAuthorizationStatus)[statusObject integerValue];
+                if(status==kCLAuthorizationStatusAuthorized || ([[[UIDevice currentDevice] systemVersion] floatValue]>=8.0 && status==kCLAuthorizationStatusAuthorizedWhenInUse)) {
+                    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"MCLocationAuthorizationChanged" object:nil];
+                    self.visiblePages = 4;
+                    [UIView animateWithDuration:0.3 animations:^{
+                        [self.scrollView setContentOffset:CGPointMake((self.visiblePages-1)*self.scrollView.bounds.size.width, 0)];
+                        [self.locationButton setAlpha:0];
+                    } completion:^(BOOL finished) {
+                        [self.locationButton setHidden:YES];
+                    }];
+                }
+            }
+        }
+    }];
+    [ViewController startLocationManager];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -349,9 +377,20 @@
         NSInteger page = lround(offset);
         if(previousPage != page) {
             previousPage = page;
-            [self.scrollView setTag:page];
             [self.pageControl setCurrentPage:page];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.scrollView setTag:page];
+            });
         }
+    }
+}
+
+- (void)setVisiblePages:(NSInteger)visiblePages {
+    _visiblePages = visiblePages;
+    [self.scrollView setContentSize:CGSizeMake(self.scrollView.bounds.size.width*self.visiblePages, self.scrollView.bounds.size.height)];
+    [self.pageControl setNumberOfPages:_visiblePages];
+    for(int i=0;i<_pages.count;i++) {
+        [[_pages objectAtIndex:i] setHidden:i>=visiblePages];
     }
 }
 
