@@ -126,7 +126,7 @@
                 CGFloat collegePickerWidth = MIN(self.bounds.size.width,self.bounds.size.height)-80;
                 _collegePicker = [[MCCollegePicker alloc] initWithFrame:CGRectMake(-collegePickerWidth/2, -30, collegePickerWidth, 60)];
                 [_collegePicker setAlpha:0];
-                [collegePickerContainer addSubview:_collegePicker];
+                [page addSubview:_collegePicker];
                 [page addSubview:collegePickerContainer];
             }
             
@@ -348,14 +348,13 @@
     if(self.locationButton.alpha == 1 && CGRectContainsPoint(CGRectInset([self convertRect:self.locationButton.frame fromView:self.locationButton.superview], -20, -20), point)) {
         return self.locationButton;
     }
-    if(self.collegePicker.alpha == 1 && CGRectContainsPoint([self convertRect:self.collegePicker.frame fromCoordinateSpace:self.collegePicker.superview], point)) {
-        return self.collegePicker;
-    }
     return [super hitTest:point withEvent:event];
 }
 
 - (void)layoutSubviews {
     [self updateScrollView];
+    
+    [self.collegePicker setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height*11/14)];
 }
 
 - (void)locationButtonTapped {

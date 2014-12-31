@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MCCollegePicker : UIView
+@interface MCCollegePicker : UIView <UIScrollViewDelegate>
 
 @end
