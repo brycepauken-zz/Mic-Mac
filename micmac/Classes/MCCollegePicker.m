@@ -36,6 +36,12 @@
         [_scrollView setShowsHorizontalScrollIndicator:NO];
         [_scrollView setShowsVerticalScrollIndicator:NO];
         
+        UITapGestureRecognizer *scrollViewTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewTapped)];
+        [scrollViewTapRecognizer setCancelsTouchesInView:YES];
+        [scrollViewTapRecognizer setEnabled:YES];
+        [scrollViewTapRecognizer setNumberOfTapsRequired:1];
+        [_scrollView addGestureRecognizer:scrollViewTapRecognizer];
+        
         _leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.height, self.bounds.size.height)];
         [_leftButton addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [_leftButton setAlpha:0];
@@ -50,7 +56,7 @@
         UIView *leftButtonBackground = [[UIView alloc] initWithFrame:_leftButton.frame];
         [leftButtonBackground setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin];
         CAGradientLayer *leftButtonBackgroundGradient = [CAGradientLayer layer];
-        [leftButtonBackgroundGradient setColors:@[(id)[UIColor MCLightBlueColor].CGColor, (id)[[UIColor MCLightBlueColor] colorWithAlphaComponent:0].CGColor]];
+        [leftButtonBackgroundGradient setColors:@[(id)[UIColor MCMainColor].CGColor, (id)[[UIColor MCMainColor] colorWithAlphaComponent:0].CGColor]];
         [leftButtonBackgroundGradient setEndPoint:CGPointMake(0.6, 0.5)];
         [leftButtonBackgroundGradient setFrame:leftButtonBackground.bounds];
         [leftButtonBackgroundGradient setStartPoint:CGPointMake(0.25, 0.5)];
@@ -59,7 +65,7 @@
         UIView *rightButtonBackground = [[UIView alloc] initWithFrame:_rightButton.frame];
         [rightButtonBackground setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin];
         CAGradientLayer *rightButtonBackgroundGradient = [CAGradientLayer layer];
-        [rightButtonBackgroundGradient setColors:@[(id)[UIColor MCLightBlueColor].CGColor, (id)[[UIColor MCLightBlueColor] colorWithAlphaComponent:0].CGColor]];
+        [rightButtonBackgroundGradient setColors:@[(id)[UIColor MCMainColor].CGColor, (id)[[UIColor MCMainColor] colorWithAlphaComponent:0].CGColor]];
         [rightButtonBackgroundGradient setEndPoint:CGPointMake(0.4, 0.5)];
         [rightButtonBackgroundGradient setFrame:leftButtonBackground.bounds];
         [rightButtonBackgroundGradient setStartPoint:CGPointMake(0.75, 0.5)];
@@ -69,7 +75,7 @@
         [_spinner setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
         [_spinner setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2)];
         
-        [self setBackgroundColor:[UIColor MCLightBlueColor]];
+        [self setBackgroundColor:[UIColor MCMainColor]];
         [self addSubview:_spinner];
         [self addSubview:_scrollView];
         [self addSubview:leftButtonBackground];
@@ -90,7 +96,7 @@
             newPage = MAX(0, self.currentPage-1);
         }
         else {
-            newPage = MIN(self.colleges.count-1, self.currentPage+1);
+            newPage = MIN(self.colleges.count, self.currentPage+1);
         }
         [UIView animateWithDuration:0.3 animations:^{
             [self.scrollView setContentOffset:CGPointMake(self.scrollView.bounds.size.width*newPage, 0)];
@@ -114,8 +120,8 @@
 - (UILabel *)createLabelWithText:(NSString *)text {
     UILabel *label = [[UILabel alloc] init];
     [label setNumberOfLines:2];
-    [label setShadowColor:[UIColor darkGrayColor]];
-    [label setShadowOffset:CGSizeMake(0, 1)];
+    //[label setShadowColor:[UIColor darkGrayColor]];
+    //[label setShadowOffset:CGSizeMake(0, 1)];
     [label setText:text];
     [label setTextAlignment:NSTextAlignmentCenter];
     [label setTextColor:[UIColor MCOffWhiteColor]];
@@ -137,22 +143,9 @@
 }
 
 - (void)getCollegesNearLocation:(CLLocation *)location {
-    NSURL *URL = [NSURL URLWithString:[NSString stringWithFormat:@"https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=%@&location=%f,%f&keyword=college+university&radius=16000&types=university",@"AIzaSyBfD0OMiMbhJhVAd969ReRsnJdEsDSEn2U",location.coordinate.latitude,location.coordinate.longitude]];
-    NSURLRequest *request = [NSURLRequest requestWithURL:URL];
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        NSError *jsonError;
-        id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:&jsonError];
-        if(!jsonError && json && [json isKindOfClass:[NSDictionary class]]) {
-            NSDictionary *jsonDictionary = (NSDictionary *)json;
-            if([jsonDictionary objectForKey:@"results"]) {
-                [self.colleges removeAllObjects];
-                for(NSDictionary *result in [jsonDictionary objectForKey:@"results"]) {
-                    [self.colleges addObject:[result objectForKey:@"name"]];
-                }
-                [self showColleges];
-            }
-        }
-    }];
+    self.colleges = [@[@"Default College"] mutableCopy];
+    [self showColleges];
+
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -162,15 +155,22 @@
             self.currentPage = page;
             
             [self.leftButton setEnabled:page>0];
-            [self.rightButton setEnabled:page<self.colleges.count-1];
+            [self.rightButton setEnabled:page<self.colleges.count];
         }
     }
 }
 
 - (void)showColleges {
-    [self.scrollView setContentSize:CGSizeMake(self.colleges.count*self.scrollView.bounds.size.width, self.scrollView.bounds.size.height)];
-    for(int i=0;i<self.colleges.count;i++) {
-        UILabel *label = [self createLabelWithText:[self.colleges objectAtIndex:i]];
+    [self.scrollView setContentSize:CGSizeMake((self.colleges.count+1)*self.scrollView.bounds.size.width, self.scrollView.bounds.size.height)];
+    for(int i=0;i<self.colleges.count+1;i++) {
+        NSString *collegeName;
+        if(i<self.colleges.count) {
+            collegeName = [self.colleges objectAtIndex:i];
+        }
+        else {
+            collegeName = @"Other/None";
+        }
+        UILabel *label = [self createLabelWithText:collegeName];
         [label setCenter:CGPointMake(i*self.scrollView.bounds.size.width+self.scrollView.bounds.size.width/2, self.scrollView.bounds.size.height/2)];
         [self.scrollView addSubview:label];
     }
@@ -179,6 +179,13 @@
     [self.leftButton setAlpha:1];
     [self.rightButton setAlpha:1];
     [self scrollViewDidScroll:self.scrollView];
+}
+
+- (void)scrollViewTapped {
+    if(self.currentPage<self.colleges.count) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Tapped" message:[NSString stringWithFormat:@"%@",[self.colleges objectAtIndex:self.currentPage]] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:YES];
+    }
 }
 
 @end

@@ -10,7 +10,7 @@
 
 @interface UIColor (MCColors)
 
-+ (UIColor *)MCLightBlueColor;
++ (UIColor *)MCMainColor;
 + (UIColor *)MCOffWhiteColor;
 
 @end

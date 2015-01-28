@@ -10,15 +10,15 @@
 
 @implementation UIColor (MCColors)
 
-+ (UIColor *)MCLightBlueColor {
-    static UIColor *lightBlueColor = nil;
++ (UIColor *)MCMainColor {
+    static UIColor *mainColor = nil;
     static dispatch_once_t dispatchOnceToken;
     
     dispatch_once(&dispatchOnceToken, ^{
-        lightBlueColor = [UIColor colorWithRed:75/255.0f green:154/255.0f blue:200/255.0f alpha:1];
+        mainColor = [UIColor colorWithRed:231/255.0f green:85/255.0f blue:93/255.0f alpha:1];
     });
     
-    return lightBlueColor;
+    return mainColor;
 }
 
 + (UIColor *)MCOffWhiteColor {

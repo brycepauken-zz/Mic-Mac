@@ -25,7 +25,7 @@
         [_label setTextAlignment:NSTextAlignmentCenter];
         [_label setTextColor:[UIColor MCOffWhiteColor]];
         
-        [self setBackgroundColor:[UIColor MCLightBlueColor]];
+        [self setBackgroundColor:[UIColor MCMainColor]];
         [self.layer setBorderColor:[UIColor MCOffWhiteColor].CGColor];
         [self.layer setBorderWidth:2];
         [self.layer setCornerRadius:4];

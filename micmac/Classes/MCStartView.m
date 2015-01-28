@@ -177,7 +177,7 @@
         [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(createSmallBubble) userInfo:nil repeats:YES];
         [self createSmallBubble];
         
-        [self setBackgroundColor:[UIColor MCLightBlueColor]];
+        [self setBackgroundColor:[UIColor MCMainColor]];
         [self addSubview:_largeBubblesContainer];
         [self addSubview:_smallBubblesContainer];
         [self addSubview:pageControlContainer];
@@ -333,8 +333,8 @@
     UILabel *label = [[UILabel alloc] init];
     [label setAttributedText:text];
     [label setNumberOfLines:0];
-    [label setShadowColor:[UIColor darkGrayColor]];
-    [label setShadowOffset:CGSizeMake(0, 1)];
+    //[label setShadowColor:[UIColor darkGrayColor]];
+    //[label setShadowOffset:CGSizeMake(0, 1)];
     [label setTextAlignment:NSTextAlignmentCenter];
     [label setTextColor:[UIColor MCOffWhiteColor]];
     
