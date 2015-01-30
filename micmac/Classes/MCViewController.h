@@ -8,10 +8,13 @@
 
 #import <CoreLocation/CoreLocation.h>
 
+@class MCMainView;
+
 @interface MCViewController : UIViewController <CLLocationManagerDelegate>
 
 @property (nonatomic, strong) CLLocation *lastLocation;
 
+- (MCMainView *)mainView;
 - (void)startLocationManager;
 
 @end

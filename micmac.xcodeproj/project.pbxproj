@@ -15,10 +15,16 @@
 		0225DB271A549435007B8A08 /* Location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0225DB1F1A549435007B8A08 /* Location@2x.png */; };
 		0225DB281A549435007B8A08 /* School.png in Resources */ = {isa = PBXBuildFile; fileRef = 0225DB201A549435007B8A08 /* School.png */; };
 		0225DB291A549435007B8A08 /* School@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0225DB211A549435007B8A08 /* School@2x.png */; };
+		024E24F91A7B0F0C00976A9C /* NSString+MCMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 024E24F81A7B0F0C00976A9C /* NSString+MCMethods.m */; };
 		025718821A52325F00916FEB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025718811A52325F00916FEB /* CoreLocation.framework */; };
 		025718841A52472700916FEB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 025718831A52472700916FEB /* Images.xcassets */; };
 		025718871A52606000916FEB /* MCCollegePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 025718861A52606000916FEB /* MCCollegePicker.m */; };
-		02B1B51A1A4B780E00474F4C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B1B50F1A4B780E00474F4C /* AppDelegate.m */; };
+		02921A071A7B8B2400094182 /* MCAlertViewButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 02921A061A7B8B2400094182 /* MCAlertViewButton.m */; };
+		02921A0C1A7B8E2B00094182 /* ButtonNo.png in Resources */ = {isa = PBXBuildFile; fileRef = 02921A081A7B8E2B00094182 /* ButtonNo.png */; };
+		02921A0D1A7B8E2B00094182 /* ButtonNo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02921A091A7B8E2B00094182 /* ButtonNo@2x.png */; };
+		02921A0E1A7B8E2B00094182 /* ButtonYes.png in Resources */ = {isa = PBXBuildFile; fileRef = 02921A0A1A7B8E2B00094182 /* ButtonYes.png */; };
+		02921A0F1A7B8E2B00094182 /* ButtonYes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02921A0B1A7B8E2B00094182 /* ButtonYes@2x.png */; };
+		02B1B51A1A4B780E00474F4C /* MCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B1B50F1A4B780E00474F4C /* MCAppDelegate.m */; };
 		02B1B51B1A4B780E00474F4C /* MCCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B1B5111A4B780E00474F4C /* MCCommon.m */; };
 		02B1B51C1A4B780E00474F4C /* MCMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B1B5131A4B780E00474F4C /* MCMainView.m */; };
 		02B1B51D1A4B780E00474F4C /* MCStartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B1B5151A4B780E00474F4C /* MCStartView.m */; };
@@ -30,6 +36,7 @@
 		02B1B52E1A4B786300474F4C /* Logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02B1B52C1A4B786300474F4C /* Logo@2x.png */; };
 		02B1B5311A4B78AE00474F4C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02B1B5301A4B78AE00474F4C /* Default-568h@2x.png */; };
 		02B1B5401A51249000474F4C /* MCButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B1B53F1A51249000474F4C /* MCButton.m */; };
+		02CF62351A78787B0038265D /* MCAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02CF62341A78787B0038265D /* MCAlertView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,12 +49,20 @@
 		0225DB201A549435007B8A08 /* School.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = School.png; sourceTree = "<group>"; };
 		0225DB211A549435007B8A08 /* School@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "School@2x.png"; sourceTree = "<group>"; };
 		0228899C1A48BD47008A7D30 /* micmac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = micmac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		024E24F71A7B0F0C00976A9C /* NSString+MCMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MCMethods.h"; sourceTree = "<group>"; };
+		024E24F81A7B0F0C00976A9C /* NSString+MCMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MCMethods.m"; sourceTree = "<group>"; };
 		025718811A52325F00916FEB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		025718831A52472700916FEB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		025718851A52606000916FEB /* MCCollegePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCCollegePicker.h; sourceTree = "<group>"; };
 		025718861A52606000916FEB /* MCCollegePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCCollegePicker.m; sourceTree = "<group>"; };
-		02B1B50E1A4B780E00474F4C /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		02B1B50F1A4B780E00474F4C /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		02921A051A7B8B2400094182 /* MCAlertViewButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCAlertViewButton.h; sourceTree = "<group>"; };
+		02921A061A7B8B2400094182 /* MCAlertViewButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCAlertViewButton.m; sourceTree = "<group>"; };
+		02921A081A7B8E2B00094182 /* ButtonNo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonNo.png; sourceTree = "<group>"; };
+		02921A091A7B8E2B00094182 /* ButtonNo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonNo@2x.png"; sourceTree = "<group>"; };
+		02921A0A1A7B8E2B00094182 /* ButtonYes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonYes.png; sourceTree = "<group>"; };
+		02921A0B1A7B8E2B00094182 /* ButtonYes@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonYes@2x.png"; sourceTree = "<group>"; };
+		02B1B50E1A4B780E00474F4C /* MCAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCAppDelegate.h; sourceTree = "<group>"; };
+		02B1B50F1A4B780E00474F4C /* MCAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCAppDelegate.m; sourceTree = "<group>"; };
 		02B1B5101A4B780E00474F4C /* MCCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCCommon.h; sourceTree = "<group>"; };
 		02B1B5111A4B780E00474F4C /* MCCommon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCCommon.m; sourceTree = "<group>"; };
 		02B1B5121A4B780E00474F4C /* MCMainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCMainView.h; sourceTree = "<group>"; };
@@ -67,6 +82,8 @@
 		02B1B5301A4B78AE00474F4C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		02B1B53E1A51249000474F4C /* MCButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCButton.h; sourceTree = "<group>"; };
 		02B1B53F1A51249000474F4C /* MCButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCButton.m; sourceTree = "<group>"; };
+		02CF62331A78787B0038265D /* MCAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCAlertView.h; sourceTree = "<group>"; };
+		02CF62341A78787B0038265D /* MCAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCAlertView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +105,10 @@
 				0225DB1A1A549435007B8A08 /* ArrowLeft@2x.png */,
 				0225DB1B1A549435007B8A08 /* ArrowRight.png */,
 				0225DB1C1A549435007B8A08 /* ArrowRight@2x.png */,
+				02921A081A7B8E2B00094182 /* ButtonNo.png */,
+				02921A091A7B8E2B00094182 /* ButtonNo@2x.png */,
+				02921A0A1A7B8E2B00094182 /* ButtonYes.png */,
+				02921A0B1A7B8E2B00094182 /* ButtonYes@2x.png */,
 			);
 			path = Navigation;
 			sourceTree = "<group>";
@@ -132,8 +153,12 @@
 		02B1B50D1A4B780E00474F4C /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				02B1B50E1A4B780E00474F4C /* AppDelegate.h */,
-				02B1B50F1A4B780E00474F4C /* AppDelegate.m */,
+				02CF62331A78787B0038265D /* MCAlertView.h */,
+				02CF62341A78787B0038265D /* MCAlertView.m */,
+				02921A051A7B8B2400094182 /* MCAlertViewButton.h */,
+				02921A061A7B8B2400094182 /* MCAlertViewButton.m */,
+				02B1B50E1A4B780E00474F4C /* MCAppDelegate.h */,
+				02B1B50F1A4B780E00474F4C /* MCAppDelegate.m */,
 				02B1B53E1A51249000474F4C /* MCButton.h */,
 				02B1B53F1A51249000474F4C /* MCButton.m */,
 				025718851A52606000916FEB /* MCCollegePicker.h */,
@@ -146,6 +171,8 @@
 				02B1B5151A4B780E00474F4C /* MCStartView.m */,
 				02B1B5161A4B780E00474F4C /* MCViewController.h */,
 				02B1B5171A4B780E00474F4C /* MCViewController.m */,
+				024E24F71A7B0F0C00976A9C /* NSString+MCMethods.h */,
+				024E24F81A7B0F0C00976A9C /* NSString+MCMethods.m */,
 				02B1B5181A4B780E00474F4C /* UIColor+MCColors.h */,
 				02B1B5191A4B780E00474F4C /* UIColor+MCColors.m */,
 			);
@@ -255,8 +282,12 @@
 				0225DB231A549435007B8A08 /* ArrowLeft@2x.png in Resources */,
 				025718841A52472700916FEB /* Images.xcassets in Resources */,
 				02B1B52D1A4B786300474F4C /* Logo.png in Resources */,
+				02921A0C1A7B8E2B00094182 /* ButtonNo.png in Resources */,
+				02921A0E1A7B8E2B00094182 /* ButtonYes.png in Resources */,
 				0225DB241A549435007B8A08 /* ArrowRight.png in Resources */,
+				02921A0D1A7B8E2B00094182 /* ButtonNo@2x.png in Resources */,
 				02B1B5311A4B78AE00474F4C /* Default-568h@2x.png in Resources */,
+				02921A0F1A7B8E2B00094182 /* ButtonYes@2x.png in Resources */,
 				02B1B52E1A4B786300474F4C /* Logo@2x.png in Resources */,
 				0225DB261A549435007B8A08 /* Location.png in Resources */,
 				0225DB251A549435007B8A08 /* ArrowRight@2x.png in Resources */,
@@ -277,10 +308,13 @@
 				02B1B51D1A4B780E00474F4C /* MCStartView.m in Sources */,
 				02B1B51C1A4B780E00474F4C /* MCMainView.m in Sources */,
 				02B1B51B1A4B780E00474F4C /* MCCommon.m in Sources */,
-				02B1B51A1A4B780E00474F4C /* AppDelegate.m in Sources */,
+				02921A071A7B8B2400094182 /* MCAlertViewButton.m in Sources */,
+				02B1B51A1A4B780E00474F4C /* MCAppDelegate.m in Sources */,
 				02B1B5401A51249000474F4C /* MCButton.m in Sources */,
+				02CF62351A78787B0038265D /* MCAlertView.m in Sources */,
 				02B1B5281A4B783E00474F4C /* micmac.xcdatamodeld in Sources */,
 				02B1B5271A4B783E00474F4C /* main.m in Sources */,
+				024E24F91A7B0F0C00976A9C /* NSString+MCMethods.m in Sources */,
 				02B1B51F1A4B780E00474F4C /* UIColor+MCColors.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

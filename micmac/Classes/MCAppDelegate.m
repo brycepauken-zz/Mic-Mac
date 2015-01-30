@@ -6,18 +6,17 @@
 //  Copyright (c) 2014 Kingfish. All rights reserved.
 //
 
-#import "AppDelegate.h"
+#import "MCAppDelegate.h"
 
 #import "MCViewController.h"
 
-@interface AppDelegate ()
+@interface MCAppDelegate ()
 
 @property (nonatomic, strong) MCViewController *viewController;
 
 @end
 
-@implementation AppDelegate
-
+@implementation MCAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //seed random number generator
@@ -34,6 +33,10 @@
     
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+- (MCMainView *)mainView {
+    return self.viewController.mainView;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

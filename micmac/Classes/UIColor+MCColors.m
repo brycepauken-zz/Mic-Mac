@@ -21,6 +21,17 @@
     return mainColor;
 }
 
++ (UIColor *)MCOffBlackColor {
+    static UIColor *offBlackColor = nil;
+    static dispatch_once_t dispatchOnceToken;
+    
+    dispatch_once(&dispatchOnceToken, ^{
+        offBlackColor = [UIColor colorWithWhite:0.05 alpha:1];
+    });
+    
+    return offBlackColor;
+}
+
 + (UIColor *)MCOffWhiteColor {
     static UIColor *offWhiteColor = nil;
     static dispatch_once_t dispatchOnceToken;

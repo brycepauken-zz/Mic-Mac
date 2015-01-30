@@ -40,6 +40,10 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"MCLocationUpdated" object:nil];
 }
 
+- (MCMainView *)mainView {
+    return _mainView;
+}
+
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
 }

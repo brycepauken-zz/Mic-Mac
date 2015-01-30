@@ -8,6 +8,7 @@
 
 #import "MCCollegePicker.h"
 
+#import "MCAlertView.h"
 #import "MCViewController.h"
 
 @interface MCCollegePicker()
@@ -106,7 +107,8 @@
 
 - (void)checkLocation {
     CLLocation *location = ViewController.lastLocation;
-    if(location) {
+    BOOL alwaysTrue = 1==1;
+    if(alwaysTrue || location) {
         [self getCollegesNearLocation:[location copy]];
     }
     else {
@@ -183,8 +185,12 @@
 
 - (void)scrollViewTapped {
     if(self.currentPage<self.colleges.count) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Tapped" message:[NSString stringWithFormat:@"%@",[self.colleges objectAtIndex:self.currentPage]] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert performSelectorOnMainThread:@selector(show) withObject:nil waitUntilDone:YES];
+        MCAlertView *alertView = [[MCAlertView alloc] initWithAlertWithTitle:[self.colleges objectAtIndex:self.currentPage] message:@"Is this college correct? You will not be able to select a different one after this point." buttonType:MCAlertViewButtonTypeYesNo];
+        __weak MCAlertView *weakAlertView = alertView;
+        [alertView setOnButtonTapped:^(int index) {
+            [weakAlertView dismiss];
+        }];
+        [alertView show];
     }
 }
 
