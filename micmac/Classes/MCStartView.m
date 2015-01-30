@@ -9,12 +9,12 @@
 #import "MCStartView.h"
 
 #import "MCButton.h"
-#import "MCCollegePicker.h"
 #import "MCViewController.h"
 
 @interface MCStartView()
 
-@property (nonatomic, strong) MCCollegePicker *collegePicker;
+@property (nonatomic, strong) MCButton *collegeNoButton;
+@property (nonatomic, strong) MCButton *collegeYesButton;
 @property (nonatomic, strong) NSMutableArray *largeBubbles;
 @property (nonatomic, strong) UIView *largeBubblesContainer;
 @property (nonatomic, strong) NSLock *largeBubblesLock;
@@ -49,7 +49,7 @@
         [_scrollView setShowsVerticalScrollIndicator:NO];
         
         int logoSize = MIN(self.bounds.size.width, self.bounds.size.height)/2;
-        _pages = @[[[UIView alloc] init], [[UIView alloc] init], [[UIView alloc] init], [[UIView alloc] init]];
+        _pages = @[[[UIView alloc] init], [[UIView alloc] init], [[UIView alloc] init], [[UIView alloc] init], [[UIView alloc] init]];
         for(int i=0;i<_pages.count;i++) {
             UIView *page = [_pages objectAtIndex:i];
             [page setFrame:CGRectMake(i*_scrollView.bounds.size.width, 0, _scrollView.bounds.size.width, _scrollView.bounds.size.height)];
@@ -84,9 +84,7 @@
                     boldRanges = @[[NSValue valueWithRange:NSMakeRange(30, 17)]];
                     break;
                 case 3:
-                    descriptionText = @"Which college do you attend?";
-                    boldRanges = @[[NSValue valueWithRange:NSMakeRange(6, 7)]];
-                    horizontalOffsetFactor = 0.65;
+                    descriptionText = @"It looks like you're on\nUC San Diego's campus.\nAre you a student here?";
                     break;
                 default:
                     break;
@@ -113,21 +111,36 @@
                 [locationButtonContainer setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
                 [locationButtonContainer setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height*13/14)];
                 _locationButton = [[MCButton alloc] initWithFrame:CGRectMake(-50, -20, 100, 40)];
-                [_locationButton addTarget:self action:@selector(locationButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+                [_locationButton addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
                 [_locationButton setAlpha:0];
                 [_locationButton setTitle:@"I Will"];
                 [locationButtonContainer addSubview:_locationButton];
                 [page addSubview:locationButtonContainer];
             }
             else if(i==3) {
-                UIView *collegePickerContainer = [[UIView alloc] initWithFrame:CGRectZero];
-                [collegePickerContainer setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
-                [collegePickerContainer setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height*11/14)];
-                CGFloat collegePickerWidth = MIN(self.bounds.size.width,self.bounds.size.height)-80;
-                _collegePicker = [[MCCollegePicker alloc] initWithFrame:CGRectMake(-collegePickerWidth/2, -30, collegePickerWidth, 60)];
-                [_collegePicker setAlpha:0];
-                [page addSubview:_collegePicker];
-                [page addSubview:collegePickerContainer];
+                UIView *buttonContainer = [[UIView alloc] initWithFrame:CGRectZero];
+                [buttonContainer setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
+                [buttonContainer setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height*13/14)];
+                
+                _collegeNoButton = [[MCButton alloc] initWithFrame:CGRectMake(-110, -20, 100, 40)];
+                [_collegeNoButton addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
+                [_collegeNoButton setAlpha:0];
+                [_collegeNoButton setTitle:@"No"];
+                
+                _collegeYesButton = [[MCButton alloc] initWithFrame:CGRectMake(10, -20, 100, 40)];
+                [_collegeYesButton addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
+                [_collegeYesButton setAlpha:0];
+                [_collegeYesButton setTitle:@"Yes"];
+                
+                [buttonContainer addSubview:_collegeNoButton];
+                [buttonContainer addSubview:_collegeYesButton];
+                [page addSubview:buttonContainer];
+            }
+            else if(i==4) {
+                UIImageView *checkmark = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"LargeCheckmark"]];
+                [checkmark setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
+                [checkmark setFrame:CGRectMake(self.bounds.size.width/2-40, self.bounds.size.height/2-40, 80, 80)];
+                [page addSubview:checkmark];
             }
             
             [_scrollView addSubview:page];
@@ -185,6 +198,51 @@
         [self addSubview:_logoContainer];
     }
     return self;
+}
+
+- (void)buttonTapped:(UIButton *)button {
+    if(button==self.locationButton) {
+        __block __weak id observer = [[NSNotificationCenter defaultCenter] addObserverForName:@"MCLocationAuthorizationChanged" object:nil queue:nil usingBlock:^(NSNotification *notification) {
+            if(notification.userInfo) {
+                NSNumber *statusObject = [notification.userInfo objectForKey:@"status"];
+                if(statusObject) {
+                    CLAuthorizationStatus status = (CLAuthorizationStatus)[statusObject integerValue];
+                    if(status==kCLAuthorizationStatusAuthorized || ([[[UIDevice currentDevice] systemVersion] floatValue]>=8.0 && status==kCLAuthorizationStatusAuthorizedWhenInUse)) {
+                        [[NSNotificationCenter defaultCenter] removeObserver:observer];
+                        self.visiblePages = 4;
+                        [self.scrollView setScrollEnabled:NO];
+                        [UIView animateWithDuration:0.3 animations:^{
+                            [self.scrollView setContentOffset:CGPointMake((self.visiblePages-1)*self.scrollView.bounds.size.width, 0)];
+                            [self.locationButton setAlpha:0];
+                        } completion:^(BOOL finished) {
+                            [self.locationButton setHidden:YES];
+                        }];
+                    }
+                }
+            }
+        }];
+        [ViewController startLocationManager];
+    }
+    else if(button==self.collegeYesButton) {
+        MCAlertView *alertView = [[MCAlertView alloc] initWithAlertWithTitle:@"UC San Diego" message:@"Is this correct? You will not be able to select a different college after this point." buttonType:MCAlertViewButtonTypeYesNo];
+        __weak MCAlertView *weakAlertView = alertView;
+        [alertView setOnButtonTapped:^(int index) {
+            [weakAlertView dismiss];
+            if(index==1) {
+                self.visiblePages = 5;
+                [self.scrollView setUserInteractionEnabled:NO];
+                [UIView animateWithDuration:0.3 animations:^{
+                    [self.scrollView setContentOffset:CGPointMake((self.visiblePages-1)*self.scrollView.bounds.size.width, 0)];
+                } completion:^(BOOL finished) {
+                    
+                }];
+            }
+        }];
+        [alertView show];
+    }
+    else if(button==self.collegeNoButton) {
+        
+    }
 }
 
 - (void)createLargeBubble {
@@ -345,39 +403,17 @@
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-    if(self.locationButton.alpha == 1 && CGRectContainsPoint(CGRectInset([self convertRect:self.locationButton.frame fromView:self.locationButton.superview], -20, -20), point)) {
-        return self.locationButton;
+    NSArray *buttons = @[self.locationButton, self.collegeYesButton, self.collegeNoButton];
+    for(UIButton *button in buttons) {
+        if(button.alpha == 1 && CGRectContainsPoint(CGRectInset([self convertRect:button.frame fromView:button.superview], -20, -20), point)) {
+            return button;
+        }
     }
     return [super hitTest:point withEvent:event];
 }
 
 - (void)layoutSubviews {
     [self updateScrollView];
-    
-    [self.collegePicker setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height*11/14)];
-}
-
-- (void)locationButtonTapped {
-    __block __weak id observer = [[NSNotificationCenter defaultCenter] addObserverForName:@"MCLocationAuthorizationChanged" object:nil queue:nil usingBlock:^(NSNotification *notification) {
-        if(notification.userInfo) {
-            NSNumber *statusObject = [notification.userInfo objectForKey:@"status"];
-            if(statusObject) {
-                CLAuthorizationStatus status = (CLAuthorizationStatus)[statusObject integerValue];
-                if(status==kCLAuthorizationStatusAuthorized || ([[[UIDevice currentDevice] systemVersion] floatValue]>=8.0 && status==kCLAuthorizationStatusAuthorizedWhenInUse)) {
-                    [[NSNotificationCenter defaultCenter] removeObserver:observer];
-                    self.visiblePages = 4;
-                    [self.scrollView setScrollEnabled:NO];
-                    [UIView animateWithDuration:0.3 animations:^{
-                        [self.scrollView setContentOffset:CGPointMake((self.visiblePages-1)*self.scrollView.bounds.size.width, 0)];
-                        [self.locationButton setAlpha:0];
-                    } completion:^(BOOL finished) {
-                        [self.locationButton setHidden:YES];
-                    }];
-                }
-            }
-        }
-    }];
-    [ViewController startLocationManager];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -388,10 +424,12 @@
         [self.largeBubblesContainer setAlpha:MIN(1, MAX(0, 1-offset))];
         [self.smallBubblesContainer setAlpha:MIN(1, MAX(0, offset<=1?offset:2-offset))];
         [self.locationButton setAlpha:MIN(1, MAX(0, offset<=2?offset-1:3-offset))];
-        [self.collegePicker setAlpha:self.visiblePages<4?0:MIN(1, MAX(0, offset<=3?offset-2:4-offset))];
+        [self.collegeNoButton setAlpha:MIN(1, MAX(0, offset<=3?offset-2:4-offset))];
+        [self.collegeYesButton setAlpha:MIN(1, MAX(0, offset<=3?offset-2:4-offset))];
         [self.logo setCenter:CGPointMake((MAX(1, offset)-1)*-self.scrollView.bounds.size.width, 0)];
         
         [self.logo setAlpha:MIN(1, MAX(0, 2-offset))];
+        [self.pageControl setAlpha:MIN(1, MAX(0, 2-offset))];
         NSInteger page = lround(offset);
         if(previousPage != page) {
             previousPage = page;

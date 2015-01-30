@@ -87,7 +87,7 @@
     
     static int alertPadding = 24;
     static int alertWidth = 216;
-    static int buttonHeight = 50;
+    static int buttonHeight = 40;
     
     CGSize titleSize = [self.titleLabel.text sizeWithFont:self.titleLabel.font constrainedToWidth:alertWidth-alertPadding*2];
     CGSize messageSize = [self.messageLabel.text sizeWithFont:self.messageLabel.font constrainedToWidth:alertWidth-alertPadding*2];
