@@ -22,7 +22,11 @@
     self = [super initWithFrame:frame];
     if(self) {
         _startView = [[MCStartView alloc] initWithFrame:self.bounds];
+        __weak MCStartView *weakStartView = _startView;
         [_startView setAutoresizingMask:UIViewAutoResizingFlexibleSize];
+        [_startView setHiddenBlock:^{
+            [weakStartView removeFromSuperview];
+        }];
         
         [self addSubview:_startView];
     }

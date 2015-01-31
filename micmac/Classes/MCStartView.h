@@ -8,4 +8,6 @@
 
 @interface MCStartView : UIView <UIScrollViewDelegate>
 
+- (void)setHiddenBlock:(void (^)())hiddenBlock;
+
 @end

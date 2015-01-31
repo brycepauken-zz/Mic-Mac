@@ -13,8 +13,10 @@
 
 @interface MCStartView()
 
+@property (nonatomic, strong) UIImageView *checkmark;
 @property (nonatomic, strong) MCButton *collegeNoButton;
 @property (nonatomic, strong) MCButton *collegeYesButton;
+@property (nonatomic, copy) void (^hiddenBlock)();
 @property (nonatomic, strong) NSMutableArray *largeBubbles;
 @property (nonatomic, strong) UIView *largeBubblesContainer;
 @property (nonatomic, strong) NSLock *largeBubblesLock;
@@ -137,10 +139,11 @@
                 [page addSubview:buttonContainer];
             }
             else if(i==4) {
-                UIImageView *checkmark = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"LargeCheckmark"]];
-                [checkmark setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
-                [checkmark setFrame:CGRectMake(self.bounds.size.width/2-40, self.bounds.size.height/2-40, 80, 80)];
-                [page addSubview:checkmark];
+                _checkmark = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"LargeCheckmark"]];
+                [_checkmark setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
+                [_checkmark setFrame:CGRectMake(self.bounds.size.width/2-40, self.bounds.size.height/2-40, 80, 80)];
+                [_checkmark setHidden:YES];
+                [page addSubview:_checkmark];
             }
             
             [_scrollView addSubview:page];
@@ -234,7 +237,37 @@
                 [UIView animateWithDuration:0.3 animations:^{
                     [self.scrollView setContentOffset:CGPointMake((self.visiblePages-1)*self.scrollView.bounds.size.width, 0)];
                 } completion:^(BOOL finished) {
+                    CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
                     
+                    CATransform3D scale1 = CATransform3DMakeScale(0.5, 0.5, 1);
+                    CATransform3D scale2 = CATransform3DMakeScale(1.2, 1.2, 1);
+                    CATransform3D scale3 = CATransform3DMakeScale(0.9, 0.9, 1);
+                    CATransform3D scale4 = CATransform3DMakeScale(1.0, 1.0, 1);
+                    
+                    NSArray *frameValues = [NSArray arrayWithObjects:[NSValue valueWithCATransform3D:scale1],[NSValue valueWithCATransform3D:scale2],[NSValue valueWithCATransform3D:scale3],[NSValue valueWithCATransform3D:scale4],nil];
+                    [animation setValues:frameValues];
+                    
+                    NSArray *frameTimes = [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.0],[NSNumber numberWithFloat:0.5],[NSNumber numberWithFloat:0.9],[NSNumber numberWithFloat:1.0],nil];
+                    [animation setKeyTimes:frameTimes];
+                    
+                    animation.fillMode = kCAFillModeForwards;
+                    animation.removedOnCompletion = NO;
+                    animation.duration = .2;
+                    
+                    [self.checkmark.layer addAnimation:animation forKey:@"popup"];
+                    [self.checkmark setHidden:NO];
+                    
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        [UIView animateWithDuration:0.3 animations:^{
+                            [self setAlpha:0];
+                            [self.checkmark setAlpha:0];
+                            [self.checkmark setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 2, 2)];
+                        } completion:^(BOOL finished) {
+                            if(self.hiddenBlock) {
+                                self.hiddenBlock();
+                            }
+                        }];
+                    });
                 }];
             }
         }];
