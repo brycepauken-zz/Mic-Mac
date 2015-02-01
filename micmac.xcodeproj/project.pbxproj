@@ -16,6 +16,8 @@
 		0225DB281A549435007B8A08 /* School.png in Resources */ = {isa = PBXBuildFile; fileRef = 0225DB201A549435007B8A08 /* School.png */; };
 		0225DB291A549435007B8A08 /* School@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0225DB211A549435007B8A08 /* School@2x.png */; };
 		024E24F91A7B0F0C00976A9C /* NSString+MCMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 024E24F81A7B0F0C00976A9C /* NSString+MCMethods.m */; };
+		024FAB711A7D8EF900FE8B56 /* MCTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 024FAB701A7D8EF900FE8B56 /* MCTabView.m */; };
+		024FAB741A7D99A600FE8B56 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 024FAB721A7D999400FE8B56 /* CoreText.framework */; };
 		025718821A52325F00916FEB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025718811A52325F00916FEB /* CoreLocation.framework */; };
 		025718841A52472700916FEB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 025718831A52472700916FEB /* Images.xcassets */; };
 		02907B471A7BA4CF003848BB /* LargeCheckmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 02907B451A7BA4CF003848BB /* LargeCheckmark.png */; };
@@ -52,6 +54,9 @@
 		0228899C1A48BD47008A7D30 /* micmac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = micmac.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		024E24F71A7B0F0C00976A9C /* NSString+MCMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MCMethods.h"; sourceTree = "<group>"; };
 		024E24F81A7B0F0C00976A9C /* NSString+MCMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MCMethods.m"; sourceTree = "<group>"; };
+		024FAB6F1A7D8EF900FE8B56 /* MCTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCTabView.h; sourceTree = "<group>"; };
+		024FAB701A7D8EF900FE8B56 /* MCTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCTabView.m; sourceTree = "<group>"; };
+		024FAB721A7D999400FE8B56 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		025718811A52325F00916FEB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		025718831A52472700916FEB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		02907B451A7BA4CF003848BB /* LargeCheckmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LargeCheckmark.png; sourceTree = "<group>"; };
@@ -93,6 +98,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				025718821A52325F00916FEB /* CoreLocation.framework in Frameworks */,
+				024FAB741A7D99A600FE8B56 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -170,8 +176,10 @@
 				02B1B5131A4B780E00474F4C /* MCMainView.m */,
 				02B1B5141A4B780E00474F4C /* MCStartView.h */,
 				02B1B5151A4B780E00474F4C /* MCStartView.m */,
-				02B1B5161A4B780E00474F4C /* MCViewController.h */,
+				024FAB6F1A7D8EF900FE8B56 /* MCTabView.h */,
+				024FAB701A7D8EF900FE8B56 /* MCTabView.m */,
 				02B1B5171A4B780E00474F4C /* MCViewController.m */,
+				02B1B5161A4B780E00474F4C /* MCViewController.h */,
 				024E24F71A7B0F0C00976A9C /* NSString+MCMethods.h */,
 				024E24F81A7B0F0C00976A9C /* NSString+MCMethods.m */,
 				02B1B5181A4B780E00474F4C /* UIColor+MCColors.h */,
@@ -184,6 +192,7 @@
 			isa = PBXGroup;
 			children = (
 				025718811A52325F00916FEB /* CoreLocation.framework */,
+				024FAB721A7D999400FE8B56 /* CoreText.framework */,
 				02B1B5211A4B783E00474F4C /* Info.plist */,
 				02B1B5221A4B783E00474F4C /* main.m */,
 				02B1B5231A4B783E00474F4C /* MicMac-Prefix.pch */,
@@ -307,6 +316,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				02B1B51E1A4B780E00474F4C /* MCViewController.m in Sources */,
+				024FAB711A7D8EF900FE8B56 /* MCTabView.m in Sources */,
 				02B1B51D1A4B780E00474F4C /* MCStartView.m in Sources */,
 				02B1B51C1A4B780E00474F4C /* MCMainView.m in Sources */,
 				02B1B51B1A4B780E00474F4C /* MCCommon.m in Sources */,

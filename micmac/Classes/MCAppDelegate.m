@@ -27,6 +27,7 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [self.window setBackgroundColor:[UIColor blackColor]];
+    [self.window setClipsToBounds:YES];
     
     self.viewController = [[MCViewController alloc] init];
     [self.window setRootViewController:self.viewController];

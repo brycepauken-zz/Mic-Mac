@@ -9,10 +9,12 @@
 #import "MCMainView.h"
 
 #import "MCStartView.h"
+#import "MCTabView.h"
 
 @interface MCMainView()
 
 @property (nonatomic, strong) MCStartView *startView;
+@property (nonatomic, strong) MCTabView *tabView;
 
 @end
 
@@ -28,6 +30,14 @@
             [weakStartView removeFromSuperview];
         }];
         
+        _tabView = [[MCTabView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height-70, self.bounds.size.width, 70)];
+        [_tabView setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleWidth];
+        [_tabView setButtonTapped:^(int index) {
+            
+        }];
+        
+        [self setBackgroundColor:[UIColor MCOffWhiteColor]];
+        [self addSubview:_tabView];
         [self addSubview:_startView];
     }
     return self;
