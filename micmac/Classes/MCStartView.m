@@ -424,8 +424,6 @@
     UILabel *label = [[UILabel alloc] init];
     [label setAttributedText:text];
     [label setNumberOfLines:0];
-    //[label setShadowColor:[UIColor darkGrayColor]];
-    //[label setShadowOffset:CGSizeMake(0, 1)];
     [label setTextAlignment:NSTextAlignmentCenter];
     [label setTextColor:[UIColor MCOffWhiteColor]];
     

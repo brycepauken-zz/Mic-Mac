@@ -36,7 +36,7 @@
         _background = [[UIView alloc] initWithFrame:self.bounds];
         [_background setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleWidth];
         CAGradientLayer *backgroundGradientLayer = [CAGradientLayer layer];
-        [backgroundGradientLayer setColors:@[(id)[[UIColor MCMainColor] colorWithAlphaComponent:0].CGColor, (id)[UIColor MCOffWhiteColor].CGColor]];
+        [backgroundGradientLayer setColors:@[(id)[[UIColor MCOffWhiteColor] colorWithAlphaComponent:0].CGColor, (id)[UIColor MCOffWhiteColor].CGColor]];
         [backgroundGradientLayer setEndPoint:CGPointMake(0.5, (self.bounds.size.height-50)/self.bounds.size.height)];
         [backgroundGradientLayer setFrame:_background.bounds];
         [backgroundGradientLayer setStartPoint:CGPointMake(0.5, (self.bounds.size.height-54)/self.bounds.size.height)];

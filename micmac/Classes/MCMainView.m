@@ -27,12 +27,6 @@
     if(self) {
         __weak MCMainView *weakSelf = self;
         
-        _tabView = [[MCTabView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height-70, self.bounds.size.width, 70)];
-        [_tabView setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleWidth];
-        [_tabView setButtonTapped:^(int index) {
-            
-        }];
-        
         _startView = [[MCStartView alloc] initWithFrame:self.bounds];
         [_startView setAutoresizingMask:UIViewAutoResizingFlexibleSize];
         [_startView setHiddenBlock:^{
@@ -41,12 +35,21 @@
         
         NSArray *pageNames = @[@"Macro", @"Micro", @"Me", @"More"];
         _pages = [[NSMutableArray alloc] init];
+        __weak NSArray *weakPages = _pages;
         for(int i=0;i<pageNames.count;i++) {
             MCPageView *page = [[MCPageView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height-50) name:[pageNames objectAtIndex:i]];
-            [page setHidden:i!=0];
+            [page setHidden:i!=1];
             [_pages addObject:page];
             [self addSubview:page];
         }
+        
+        _tabView = [[MCTabView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height-70, self.bounds.size.width, 70)];
+        [_tabView setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleWidth];
+        [_tabView setButtonTapped:^(int index) {
+            for(int i=0;i<weakPages.count;i++) {
+                [[weakPages objectAtIndex:i] setHidden:i!=index];
+            }
+        }];
         
         [self setBackgroundColor:[UIColor MCOffWhiteColor]];
         [self addSubview:_tabView];

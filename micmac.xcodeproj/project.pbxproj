@@ -21,6 +21,7 @@
 		025718821A52325F00916FEB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025718811A52325F00916FEB /* CoreLocation.framework */; };
 		025718841A52472700916FEB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 025718831A52472700916FEB /* Images.xcassets */; };
 		027DCC2A1A7EFC9D0054EEB8 /* MCPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 027DCC291A7EFC9D0054EEB8 /* MCPageView.m */; };
+		027DCC2D1A7F007A0054EEB8 /* MCNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 027DCC2C1A7F007A0054EEB8 /* MCNavigationBar.m */; };
 		02907B471A7BA4CF003848BB /* LargeCheckmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 02907B451A7BA4CF003848BB /* LargeCheckmark.png */; };
 		02907B481A7BA4CF003848BB /* LargeCheckmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02907B461A7BA4CF003848BB /* LargeCheckmark@2x.png */; };
 		02921A071A7B8B2400094182 /* MCAlertViewButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 02921A061A7B8B2400094182 /* MCAlertViewButton.m */; };
@@ -62,6 +63,8 @@
 		025718831A52472700916FEB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		027DCC281A7EFC9D0054EEB8 /* MCPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPageView.h; sourceTree = "<group>"; };
 		027DCC291A7EFC9D0054EEB8 /* MCPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCPageView.m; sourceTree = "<group>"; };
+		027DCC2B1A7F007A0054EEB8 /* MCNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCNavigationBar.h; sourceTree = "<group>"; };
+		027DCC2C1A7F007A0054EEB8 /* MCNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCNavigationBar.m; sourceTree = "<group>"; };
 		02907B451A7BA4CF003848BB /* LargeCheckmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LargeCheckmark.png; sourceTree = "<group>"; };
 		02907B461A7BA4CF003848BB /* LargeCheckmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LargeCheckmark@2x.png"; sourceTree = "<group>"; };
 		02921A051A7B8B2400094182 /* MCAlertViewButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCAlertViewButton.h; sourceTree = "<group>"; };
@@ -179,6 +182,8 @@
 				027DCC291A7EFC9D0054EEB8 /* MCPageView.m */,
 				02B1B5121A4B780E00474F4C /* MCMainView.h */,
 				02B1B5131A4B780E00474F4C /* MCMainView.m */,
+				027DCC2B1A7F007A0054EEB8 /* MCNavigationBar.h */,
+				027DCC2C1A7F007A0054EEB8 /* MCNavigationBar.m */,
 				02B1B5141A4B780E00474F4C /* MCStartView.h */,
 				02B1B5151A4B780E00474F4C /* MCStartView.m */,
 				024FAB6F1A7D8EF900FE8B56 /* MCTabView.h */,
@@ -330,6 +335,7 @@
 				02B1B5401A51249000474F4C /* MCButton.m in Sources */,
 				02CF62351A78787B0038265D /* MCAlertView.m in Sources */,
 				027DCC2A1A7EFC9D0054EEB8 /* MCPageView.m in Sources */,
+				027DCC2D1A7F007A0054EEB8 /* MCNavigationBar.m in Sources */,
 				02B1B5281A4B783E00474F4C /* micmac.xcdatamodeld in Sources */,
 				02B1B5271A4B783E00474F4C /* main.m in Sources */,
 				024E24F91A7B0F0C00976A9C /* NSString+MCMethods.m in Sources */,
