@@ -33,9 +33,14 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if(self) {
-        _background = [[UIView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height-50, self.bounds.size.width, self.bounds.size.height)];
+        _background = [[UIView alloc] initWithFrame:self.bounds];
         [_background setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleWidth];
-        [_background setBackgroundColor:[UIColor MCOffWhiteColor]];
+        CAGradientLayer *backgroundGradientLayer = [CAGradientLayer layer];
+        [backgroundGradientLayer setColors:@[(id)[[UIColor MCMainColor] colorWithAlphaComponent:0].CGColor, (id)[UIColor MCOffWhiteColor].CGColor]];
+        [backgroundGradientLayer setEndPoint:CGPointMake(0.5, (self.bounds.size.height-50)/self.bounds.size.height)];
+        [backgroundGradientLayer setFrame:_background.bounds];
+        [backgroundGradientLayer setStartPoint:CGPointMake(0.5, (self.bounds.size.height-54)/self.bounds.size.height)];
+        [_background.layer insertSublayer:backgroundGradientLayer atIndex:0];
         
         _currentHighlightOffset = 0.25;
         _goalHighlightOffset = 0.25;
