@@ -10,6 +10,7 @@
 
 @interface NSString (MCMethods)
 
+- (NSString *)md5;
 - (CGSize)sizeWithFont:(UIFont *)font constrainedToWidth:(CGFloat)width;
 
 @end
