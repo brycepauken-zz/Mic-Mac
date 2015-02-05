@@ -8,6 +8,7 @@
 
 #import "MCAppDelegate.h"
 
+#import "MCSettingsManager.h"
 #import "MCViewController.h"
 
 @interface MCAppDelegate ()
@@ -24,6 +25,9 @@
     dispatch_once(&dispatchOnceToken, ^{
         srand48(time(0));
     });
+    
+    //intialize settings manager
+    [MCSettingsManager initialize];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     [self.window setBackgroundColor:[UIColor blackColor]];

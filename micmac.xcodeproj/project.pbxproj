@@ -43,6 +43,8 @@
 		02B1B5401A51249000474F4C /* MCButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B1B53F1A51249000474F4C /* MCButton.m */; };
 		02CF62351A78787B0038265D /* MCAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02CF62341A78787B0038265D /* MCAlertView.m */; };
 		02F454421A82D83100A689F3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02F454401A82D82800A689F3 /* SystemConfiguration.framework */; };
+		02F454451A82F86100A689F3 /* MCSettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F454441A82F86100A689F3 /* MCSettingsManager.m */; };
+		02F454481A82FE6B00A689F3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02F454461A82FE5500A689F3 /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -99,6 +101,9 @@
 		02CF62331A78787B0038265D /* MCAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCAlertView.h; sourceTree = "<group>"; };
 		02CF62341A78787B0038265D /* MCAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCAlertView.m; sourceTree = "<group>"; };
 		02F454401A82D82800A689F3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		02F454431A82F86100A689F3 /* MCSettingsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCSettingsManager.h; sourceTree = "<group>"; };
+		02F454441A82F86100A689F3 /* MCSettingsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCSettingsManager.m; sourceTree = "<group>"; };
+		02F454461A82FE5500A689F3 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +113,7 @@
 			files = (
 				025718821A52325F00916FEB /* CoreLocation.framework in Frameworks */,
 				024FAB741A7D99A600FE8B56 /* CoreText.framework in Frameworks */,
+				02F454481A82FE6B00A689F3 /* Security.framework in Frameworks */,
 				02F454421A82D83100A689F3 /* SystemConfiguration.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -190,6 +196,8 @@
 				02B1B5131A4B780E00474F4C /* MCMainView.m */,
 				027DCC2B1A7F007A0054EEB8 /* MCNavigationBar.h */,
 				027DCC2C1A7F007A0054EEB8 /* MCNavigationBar.m */,
+				02F454431A82F86100A689F3 /* MCSettingsManager.h */,
+				02F454441A82F86100A689F3 /* MCSettingsManager.m */,
 				02B1B5141A4B780E00474F4C /* MCStartView.h */,
 				02B1B5151A4B780E00474F4C /* MCStartView.m */,
 				024FAB6F1A7D8EF900FE8B56 /* MCTabView.h */,
@@ -209,6 +217,7 @@
 			children = (
 				025718811A52325F00916FEB /* CoreLocation.framework */,
 				024FAB721A7D999400FE8B56 /* CoreText.framework */,
+				02F454461A82FE5500A689F3 /* Security.framework */,
 				02F454401A82D82800A689F3 /* SystemConfiguration.framework */,
 				02B1B5211A4B783E00474F4C /* Info.plist */,
 				02B1B5221A4B783E00474F4C /* main.m */,
@@ -341,6 +350,7 @@
 				02B1B51A1A4B780E00474F4C /* MCAppDelegate.m in Sources */,
 				02B1B5401A51249000474F4C /* MCButton.m in Sources */,
 				02CF62351A78787B0038265D /* MCAlertView.m in Sources */,
+				02F454451A82F86100A689F3 /* MCSettingsManager.m in Sources */,
 				027DCC2A1A7EFC9D0054EEB8 /* MCPageView.m in Sources */,
 				027DCC2D1A7F007A0054EEB8 /* MCNavigationBar.m in Sources */,
 				02B1B5271A4B783E00474F4C /* main.m in Sources */,

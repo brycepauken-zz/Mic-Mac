@@ -8,10 +8,9 @@
 
 #import "MCAPIHandler.h"
 
-@implementation MCAPIHandler
+#import "MCSettingsManager.h"
 
-static NSString *_username;
-static NSString *_password;
+@implementation MCAPIHandler
 
 /*
  Make a request to the API.
@@ -19,9 +18,12 @@ static NSString *_password;
  will make a request to /api/v1/a/b/c?d=e (with the parameters sent as POST).
  */
 + (id)makeRequestToFunction:(NSString *)function components:(NSArray *)components parameters:(NSDictionary *)parameters {
+    NSString *username = [MCSettingsManager settingForKey:@"username"]?:@"";
+    NSString *password = [MCSettingsManager settingForKey:@"password"]?:@"";
+    
     NSString *requestString = [NSString stringWithFormat:@"http://micmac.kingfi.sh/api/v1/%@/%@",function,[components componentsJoinedByString:@"/"]];
-    NSString *randomChars = [[[NSString stringWithFormat:@"%d",arc4random_uniform(UINT32_MAX)] md5] substringToIndex:16];
-    NSString *requestMD5 = [[NSString stringWithFormat:@"%@%@%@%@",requestString,_username,_password,randomChars] md5];
+    NSString *randomChars = [[[NSString stringWithFormat:@"%f%d",[[NSDate date] timeIntervalSince1970],arc4random_uniform(UINT32_MAX)] md5] substringToIndex:16];
+    NSString *requestMD5 = [[NSString stringWithFormat:@"%@%@%@%@",requestString,username,password,randomChars] md5];
     
     int customHash=0, i=0, o=0;
     int charVal = [requestMD5 characterAtIndex:0];
@@ -41,11 +43,6 @@ static NSString *_password;
     //to be implemented
     
     return nil;
-}
-
-+ (void)updateCredentialsWithUsername:(NSString *)username password:(NSString *)password {
-    _username = username;
-    _password = password;
 }
 
 @end
