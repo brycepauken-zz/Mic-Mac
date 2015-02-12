@@ -64,6 +64,7 @@
     CGPathAddPath(path, NULL, [[self class] pathForCircleWithRadius:minRadius+x2*addRadius center:CGPointMake(self.bounds.size.width*0.50, self.bounds.size.height/2-x2)].CGPath);
     CGPathAddPath(path, NULL, [[self class] pathForCircleWithRadius:minRadius+x3*addRadius center:CGPointMake(self.bounds.size.width*0.82, self.bounds.size.height/2-x3)].CGPath);
     [self.circlesOverlayMask setPath:path];
+    CGPathRelease(path);
 }
 
 + (UIBezierPath *)pathForCircleWithRadius:(CGFloat)radius center:(CGPoint)center {

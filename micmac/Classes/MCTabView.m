@@ -17,7 +17,6 @@
 @property (nonatomic, copy) void (^buttonTapped)(int index);
 @property (nonatomic) CGFloat currentHighlightOffset;
 @property (nonatomic, strong) CADisplayLink *displayLink;
-@property (nonatomic, strong) NSRunLoop *displayLinkRunLoop;
 @property (nonatomic) CFTimeInterval displayLinkTimestamp;
 @property (nonatomic) CGFloat goalHighlightOffset;
 @property (nonatomic) CGFloat lastGoalHighlightOffset;
@@ -48,6 +47,8 @@
         
         _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayLinkCalled)];
         [_displayLink setFrameInterval:1];
+        [_displayLink setPaused:YES];
+        [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
         
         _overlayMask = [[CAShapeLayer alloc] init];
         [_overlayMask setFillColor:[[UIColor blackColor] CGColor]];
@@ -83,6 +84,7 @@
     dispatch_once(&onceToken, ^{
         CTFontRef fontRef = CTFontCreateWithName(CFSTR("HelveticaNeue"), 12, NULL);
         stringAttributes = [NSDictionary dictionaryWithObjectsAndKeys:(__bridge id)fontRef, kCTFontAttributeName, nil];
+        CFRelease(fontRef);
     });
     
     NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:text attributes:stringAttributes];
@@ -171,10 +173,7 @@
     CFTimeInterval progress = MAX(0,MIN(1,(self.displayLink.timestamp-self.displayLinkTimestamp)/0.25))*2;
     
     if(progress==2) {
-        if(self.displayLinkRunLoop) {
-            [self.displayLink removeFromRunLoop:self.displayLinkRunLoop forMode:NSRunLoopCommonModes];
-            self.displayLinkRunLoop = nil;
-        }
+        [self.displayLink setPaused:YES];
     }
     
     if(progress<1) {
@@ -209,10 +208,7 @@
         _goalHighlightOffset = goalHighlightOffset;
         self.displayLinkTimestamp = 0;
         
-        if(!self.displayLinkRunLoop) {
-            self.displayLinkRunLoop = [NSRunLoop currentRunLoop];
-            [self.displayLink addToRunLoop:self.displayLinkRunLoop forMode:NSRunLoopCommonModes];
-        }
+        [self.displayLink setPaused:NO];
     }
 }
 
@@ -261,7 +257,7 @@
     
     CGPathAddPath(path, NULL, highlightPath.CGPath);
     [self.overlayMask setPath:path];
-    
+    CGPathRelease(path);
 }
 
 @end
