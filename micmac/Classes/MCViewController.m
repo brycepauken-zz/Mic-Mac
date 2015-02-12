@@ -31,6 +31,10 @@
     return self;
 }
 
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+}
+
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"MCLocationAuthorizationChanged" object:nil userInfo:@{@"status":[NSNumber numberWithInteger:status]}];
 }
@@ -42,6 +46,10 @@
 
 - (MCMainView *)mainView {
     return _mainView;
+}
+
+- (BOOL)prefersStatusBarHidden {
+    return NO;
 }
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
