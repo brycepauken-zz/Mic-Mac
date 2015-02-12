@@ -9,6 +9,7 @@
 #import "MCMainView.h"
 
 #import "MCPageView.h"
+#import "MCSettingsManager.h"
 #import "MCStartView.h"
 #import "MCTabView.h"
 
@@ -27,11 +28,13 @@
     if(self) {
         __weak MCMainView *weakSelf = self;
         
-        _startView = [[MCStartView alloc] initWithFrame:self.bounds];
-        [_startView setAutoresizingMask:UIViewAutoResizingFlexibleSize];
-        [_startView setHiddenBlock:^{
-            [weakSelf unsetStartView];
-        }];
+        if(![[MCSettingsManager settingForKey:@"starupCompleted"] boolValue]) {
+            _startView = [[MCStartView alloc] initWithFrame:self.bounds];
+            [_startView setAutoresizingMask:UIViewAutoResizingFlexibleSize];
+            [_startView setHiddenBlock:^{
+                [weakSelf unsetStartView];
+            }];
+        }
         
         NSArray *pageNames = @[@"Macro", @"Micro", @"Me", @"More"];
         _pages = [[NSMutableArray alloc] init];
@@ -43,7 +46,7 @@
             [self addSubview:page];
         }
         
-        _tabView = [[MCTabView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height-70, self.bounds.size.width, 70)];
+        _tabView = [[MCTabView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height-60, self.bounds.size.width, 60)];
         [_tabView setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleWidth];
         [_tabView setButtonTapped:^(int index) {
             for(int i=0;i<weakPages.count;i++) {
@@ -53,7 +56,9 @@
         
         [self setBackgroundColor:[UIColor MCOffWhiteColor]];
         [self addSubview:_tabView];
-        [self addSubview:_startView];
+        if(_startView) {
+            [self addSubview:_startView];
+        }
     }
     return self;
 }

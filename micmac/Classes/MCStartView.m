@@ -8,13 +8,21 @@
 
 #import "MCStartView.h"
 
+#import "MCActivityIndicatorView.h"
+#import "MCAPIHandler.h"
 #import "MCButton.h"
+#import "MCSettingsManager.h"
 #import "MCViewController.h"
 
 @interface MCStartView()
 
 @property (nonatomic, strong) UIImageView *checkmark;
+@property (nonatomic, strong) UIView *collegeButtonContainer;
+@property (nonatomic, strong) NSString *collegeID;
+@property (nonatomic, strong) UILabel *collegeLabel;
+@property (nonatomic, strong) NSString *collegeName;
 @property (nonatomic, strong) MCButton *collegeNoButton;
+@property (nonatomic, strong) MCActivityIndicatorView *collegeSpinner;
 @property (nonatomic, strong) MCButton *collegeYesButton;
 @property (nonatomic, copy) void (^hiddenBlock)();
 @property (nonatomic, strong) NSMutableArray *largeBubbles;
@@ -22,6 +30,8 @@
 @property (nonatomic, strong) NSLock *largeBubblesLock;
 @property (nonatomic) CGPoint largeBubblesNextCenter;
 @property (nonatomic, strong) MCButton *locationButton;
+@property (nonatomic, strong) CLLocationManager *locationManager;
+@property (nonatomic) BOOL locationUpdating;
 @property (nonatomic, strong) UIImageView *logo;
 @property (nonatomic, strong) UIView *logoContainer;
 @property (nonatomic, strong) NSArray *pages;
@@ -57,7 +67,7 @@
             [page setFrame:CGRectMake(i*_scrollView.bounds.size.width, 0, _scrollView.bounds.size.width, _scrollView.bounds.size.height)];
             [page setTag:i];
             
-            NSString *descriptionText;
+            NSString *descriptionText = @"";
             NSArray *boldRanges;
             CGFloat horizontalOffsetFactor = 0.72;
             if(i==0) {
@@ -85,9 +95,6 @@
                     descriptionText = @"First, we need you to enable\nLocation Services so we can\n show you relevant topics.";
                     boldRanges = @[[NSValue valueWithRange:NSMakeRange(30, 17)]];
                     break;
-                case 3:
-                    descriptionText = @"It looks like you're on\nUC San Diego's campus.\nAre you a student here?";
-                    break;
                 default:
                     break;
             }
@@ -107,6 +114,9 @@
                 [labelContainer setCenter:CGPointMake(page.bounds.size.width/2, page.bounds.size.height*horizontalOffsetFactor)];
                 [labelContainer setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
                 [page addSubview:labelContainer];
+                if(i==3) {
+                    self.collegeLabel = [[labelContainer subviews] objectAtIndex:0];
+                }
             }
             if(i==2) {
                 UIView *locationButtonContainer = [[UIView alloc] initWithFrame:CGRectZero];
@@ -120,9 +130,22 @@
                 [page addSubview:locationButtonContainer];
             }
             else if(i==3) {
-                UIView *buttonContainer = [[UIView alloc] initWithFrame:CGRectZero];
-                [buttonContainer setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
-                [buttonContainer setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height*13/14)];
+                [self.collegeLabel setAlpha:0];
+                [self.collegeLabel setFont:[UIFont fontWithName:@"Avenir-Heavy" size:20]];
+                
+                UIView *spinnerContainer = [[UIView alloc] initWithFrame:CGRectZero];
+                [spinnerContainer setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
+                [spinnerContainer setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height*horizontalOffsetFactor)];
+                _collegeSpinner = [[MCActivityIndicatorView alloc] init];
+                [_collegeSpinner setFrame:CGRectMake(-_collegeSpinner.frame.size.width/2, -_collegeSpinner.frame.size.height/2, _collegeSpinner.frame.size.width, _collegeSpinner.frame.size.height)];
+                [spinnerContainer addSubview:_collegeSpinner];
+                [page addSubview:spinnerContainer];
+                
+                _collegeButtonContainer = [[UIView alloc] initWithFrame:CGRectZero];
+                [_collegeButtonContainer setAlpha:0];
+                [_collegeButtonContainer setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
+                [_collegeButtonContainer setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height*13/14)];
+                [_collegeButtonContainer setUserInteractionEnabled:NO];
                 
                 _collegeNoButton = [[MCButton alloc] initWithFrame:CGRectMake(-110, -20, 100, 40)];
                 [_collegeNoButton addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
@@ -134,9 +157,9 @@
                 [_collegeYesButton setAlpha:0];
                 [_collegeYesButton setTitle:@"Yes"];
                 
-                [buttonContainer addSubview:_collegeNoButton];
-                [buttonContainer addSubview:_collegeYesButton];
-                [page addSubview:buttonContainer];
+                [_collegeButtonContainer addSubview:_collegeNoButton];
+                [_collegeButtonContainer addSubview:_collegeYesButton];
+                [page addSubview:_collegeButtonContainer];
             }
             else if(i==4) {
                 _checkmark = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"LargeCheckmark"]];
@@ -219,6 +242,7 @@
                             [self.locationButton setAlpha:0];
                         } completion:^(BOOL finished) {
                             [self.locationButton setHidden:YES];
+                            [self observeLocation];
                         }];
                     }
                 }
@@ -227,48 +251,25 @@
         [ViewController startLocationManager];
     }
     else if(button==self.collegeYesButton) {
-        MCAlertView *alertView = [[MCAlertView alloc] initWithAlertWithTitle:@"UC San Diego" message:@"Is this correct? You will not be able to select a different college after this point." buttonType:MCAlertViewButtonTypeYesNo];
+        MCAlertView *alertView = [[MCAlertView alloc] initWithAlertWithTitle:self.collegeName message:@"Is this correct? You will not be able to select a different college after this point." buttonType:MCAlertViewButtonTypeYesNo];
         __weak MCAlertView *weakAlertView = alertView;
         [alertView setOnButtonTapped:^(int index) {
             [weakAlertView dismiss];
             if(index==1) {
-                self.visiblePages = 5;
-                [self.scrollView setUserInteractionEnabled:NO];
-                [UIView animateWithDuration:0.3 animations:^{
-                    [self.scrollView setContentOffset:CGPointMake((self.visiblePages-1)*self.scrollView.bounds.size.width, 0)];
-                } completion:^(BOOL finished) {
-                    CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
-                    
-                    CATransform3D scale1 = CATransform3DMakeScale(0.5, 0.5, 1);
-                    CATransform3D scale2 = CATransform3DMakeScale(1.2, 1.2, 1);
-                    CATransform3D scale3 = CATransform3DMakeScale(0.9, 0.9, 1);
-                    CATransform3D scale4 = CATransform3DMakeScale(1.0, 1.0, 1);
-                    
-                    NSArray *frameValues = [NSArray arrayWithObjects:[NSValue valueWithCATransform3D:scale1],[NSValue valueWithCATransform3D:scale2],[NSValue valueWithCATransform3D:scale3],[NSValue valueWithCATransform3D:scale4],nil];
-                    [animation setValues:frameValues];
-                    
-                    NSArray *frameTimes = [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.0],[NSNumber numberWithFloat:0.5],[NSNumber numberWithFloat:0.9],[NSNumber numberWithFloat:1.0],nil];
-                    [animation setKeyTimes:frameTimes];
-                    
-                    animation.fillMode = kCAFillModeForwards;
-                    animation.removedOnCompletion = NO;
-                    animation.duration = .2;
-                    
-                    [self.checkmark.layer addAnimation:animation forKey:@"popup"];
-                    [self.checkmark setHidden:NO];
-                    
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                        [UIView animateWithDuration:0.3 animations:^{
-                            [self setAlpha:0];
-                            [self.checkmark setAlpha:0];
-                            [self.checkmark setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 2, 2)];
-                        } completion:^(BOOL finished) {
-                            if(self.hiddenBlock) {
-                                self.hiddenBlock();
-                            }
-                        }];
-                    });
-                }];
+                [self.collegeButtonContainer setUserInteractionEnabled:NO];
+                [UIView animateWithDuration:0.2 delay:0 options:0 animations:^{
+                    [self.collegeButtonContainer setAlpha:0];
+                    [self.collegeLabel setAlpha:0];
+                } completion:nil];
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self.collegeSpinner startAnimatingWithFadeIn:YES];
+                    [MCAPIHandler makeRequestToFunction:@"SetCollege" components:@[self.collegeID] parameters:nil completion:^(NSDictionary *data) {
+                        if(data) {
+                            [MCSettingsManager setSetting:[NSNumber numberWithBool:YES] forKey:@"starupCompleted"];
+                            [self finishStartup];
+                        }
+                    }];
+                });
             }
         }];
         [alertView show];
@@ -276,6 +277,21 @@
     else if(button==self.collegeNoButton) {
         
     }
+}
+
+- (UIView *)createLabelInContainerWithText:(NSAttributedString *)text {
+    UIView *container = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    UILabel *label = [[UILabel alloc] init];
+    [label setAttributedText:text];
+    [label setNumberOfLines:0];
+    [label setTextAlignment:NSTextAlignmentCenter];
+    [label setTextColor:[UIColor MCOffWhiteColor]];
+    
+    [container addSubview:label];
+    [label sizeToFit];
+    [label setCenter:CGPointZero];
+    return container;
 }
 
 - (void)createLargeBubble {
@@ -418,19 +434,44 @@
     });
 }
 
-- (UIView *)createLabelInContainerWithText:(NSAttributedString *)text {
-    UIView *container = [[UIView alloc] initWithFrame:CGRectZero];
-    
-    UILabel *label = [[UILabel alloc] init];
-    [label setAttributedText:text];
-    [label setNumberOfLines:0];
-    [label setTextAlignment:NSTextAlignmentCenter];
-    [label setTextColor:[UIColor MCOffWhiteColor]];
-    
-    [container addSubview:label];
-    [label sizeToFit];
-    [label setCenter:CGPointZero];
-    return container;
+- (void)finishStartup {
+    self.visiblePages = 5;
+    [self.scrollView setUserInteractionEnabled:NO];
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.scrollView setContentOffset:CGPointMake((self.visiblePages-1)*self.scrollView.bounds.size.width, 0)];
+    } completion:^(BOOL finished) {
+        CAKeyframeAnimation *animation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
+        
+        CATransform3D scale1 = CATransform3DMakeScale(0.5, 0.5, 1);
+        CATransform3D scale2 = CATransform3DMakeScale(1.2, 1.2, 1);
+        CATransform3D scale3 = CATransform3DMakeScale(0.9, 0.9, 1);
+        CATransform3D scale4 = CATransform3DMakeScale(1.0, 1.0, 1);
+        
+        NSArray *frameValues = [NSArray arrayWithObjects:[NSValue valueWithCATransform3D:scale1],[NSValue valueWithCATransform3D:scale2],[NSValue valueWithCATransform3D:scale3],[NSValue valueWithCATransform3D:scale4],nil];
+        [animation setValues:frameValues];
+        
+        NSArray *frameTimes = [NSArray arrayWithObjects:[NSNumber numberWithFloat:0.0],[NSNumber numberWithFloat:0.5],[NSNumber numberWithFloat:0.9],[NSNumber numberWithFloat:1.0],nil];
+        [animation setKeyTimes:frameTimes];
+        
+        animation.fillMode = kCAFillModeForwards;
+        animation.removedOnCompletion = NO;
+        animation.duration = .2;
+        
+        [self.checkmark.layer addAnimation:animation forKey:@"popup"];
+        [self.checkmark setHidden:NO];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [UIView animateWithDuration:0.3 animations:^{
+                [self setAlpha:0];
+                [self.checkmark setAlpha:0];
+                [self.checkmark setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 2, 2)];
+            } completion:^(BOOL finished) {
+                if(self.hiddenBlock) {
+                    self.hiddenBlock();
+                }
+            }];
+        });
+    }];
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
@@ -445,6 +486,52 @@
 
 - (void)layoutSubviews {
     [self updateScrollView];
+}
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    @synchronized(self) {
+        if(self.locationUpdating) {
+            [self setLocationUpdating:NO];
+            [self.locationManager stopUpdatingLocation];
+            if(![[MCSettingsManager settingForKey:@"username"] length]) {
+                [MCAPIHandler makeRequestToFunction:@"CreateUser" components:nil parameters:nil completion:^(NSDictionary *data) {
+                    if(data && [[data objectForKey:@"username"] length]) {
+                        [MCSettingsManager setSetting:[data objectForKey:@"username"] forKey:@"username"];
+                        [self setLocationUpdating:YES];
+                        [self locationManager:manager didUpdateLocations:locations];
+                    }
+                }];
+            }
+            else {
+                CLLocation *location = [locations lastObject];
+                [MCAPIHandler makeRequestToFunction:@"Locationinfo" components:@[[NSString stringWithFormat:@"%f,%f",location.coordinate.latitude,location.coordinate.longitude]] parameters:nil completion:^(NSDictionary *data) {
+                    [self setCollegeID:[data objectForKey:@"id"]];
+                    [self setCollegeName:[data objectForKey:@"name"]];
+                    [self updateCollegeLabel];
+                }];
+            }
+        }
+    }
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    if([[[UIDevice currentDevice] model] isEqualToString:@"iPhone Simulator"]) {
+        [self locationManager:manager didUpdateLocations:@[[[CLLocation alloc] initWithLatitude:32.8855413 longitude:-117.2435693]]];
+    }
+}
+
+- (void)observeLocation {
+    if(!self.locationManager) {
+        self.locationManager = [[CLLocationManager alloc] init];
+        [self.locationManager setDelegate:self];
+        [self.locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
+        [self.locationManager setDistanceFilter:10];
+        if([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0) {
+            [self.locationManager requestWhenInUseAuthorization];
+        }
+        [self setLocationUpdating:YES];
+        [self.locationManager startUpdatingLocation];
+    }
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -479,6 +566,18 @@
     for(int i=0;i<_pages.count;i++) {
         [[_pages objectAtIndex:i] setHidden:i>=visiblePages];
     }
+}
+
+- (void)updateCollegeLabel {
+    [self.collegeSpinner stopAnimating];
+    [self.collegeLabel setText:[NSString stringWithFormat:@"It looks like you're on\n%@'s campus.\nAre you a student here?",self.collegeName]];
+    [self.collegeLabel sizeToFit];
+    [self.collegeLabel setCenter:CGPointZero];
+    [self.collegeButtonContainer setUserInteractionEnabled:YES];
+    [UIView animateWithDuration:0.2 delay:0.1 options:0 animations:^{
+        [self.collegeButtonContainer setAlpha:1];
+        [self.collegeLabel setAlpha:1];
+    } completion:nil];
 }
 
 - (void)updateScrollView {

@@ -49,6 +49,7 @@ static NSMutableDictionary *_settings;
 
 + (void)setSetting:(id)setting forKey:(id<NSCopying>)key {
     [[self settings] setObject:setting forKey:key];
+    [self updateSettings];
 }
 
 + (id)settingForKey:(id<NSCopying>)key {

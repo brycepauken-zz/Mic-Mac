@@ -6,7 +6,9 @@
 //  Copyright (c) 2014 Kingfish. All rights reserved.
 //
 
-@interface MCStartView : UIView <UIScrollViewDelegate>
+#import <CoreLocation/CoreLocation.h>
+
+@interface MCStartView : UIView <CLLocationManagerDelegate, UIScrollViewDelegate>
 
 - (void)setHiddenBlock:(void (^)())hiddenBlock;
 

@@ -10,4 +10,6 @@
 
 @interface MCAPIHandler : NSObject
 
++ (void)makeRequestToFunction:(NSString *)function components:(NSArray *)components parameters:(NSDictionary *)parameters completion:(void (^)(NSDictionary *data))completion;
+
 @end

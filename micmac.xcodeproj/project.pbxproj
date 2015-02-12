@@ -41,6 +41,7 @@
 		02B1B52E1A4B786300474F4C /* Logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02B1B52C1A4B786300474F4C /* Logo@2x.png */; };
 		02B1B5311A4B78AE00474F4C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02B1B5301A4B78AE00474F4C /* Default-568h@2x.png */; };
 		02B1B5401A51249000474F4C /* MCButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B1B53F1A51249000474F4C /* MCButton.m */; };
+		02C6BBD41A85AC3D003DAC24 /* MCActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C6BBD31A85AC3D003DAC24 /* MCActivityIndicatorView.m */; };
 		02CF62351A78787B0038265D /* MCAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02CF62341A78787B0038265D /* MCAlertView.m */; };
 		02F454421A82D83100A689F3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02F454401A82D82800A689F3 /* SystemConfiguration.framework */; };
 		02F454451A82F86100A689F3 /* MCSettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F454441A82F86100A689F3 /* MCSettingsManager.m */; };
@@ -98,6 +99,8 @@
 		02B1B5301A4B78AE00474F4C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		02B1B53E1A51249000474F4C /* MCButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCButton.h; sourceTree = "<group>"; };
 		02B1B53F1A51249000474F4C /* MCButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCButton.m; sourceTree = "<group>"; };
+		02C6BBD21A85AC3D003DAC24 /* MCActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCActivityIndicatorView.h; sourceTree = "<group>"; };
+		02C6BBD31A85AC3D003DAC24 /* MCActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCActivityIndicatorView.m; sourceTree = "<group>"; };
 		02CF62331A78787B0038265D /* MCAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCAlertView.h; sourceTree = "<group>"; };
 		02CF62341A78787B0038265D /* MCAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCAlertView.m; sourceTree = "<group>"; };
 		02F454401A82D82800A689F3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -178,6 +181,8 @@
 		02B1B50D1A4B780E00474F4C /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				02C6BBD21A85AC3D003DAC24 /* MCActivityIndicatorView.h */,
+				02C6BBD31A85AC3D003DAC24 /* MCActivityIndicatorView.m */,
 				02CF62331A78787B0038265D /* MCAlertView.h */,
 				02CF62341A78787B0038265D /* MCAlertView.m */,
 				02921A051A7B8B2400094182 /* MCAlertViewButton.h */,
@@ -202,8 +207,8 @@
 				02B1B5151A4B780E00474F4C /* MCStartView.m */,
 				024FAB6F1A7D8EF900FE8B56 /* MCTabView.h */,
 				024FAB701A7D8EF900FE8B56 /* MCTabView.m */,
-				02B1B5171A4B780E00474F4C /* MCViewController.m */,
 				02B1B5161A4B780E00474F4C /* MCViewController.h */,
+				02B1B5171A4B780E00474F4C /* MCViewController.m */,
 				024E24F71A7B0F0C00976A9C /* NSString+MCMethods.h */,
 				024E24F81A7B0F0C00976A9C /* NSString+MCMethods.m */,
 				02B1B5181A4B780E00474F4C /* UIColor+MCColors.h */,
@@ -346,6 +351,7 @@
 				02B1B51D1A4B780E00474F4C /* MCStartView.m in Sources */,
 				02B1B51C1A4B780E00474F4C /* MCMainView.m in Sources */,
 				02B1B51B1A4B780E00474F4C /* MCCommon.m in Sources */,
+				02C6BBD41A85AC3D003DAC24 /* MCActivityIndicatorView.m in Sources */,
 				02921A071A7B8B2400094182 /* MCAlertViewButton.m in Sources */,
 				02B1B51A1A4B780E00474F4C /* MCAppDelegate.m in Sources */,
 				02B1B5401A51249000474F4C /* MCButton.m in Sources */,

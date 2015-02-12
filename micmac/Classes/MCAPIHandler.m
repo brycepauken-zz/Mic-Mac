@@ -17,11 +17,11 @@
  For example, [MCAPIHandler makeRequestToFunction:@"a" components:@[@"b",@"c"] parameters:@{@"d"=>@"e"}
  will make a request to /api/v1/a/b/c?d=e (with the parameters sent as POST).
  */
-+ (id)makeRequestToFunction:(NSString *)function components:(NSArray *)components parameters:(NSDictionary *)parameters {
++ (void)makeRequestToFunction:(NSString *)function components:(NSArray *)components parameters:(NSDictionary *)parameters completion:(void (^)(NSDictionary *data))completion {
     NSString *username = [MCSettingsManager settingForKey:@"username"]?:@"";
     NSString *password = [MCSettingsManager settingForKey:@"password"]?:@"";
     
-    NSString *requestString = [NSString stringWithFormat:@"http://micmac.kingfi.sh/api/v1/%@/%@",function,[components componentsJoinedByString:@"/"]];
+    NSString *requestString = [NSString stringWithFormat:@"%@/%@",function,(components?[components componentsJoinedByString:@"/"]:@"")];
     NSString *randomChars = [[[NSString stringWithFormat:@"%f%d",[[NSDate date] timeIntervalSince1970],arc4random_uniform(UINT32_MAX)] md5] substringToIndex:16];
     NSString *requestMD5 = [[NSString stringWithFormat:@"%@%@%@%@",requestString,username,password,randomChars] md5];
     
@@ -39,10 +39,20 @@
     NSString *customHashMD5 = [[[NSString stringWithFormat:@"%d",customHash] md5] substringToIndex:16];
     NSString *authToken = [customHashMD5 stringByAppendingString:randomChars];
     
-    authToken = nil;
-    //to be implemented
-    
-    return nil;
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[@"http://micmac.kingfi.sh/api/v1/" stringByAppendingString:requestString]]];
+    [request addValue:authToken forHTTPHeaderField:@"X-API-Auth"];
+    [request addValue:[(username.length?[username stringByAppendingString:@"."]:@"") stringByAppendingString:password] forHTTPHeaderField:@"X-API-Cred"];
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+        if(completion) {
+            id returnData = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            if([returnData respondsToSelector:@selector(objectForKey:)] && [[returnData objectForKey:@"success"] boolValue]) {
+                completion(returnData);
+            }
+            else {
+                completion(nil);
+            }
+        }
+    }];
 }
 
 @end
