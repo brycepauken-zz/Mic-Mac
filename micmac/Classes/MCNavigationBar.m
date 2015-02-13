@@ -26,7 +26,7 @@
         [_titleLabel setTextAlignment:NSTextAlignmentCenter];
         [_titleLabel setTextColor:[UIColor MCOffWhiteColor]];
         
-        _bottomOverlay = [[UIView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, 8)];
+        _bottomOverlay = [[UIView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, 10)];
         [_bottomOverlay setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleWidth];
         [_bottomOverlay setBackgroundColor:[UIColor MCMainColor]];
         [self updateBottomOverlayMask];
@@ -53,8 +53,9 @@
     UIBezierPath *path = [UIBezierPath bezierPath];
     [path moveToPoint:CGPointMake(0, 0)];
     [path addLineToPoint:CGPointMake(0, self.bottomOverlay.bounds.size.height)];
-    [path addCurveToPoint:CGPointMake(self.bottomOverlay.bounds.size.width*0.5, 0) controlPoint1:CGPointMake(0, 0) controlPoint2:CGPointMake(self.bottomOverlay.bounds.size.width*0.25, 0)];
-    [path addCurveToPoint:CGPointMake(self.bottomOverlay.bounds.size.width, self.bottomOverlay.bounds.size.height) controlPoint1:CGPointMake(self.bottomOverlay.bounds.size.width*0.75, 0) controlPoint2:CGPointMake(self.bottomOverlay.bounds.size.width, 0)];
+    [path addCurveToPoint:CGPointMake(self.bottomOverlay.bounds.size.width*0.25, 0) controlPoint1:CGPointMake(0, 0) controlPoint2:CGPointMake(self.bottomOverlay.bounds.size.width*0.125, 0)];
+    [path addLineToPoint:CGPointMake(self.bounds.size.width*0.75, 0)];
+    [path addCurveToPoint:CGPointMake(self.bottomOverlay.bounds.size.width, self.bottomOverlay.bounds.size.height) controlPoint1:CGPointMake(self.bottomOverlay.bounds.size.width*0.875, 0) controlPoint2:CGPointMake(self.bottomOverlay.bounds.size.width, 0)];
     [path addLineToPoint:CGPointMake(self.bottomOverlay.bounds.size.width, 0)];
     [path closePath];
     
