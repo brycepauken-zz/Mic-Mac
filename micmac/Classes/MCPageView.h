@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class MCNavigationBar;
+
 @interface MCPageView : UIView
+
+@property (nonatomic, strong) MCNavigationBar *navigationBar;
 
 - (instancetype)initWithFrame:(CGRect)frame name:(NSString *)name;
 

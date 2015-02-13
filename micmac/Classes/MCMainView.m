@@ -9,13 +9,14 @@
 #import "MCMainView.h"
 
 #import "MCPageView.h"
+#import "MCPageViewMicro.h"
 #import "MCSettingsManager.h"
 #import "MCStartView.h"
 #import "MCTabView.h"
 
 @interface MCMainView()
 
-@property (nonatomic, strong) NSMutableArray *pages;
+@property (nonatomic, strong) NSArray *pages;
 @property (nonatomic, strong) MCStartView *startView;
 @property (nonatomic, strong) MCTabView *tabView;
 
@@ -36,13 +37,12 @@
             }];
         }
         
-        NSArray *pageNames = @[@"Macro", @"Micro", @"Me", @"More"];
-        _pages = [[NSMutableArray alloc] init];
+        CGRect pageRect = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height-50);
+        _pages = @[[[MCPageView alloc] initWithFrame:pageRect name:@"Macro"], [[MCPageViewMicro alloc] initWithFrame:pageRect], [[MCPageView alloc] initWithFrame:pageRect name:@"Me"], [[MCPageView alloc] initWithFrame:pageRect name:@"More"]];
         __weak NSArray *weakPages = _pages;
-        for(int i=0;i<pageNames.count;i++) {
-            MCPageView *page = [[MCPageView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height-50) name:[pageNames objectAtIndex:i]];
+        for(int i=0;i<_pages.count;i++) {
+            MCPageView *page = [_pages objectAtIndex:i];
             [page setHidden:i!=1];
-            [_pages addObject:page];
             [self addSubview:page];
         }
         

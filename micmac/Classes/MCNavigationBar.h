@@ -10,6 +10,8 @@
 
 @interface MCNavigationBar : UIView
 
+- (void)setRightButtonImage:(UIImage *)image;
+- (void)setRightButtonTapped:(void (^)())rightButtonTapped;
 - (void)setTitle:(NSString *)title;
 
 @end

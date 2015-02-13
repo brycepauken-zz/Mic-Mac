@@ -13,7 +13,6 @@
 @interface MCPageView()
 
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) MCNavigationBar *navigationBar;
 
 @end
 

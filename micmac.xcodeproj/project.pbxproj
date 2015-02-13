@@ -15,6 +15,9 @@
 		0225DB271A549435007B8A08 /* Location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0225DB1F1A549435007B8A08 /* Location@2x.png */; };
 		0225DB281A549435007B8A08 /* School.png in Resources */ = {isa = PBXBuildFile; fileRef = 0225DB201A549435007B8A08 /* School.png */; };
 		0225DB291A549435007B8A08 /* School@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0225DB211A549435007B8A08 /* School@2x.png */; };
+		0232938C1A8DCD1100965F44 /* MCPageViewMicro.m in Sources */ = {isa = PBXBuildFile; fileRef = 0232938B1A8DCD1100965F44 /* MCPageViewMicro.m */; };
+		0249F23D1A8D1007008EBAA8 /* Compose.png in Resources */ = {isa = PBXBuildFile; fileRef = 0249F23B1A8D1007008EBAA8 /* Compose.png */; };
+		0249F23E1A8D1007008EBAA8 /* Compose@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0249F23C1A8D1007008EBAA8 /* Compose@2x.png */; };
 		024E24F91A7B0F0C00976A9C /* NSString+MCMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 024E24F81A7B0F0C00976A9C /* NSString+MCMethods.m */; };
 		024FAB711A7D8EF900FE8B56 /* MCTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 024FAB701A7D8EF900FE8B56 /* MCTabView.m */; };
 		024FAB741A7D99A600FE8B56 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 024FAB721A7D999400FE8B56 /* CoreText.framework */; };
@@ -58,6 +61,10 @@
 		0225DB201A549435007B8A08 /* School.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = School.png; sourceTree = "<group>"; };
 		0225DB211A549435007B8A08 /* School@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "School@2x.png"; sourceTree = "<group>"; };
 		0228899C1A48BD47008A7D30 /* micmac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = micmac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0232938A1A8DCD1100965F44 /* MCPageViewMicro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPageViewMicro.h; sourceTree = "<group>"; };
+		0232938B1A8DCD1100965F44 /* MCPageViewMicro.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCPageViewMicro.m; sourceTree = "<group>"; };
+		0249F23B1A8D1007008EBAA8 /* Compose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Compose.png; sourceTree = "<group>"; };
+		0249F23C1A8D1007008EBAA8 /* Compose@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Compose@2x.png"; sourceTree = "<group>"; };
 		024E24F71A7B0F0C00976A9C /* NSString+MCMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MCMethods.h"; sourceTree = "<group>"; };
 		024E24F81A7B0F0C00976A9C /* NSString+MCMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MCMethods.m"; sourceTree = "<group>"; };
 		024FAB6F1A7D8EF900FE8B56 /* MCTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCTabView.h; sourceTree = "<group>"; };
@@ -135,6 +142,8 @@
 				02921A091A7B8E2B00094182 /* ButtonNo@2x.png */,
 				02921A0A1A7B8E2B00094182 /* ButtonYes.png */,
 				02921A0B1A7B8E2B00094182 /* ButtonYes@2x.png */,
+				0249F23B1A8D1007008EBAA8 /* Compose.png */,
+				0249F23C1A8D1007008EBAA8 /* Compose@2x.png */,
 				02907B451A7BA4CF003848BB /* LargeCheckmark.png */,
 				02907B461A7BA4CF003848BB /* LargeCheckmark@2x.png */,
 			);
@@ -195,6 +204,8 @@
 				02B1B53F1A51249000474F4C /* MCButton.m */,
 				02B1B5101A4B780E00474F4C /* MCCommon.h */,
 				02B1B5111A4B780E00474F4C /* MCCommon.m */,
+				0232938A1A8DCD1100965F44 /* MCPageViewMicro.h */,
+				0232938B1A8DCD1100965F44 /* MCPageViewMicro.m */,
 				027DCC281A7EFC9D0054EEB8 /* MCPageView.h */,
 				027DCC291A7EFC9D0054EEB8 /* MCPageView.m */,
 				02B1B5121A4B780E00474F4C /* MCMainView.h */,
@@ -322,6 +333,7 @@
 				0225DB231A549435007B8A08 /* ArrowLeft@2x.png in Resources */,
 				025718841A52472700916FEB /* Images.xcassets in Resources */,
 				02B1B52D1A4B786300474F4C /* Logo.png in Resources */,
+				0249F23E1A8D1007008EBAA8 /* Compose@2x.png in Resources */,
 				02921A0C1A7B8E2B00094182 /* ButtonNo.png in Resources */,
 				02921A0E1A7B8E2B00094182 /* ButtonYes.png in Resources */,
 				02907B471A7BA4CF003848BB /* LargeCheckmark.png in Resources */,
@@ -335,6 +347,7 @@
 				0225DB251A549435007B8A08 /* ArrowRight@2x.png in Resources */,
 				0225DB291A549435007B8A08 /* School@2x.png in Resources */,
 				0225DB271A549435007B8A08 /* Location@2x.png in Resources */,
+				0249F23D1A8D1007008EBAA8 /* Compose.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,6 +362,7 @@
 				025A830D1A82BDF2006C616E /* MCAPIHandler.m in Sources */,
 				024FAB711A7D8EF900FE8B56 /* MCTabView.m in Sources */,
 				02B1B51D1A4B780E00474F4C /* MCStartView.m in Sources */,
+				0232938C1A8DCD1100965F44 /* MCPageViewMicro.m in Sources */,
 				02B1B51C1A4B780E00474F4C /* MCMainView.m in Sources */,
 				02B1B51B1A4B780E00474F4C /* MCCommon.m in Sources */,
 				02C6BBD41A85AC3D003DAC24 /* MCActivityIndicatorView.m in Sources */,
