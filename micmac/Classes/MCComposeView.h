@@ -11,6 +11,7 @@
 @interface MCComposeView : UIView <UITextViewDelegate>
 
 - (instancetype)initInView:(UIView *)view withPlaceholder:(NSString *)placeholder;
+- (void)dismiss;
 - (void)show;
 
 @end

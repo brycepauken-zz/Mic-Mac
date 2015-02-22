@@ -48,6 +48,19 @@
     return self;
 }
 
+- (void)hideComposeView:(MCComposeView *)composeView {
+    __weak MCPageViewMicro *weakSelf = self;
+    
+    [self.navigationBar setLeftButtonImage:nil];
+    [self.navigationBar setLeftButtonTapped:nil];
+    [self.navigationBar setRightButtonImage:[UIImage imageNamed:@"Compose"]];
+    [self.navigationBar setRightButtonTapped:^{
+        [weakSelf showComposeView];
+    }];
+    
+    [composeView dismiss];
+}
+
 - (void)showComposeView {
     NSString *collegeName = [MCSettingsManager settingForKey:@"collegeName"];
     NSString *composePlaceholder = @"";
@@ -55,6 +68,17 @@
         composePlaceholder = [NSString stringWithFormat:@"New Post in %@'%@ Micro Section",collegeName,[collegeName hasSuffix:@"s"]?@"":@"s"];
     }
     MCComposeView *composeView = [[MCComposeView alloc] initInView:self.contentView withPlaceholder:composePlaceholder];
+    
+    __weak MCPageViewMicro *weakSelf = self;
+    [self.navigationBar setLeftButtonImage:[UIImage imageNamed:@"Cancel"]];
+    [self.navigationBar setLeftButtonTapped:^{
+        [weakSelf hideComposeView:(MCComposeView *)composeView];
+    }];
+    [self.navigationBar setRightButtonImage:[UIImage imageNamed:@"Accept"]];
+    [self.navigationBar setRightButtonTapped:^{
+        [weakSelf hideComposeView:(MCComposeView *)composeView];
+    }];
+    
     [composeView show];
 }
 

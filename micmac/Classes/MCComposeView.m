@@ -35,6 +35,18 @@ static const int kContentVerticalMargin = 14;
     return self;
 }
 
+- (void)dismiss {
+    [self setUserInteractionEnabled:NO];
+    [UIView animateWithDuration:0.2 delay:0.1 options:0 animations:^{
+        [self.windowOverlay setAlpha:0];
+    } completion:^(BOOL finished) {
+        [self removeFromSuperview];
+    }];
+    [UIView animateWithDuration:0.3 animations:^{
+        [self.textView setFrame:CGRectMake(0, -kContentDefaultHeight, self.bounds.size.width, kContentDefaultHeight)];
+    }];
+}
+
 - (void)setupInView:(UIView *)view {
     [self setAutoresizingMask:UIViewAutoResizingFlexibleSize];
     [self setFrame:view.bounds];

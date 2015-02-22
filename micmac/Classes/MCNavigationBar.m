@@ -11,6 +11,8 @@
 @interface MCNavigationBar()
 
 @property (nonatomic, strong) UIView *bottomOverlay;
+@property (nonatomic, strong) UIButton *leftButton;
+@property (nonatomic, copy) void (^leftButtonTapped)();
 @property (nonatomic, strong) UIButton *rightButton;
 @property (nonatomic, copy) void (^rightButtonTapped)();
 @property (nonatomic, strong) UILabel *titleLabel;
@@ -22,6 +24,11 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if(self) {
+        _leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
+        [_leftButton addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [_leftButton setHidden:YES];
+        [self addSubview:_leftButton];
+        
         _rightButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
         [_rightButton addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [_rightButton setHidden:YES];
@@ -48,43 +55,61 @@
 }
 
 - (void)buttonTapped:(UIButton *)sender {
-    if(sender == self.rightButton && self.rightButtonTapped) {
+    if(sender == self.leftButton && self.leftButtonTapped) {
+        self.leftButtonTapped();
+    }
+    else if(sender == self.rightButton && self.rightButtonTapped) {
         self.rightButtonTapped();
     }
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    if(CGRectContainsPoint(CGRectInset(self.leftButton.frame, -20, -20), point)) {
+        return self.leftButton;
+    }
     if(CGRectContainsPoint(CGRectInset(self.rightButton.frame, -20, -20), point)) {
         return self.rightButton;
     }
     return [super hitTest:point withEvent:event];
 }
 
++ (UIImage *)maskImageFromImage:(UIImage *)image {
+    CGRect imageRect = CGRectMake(0, 0, image.size.width, image.size.height);
+    UIGraphicsBeginImageContextWithOptions(imageRect.size, NO, image.scale);
+    
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    [image drawInRect:imageRect];
+    CGContextSetFillColorWithColor(ctx, [UIColor MCOffWhiteColor].CGColor);
+    
+    CGContextSetBlendMode(ctx, kCGBlendModeSourceAtop);
+    CGContextFillRect(ctx, imageRect);
+    
+    UIImage *result = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return result;
+}
+
 - (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
     
-    CGFloat buttonMargin = ((self.bounds.size.height-20)-self.rightButton.bounds.size.height)/2;
+    CGFloat buttonMargin = ((self.bounds.size.height-20)-self.leftButton.bounds.size.height)/2;
+    [self.leftButton setFrame:CGRectMake(buttonMargin, buttonMargin+20, self.rightButton.bounds.size.width, self.leftButton.bounds.size.height)];
     [self.rightButton setFrame:CGRectMake(self.bounds.size.width-self.rightButton.bounds.size.width-buttonMargin, buttonMargin+20, self.rightButton.bounds.size.width, self.rightButton.bounds.size.height)];
     
     [self updateBottomOverlayMask];
 }
 
+- (void)setLeftButtonImage:(UIImage *)image {
+    if(image) {
+        [self.leftButton setImage:[[self class] maskImageFromImage:image] forState:UIControlStateNormal];
+    }
+    [self.leftButton setHidden:!image];
+}
+
 - (void)setRightButtonImage:(UIImage *)image {
     if(image) {
-        CGRect imageRect = CGRectMake(0, 0, image.size.width, image.size.height);
-        UIGraphicsBeginImageContextWithOptions(imageRect.size, NO, image.scale);
-        
-        CGContextRef ctx = UIGraphicsGetCurrentContext();
-        [image drawInRect:imageRect];
-        CGContextSetFillColorWithColor(ctx, [UIColor MCOffWhiteColor].CGColor);
-        
-        CGContextSetBlendMode(ctx, kCGBlendModeSourceAtop);
-        CGContextFillRect(ctx, imageRect);
-        
-        UIImage *result = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
-        [self.rightButton setImage:result forState:UIControlStateNormal];
+        [self.rightButton setImage:[[self class] maskImageFromImage:image] forState:UIControlStateNormal];
     }
     [self.rightButton setHidden:!image];
 }

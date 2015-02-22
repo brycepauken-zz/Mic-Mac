@@ -24,6 +24,10 @@
 		024E24F91A7B0F0C00976A9C /* NSString+MCMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 024E24F81A7B0F0C00976A9C /* NSString+MCMethods.m */; };
 		024FAB711A7D8EF900FE8B56 /* MCTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 024FAB701A7D8EF900FE8B56 /* MCTabView.m */; };
 		024FAB741A7D99A600FE8B56 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 024FAB721A7D999400FE8B56 /* CoreText.framework */; };
+		0255AC251A9A8CCA0093161E /* Accept.png in Resources */ = {isa = PBXBuildFile; fileRef = 0255AC231A9A8CCA0093161E /* Accept.png */; };
+		0255AC261A9A8CCA0093161E /* Accept@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0255AC241A9A8CCA0093161E /* Accept@2x.png */; };
+		0255AC291A9A8CD50093161E /* Cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 0255AC271A9A8CD50093161E /* Cancel.png */; };
+		0255AC2A1A9A8CD50093161E /* Cancel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0255AC281A9A8CD50093161E /* Cancel@2x.png */; };
 		025718821A52325F00916FEB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025718811A52325F00916FEB /* CoreLocation.framework */; };
 		025718841A52472700916FEB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 025718831A52472700916FEB /* Images.xcassets */; };
 		025A830D1A82BDF2006C616E /* MCAPIHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 025A830C1A82BDF2006C616E /* MCAPIHandler.m */; };
@@ -81,6 +85,10 @@
 		024FAB6F1A7D8EF900FE8B56 /* MCTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCTabView.h; sourceTree = "<group>"; };
 		024FAB701A7D8EF900FE8B56 /* MCTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCTabView.m; sourceTree = "<group>"; };
 		024FAB721A7D999400FE8B56 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		0255AC231A9A8CCA0093161E /* Accept.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Accept.png; sourceTree = "<group>"; };
+		0255AC241A9A8CCA0093161E /* Accept@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Accept@2x.png"; sourceTree = "<group>"; };
+		0255AC271A9A8CD50093161E /* Cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cancel.png; sourceTree = "<group>"; };
+		0255AC281A9A8CD50093161E /* Cancel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cancel@2x.png"; sourceTree = "<group>"; };
 		025718811A52325F00916FEB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		025718831A52472700916FEB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		025A830B1A82BDF2006C616E /* MCAPIHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCAPIHandler.h; sourceTree = "<group>"; };
@@ -149,6 +157,8 @@
 		0225DB181A549435007B8A08 /* Navigation */ = {
 			isa = PBXGroup;
 			children = (
+				0255AC231A9A8CCA0093161E /* Accept.png */,
+				0255AC241A9A8CCA0093161E /* Accept@2x.png */,
 				0225DB191A549435007B8A08 /* ArrowLeft.png */,
 				0225DB1A1A549435007B8A08 /* ArrowLeft@2x.png */,
 				0225DB1B1A549435007B8A08 /* ArrowRight.png */,
@@ -157,6 +167,8 @@
 				02921A091A7B8E2B00094182 /* ButtonNo@2x.png */,
 				02921A0A1A7B8E2B00094182 /* ButtonYes.png */,
 				02921A0B1A7B8E2B00094182 /* ButtonYes@2x.png */,
+				0255AC271A9A8CD50093161E /* Cancel.png */,
+				0255AC281A9A8CD50093161E /* Cancel@2x.png */,
 				0249F23B1A8D1007008EBAA8 /* Compose.png */,
 				0249F23C1A8D1007008EBAA8 /* Compose@2x.png */,
 				02907B451A7BA4CF003848BB /* LargeCheckmark.png */,
@@ -353,6 +365,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0255AC2A1A9A8CD50093161E /* Cancel@2x.png in Resources */,
+				0255AC261A9A8CCA0093161E /* Accept@2x.png in Resources */,
+				0255AC251A9A8CCA0093161E /* Accept.png in Resources */,
 				0225DB281A549435007B8A08 /* School.png in Resources */,
 				0225DB221A549435007B8A08 /* ArrowLeft.png in Resources */,
 				0225DB231A549435007B8A08 /* ArrowLeft@2x.png in Resources */,
@@ -373,6 +388,7 @@
 				0225DB291A549435007B8A08 /* School@2x.png in Resources */,
 				0225DB271A549435007B8A08 /* Location@2x.png in Resources */,
 				0249F23D1A8D1007008EBAA8 /* Compose.png in Resources */,
+				0255AC291A9A8CD50093161E /* Cancel.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
