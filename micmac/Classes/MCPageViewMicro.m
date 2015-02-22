@@ -11,6 +11,7 @@
 #import "MCComposeView.h"
 #import "MCNavigationBar.h"
 #import "MCPostTableView.h"
+#import "MCSettingsManager.h"
 
 @interface MCPageViewMicro()
 
@@ -48,7 +49,12 @@
 }
 
 - (void)showComposeView {
-    MCComposeView *composeView = [[MCComposeView alloc] initInView:self.contentView withPlaceholder:@"Hello World"];
+    NSString *collegeName = [MCSettingsManager settingForKey:@"collegeName"];
+    NSString *composePlaceholder = @"";
+    if(collegeName.length) {
+        composePlaceholder = [NSString stringWithFormat:@"New Post in %@'%@ Micro Section",collegeName,[collegeName hasSuffix:@"s"]?@"":@"s"];
+    }
+    MCComposeView *composeView = [[MCComposeView alloc] initInView:self.contentView withPlaceholder:composePlaceholder];
     [composeView show];
 }
 

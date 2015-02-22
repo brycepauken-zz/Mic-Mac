@@ -266,6 +266,7 @@
                     [MCAPIHandler makeRequestToFunction:@"SetCollege" components:@[self.collegeID] parameters:nil completion:^(NSDictionary *data) {
                         if(data) {
                             [MCSettingsManager setSetting:[NSNumber numberWithBool:YES] forKey:@"starupCompleted"];
+                            [MCSettingsManager setSetting:self.collegeName forKey:@"collegeName"];
                             [self finishStartup];
                         }
                     }];
