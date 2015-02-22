@@ -33,7 +33,7 @@
         [_titleLabel setTextAlignment:NSTextAlignmentCenter];
         [_titleLabel setTextColor:[UIColor MCOffWhiteColor]];
         
-        _bottomOverlay = [[UIView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, 10)];
+        _bottomOverlay = [[UIView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, 4)];
         [_bottomOverlay setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleWidth];
         [_bottomOverlay setBackgroundColor:[UIColor MCMainColor]];
         

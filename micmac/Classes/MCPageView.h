@@ -12,6 +12,7 @@
 
 @interface MCPageView : UIView
 
+@property (nonatomic, strong) UIView *contentView;
 @property (nonatomic, strong) MCNavigationBar *navigationBar;
 
 - (instancetype)initWithFrame:(CGRect)frame name:(NSString *)name;

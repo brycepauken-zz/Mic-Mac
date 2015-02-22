@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0200368E1A99BC6D00362703 /* MCVoteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0200368D1A99BC6D00362703 /* MCVoteView.m */; };
 		0225DB221A549435007B8A08 /* ArrowLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 0225DB191A549435007B8A08 /* ArrowLeft.png */; };
 		0225DB231A549435007B8A08 /* ArrowLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0225DB1A1A549435007B8A08 /* ArrowLeft@2x.png */; };
 		0225DB241A549435007B8A08 /* ArrowRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 0225DB1B1A549435007B8A08 /* ArrowRight.png */; };
@@ -25,6 +26,7 @@
 		025718821A52325F00916FEB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025718811A52325F00916FEB /* CoreLocation.framework */; };
 		025718841A52472700916FEB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 025718831A52472700916FEB /* Images.xcassets */; };
 		025A830D1A82BDF2006C616E /* MCAPIHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 025A830C1A82BDF2006C616E /* MCAPIHandler.m */; };
+		02608F821A9431CB00FF9D23 /* MCPostTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02608F811A9431CB00FF9D23 /* MCPostTableView.m */; };
 		027DCC2A1A7EFC9D0054EEB8 /* MCPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 027DCC291A7EFC9D0054EEB8 /* MCPageView.m */; };
 		027DCC2D1A7F007A0054EEB8 /* MCNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 027DCC2C1A7F007A0054EEB8 /* MCNavigationBar.m */; };
 		02907B471A7BA4CF003848BB /* LargeCheckmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 02907B451A7BA4CF003848BB /* LargeCheckmark.png */; };
@@ -47,12 +49,15 @@
 		02B1B5401A51249000474F4C /* MCButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B1B53F1A51249000474F4C /* MCButton.m */; };
 		02C6BBD41A85AC3D003DAC24 /* MCActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C6BBD31A85AC3D003DAC24 /* MCActivityIndicatorView.m */; };
 		02CF62351A78787B0038265D /* MCAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02CF62341A78787B0038265D /* MCAlertView.m */; };
+		02DAC4D11A9562EB00E91193 /* MCPostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 02DAC4D01A9562EB00E91193 /* MCPostCell.m */; };
 		02F454421A82D83100A689F3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02F454401A82D82800A689F3 /* SystemConfiguration.framework */; };
 		02F454451A82F86100A689F3 /* MCSettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F454441A82F86100A689F3 /* MCSettingsManager.m */; };
 		02F454481A82FE6B00A689F3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02F454461A82FE5500A689F3 /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0200368C1A99BC6D00362703 /* MCVoteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCVoteView.h; sourceTree = "<group>"; };
+		0200368D1A99BC6D00362703 /* MCVoteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCVoteView.m; sourceTree = "<group>"; };
 		0225DB191A549435007B8A08 /* ArrowLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArrowLeft.png; sourceTree = "<group>"; };
 		0225DB1A1A549435007B8A08 /* ArrowLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ArrowLeft@2x.png"; sourceTree = "<group>"; };
 		0225DB1B1A549435007B8A08 /* ArrowRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArrowRight.png; sourceTree = "<group>"; };
@@ -77,6 +82,8 @@
 		025718831A52472700916FEB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		025A830B1A82BDF2006C616E /* MCAPIHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCAPIHandler.h; sourceTree = "<group>"; };
 		025A830C1A82BDF2006C616E /* MCAPIHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCAPIHandler.m; sourceTree = "<group>"; };
+		02608F801A9431CB00FF9D23 /* MCPostTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPostTableView.h; sourceTree = "<group>"; };
+		02608F811A9431CB00FF9D23 /* MCPostTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCPostTableView.m; sourceTree = "<group>"; };
 		027DCC281A7EFC9D0054EEB8 /* MCPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPageView.h; sourceTree = "<group>"; };
 		027DCC291A7EFC9D0054EEB8 /* MCPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCPageView.m; sourceTree = "<group>"; };
 		027DCC2B1A7F007A0054EEB8 /* MCNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCNavigationBar.h; sourceTree = "<group>"; };
@@ -113,6 +120,8 @@
 		02C6BBD31A85AC3D003DAC24 /* MCActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCActivityIndicatorView.m; sourceTree = "<group>"; };
 		02CF62331A78787B0038265D /* MCAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCAlertView.h; sourceTree = "<group>"; };
 		02CF62341A78787B0038265D /* MCAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCAlertView.m; sourceTree = "<group>"; };
+		02DAC4CF1A9562EB00E91193 /* MCPostCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPostCell.h; sourceTree = "<group>"; };
+		02DAC4D01A9562EB00E91193 /* MCPostCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCPostCell.m; sourceTree = "<group>"; };
 		02F454401A82D82800A689F3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		02F454431A82F86100A689F3 /* MCSettingsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCSettingsManager.h; sourceTree = "<group>"; };
 		02F454441A82F86100A689F3 /* MCSettingsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCSettingsManager.m; sourceTree = "<group>"; };
@@ -213,6 +222,10 @@
 				027DCC291A7EFC9D0054EEB8 /* MCPageView.m */,
 				0232938D1A8DD2CF00965F44 /* MCPointingView.h */,
 				0232938E1A8DD2CF00965F44 /* MCPointingView.m */,
+				02DAC4CF1A9562EB00E91193 /* MCPostCell.h */,
+				02DAC4D01A9562EB00E91193 /* MCPostCell.m */,
+				02608F801A9431CB00FF9D23 /* MCPostTableView.h */,
+				02608F811A9431CB00FF9D23 /* MCPostTableView.m */,
 				02B1B5121A4B780E00474F4C /* MCMainView.h */,
 				02B1B5131A4B780E00474F4C /* MCMainView.m */,
 				027DCC2B1A7F007A0054EEB8 /* MCNavigationBar.h */,
@@ -225,6 +238,8 @@
 				024FAB701A7D8EF900FE8B56 /* MCTabView.m */,
 				02B1B5161A4B780E00474F4C /* MCViewController.h */,
 				02B1B5171A4B780E00474F4C /* MCViewController.m */,
+				0200368C1A99BC6D00362703 /* MCVoteView.h */,
+				0200368D1A99BC6D00362703 /* MCVoteView.m */,
 				024E24F71A7B0F0C00976A9C /* NSString+MCMethods.h */,
 				024E24F81A7B0F0C00976A9C /* NSString+MCMethods.m */,
 				02B1B5181A4B780E00474F4C /* UIColor+MCColors.h */,
@@ -368,7 +383,9 @@
 				025A830D1A82BDF2006C616E /* MCAPIHandler.m in Sources */,
 				024FAB711A7D8EF900FE8B56 /* MCTabView.m in Sources */,
 				02B1B51D1A4B780E00474F4C /* MCStartView.m in Sources */,
+				02608F821A9431CB00FF9D23 /* MCPostTableView.m in Sources */,
 				0232938C1A8DCD1100965F44 /* MCPageViewMicro.m in Sources */,
+				02DAC4D11A9562EB00E91193 /* MCPostCell.m in Sources */,
 				02B1B51C1A4B780E00474F4C /* MCMainView.m in Sources */,
 				02B1B51B1A4B780E00474F4C /* MCCommon.m in Sources */,
 				02C6BBD41A85AC3D003DAC24 /* MCActivityIndicatorView.m in Sources */,
@@ -377,6 +394,7 @@
 				02B1B5401A51249000474F4C /* MCButton.m in Sources */,
 				02CF62351A78787B0038265D /* MCAlertView.m in Sources */,
 				02F454451A82F86100A689F3 /* MCSettingsManager.m in Sources */,
+				0200368E1A99BC6D00362703 /* MCVoteView.m in Sources */,
 				027DCC2A1A7EFC9D0054EEB8 /* MCPageView.m in Sources */,
 				027DCC2D1A7F007A0054EEB8 /* MCNavigationBar.m in Sources */,
 				02B1B5271A4B783E00474F4C /* main.m in Sources */,

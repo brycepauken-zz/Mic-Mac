@@ -10,6 +10,17 @@
 
 @implementation UIColor (MCColors)
 
++ (UIColor *)MCLightGrayColor {
+    static UIColor *lightGrayColor = nil;
+    static dispatch_once_t dispatchOnceToken;
+    
+    dispatch_once(&dispatchOnceToken, ^{
+        lightGrayColor = [UIColor colorWithWhite:0.8 alpha:1];
+    });
+    
+    return lightGrayColor;
+}
+
 + (UIColor *)MCMainColor {
     static UIColor *mainColor = nil;
     static dispatch_once_t dispatchOnceToken;
