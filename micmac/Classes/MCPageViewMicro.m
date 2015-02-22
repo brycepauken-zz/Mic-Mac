@@ -8,8 +8,8 @@
 
 #import "MCPageViewMicro.h"
 
+#import "MCComposeView.h"
 #import "MCNavigationBar.h"
-#import "MCPointingView.h"
 #import "MCPostTableView.h"
 
 @interface MCPageViewMicro()
@@ -48,8 +48,8 @@
 }
 
 - (void)showComposeView {
-    MCPointingView *pointingView = [[MCPointingView alloc] init];
-    [pointingView show];
+    MCComposeView *composeView = [[MCComposeView alloc] initInView:self.contentView withPlaceholder:@"Hello World"];
+    [composeView show];
 }
 
 @end

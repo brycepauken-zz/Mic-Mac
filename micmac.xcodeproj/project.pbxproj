@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0200368E1A99BC6D00362703 /* MCVoteView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0200368D1A99BC6D00362703 /* MCVoteView.m */; };
+		020036911A99D20C00362703 /* MCComposeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 020036901A99D20C00362703 /* MCComposeView.m */; };
 		0225DB221A549435007B8A08 /* ArrowLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 0225DB191A549435007B8A08 /* ArrowLeft.png */; };
 		0225DB231A549435007B8A08 /* ArrowLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0225DB1A1A549435007B8A08 /* ArrowLeft@2x.png */; };
 		0225DB241A549435007B8A08 /* ArrowRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 0225DB1B1A549435007B8A08 /* ArrowRight.png */; };
@@ -58,6 +59,8 @@
 /* Begin PBXFileReference section */
 		0200368C1A99BC6D00362703 /* MCVoteView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCVoteView.h; sourceTree = "<group>"; };
 		0200368D1A99BC6D00362703 /* MCVoteView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCVoteView.m; sourceTree = "<group>"; };
+		0200368F1A99D20C00362703 /* MCComposeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCComposeView.h; sourceTree = "<group>"; };
+		020036901A99D20C00362703 /* MCComposeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCComposeView.m; sourceTree = "<group>"; };
 		0225DB191A549435007B8A08 /* ArrowLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArrowLeft.png; sourceTree = "<group>"; };
 		0225DB1A1A549435007B8A08 /* ArrowLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ArrowLeft@2x.png"; sourceTree = "<group>"; };
 		0225DB1B1A549435007B8A08 /* ArrowRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ArrowRight.png; sourceTree = "<group>"; };
@@ -216,6 +219,8 @@
 				02B1B53F1A51249000474F4C /* MCButton.m */,
 				02B1B5101A4B780E00474F4C /* MCCommon.h */,
 				02B1B5111A4B780E00474F4C /* MCCommon.m */,
+				0200368F1A99D20C00362703 /* MCComposeView.h */,
+				020036901A99D20C00362703 /* MCComposeView.m */,
 				0232938A1A8DCD1100965F44 /* MCPageViewMicro.h */,
 				0232938B1A8DCD1100965F44 /* MCPageViewMicro.m */,
 				027DCC281A7EFC9D0054EEB8 /* MCPageView.h */,
@@ -381,6 +386,7 @@
 				0232938F1A8DD2CF00965F44 /* MCPointingView.m in Sources */,
 				02B1B51E1A4B780E00474F4C /* MCViewController.m in Sources */,
 				025A830D1A82BDF2006C616E /* MCAPIHandler.m in Sources */,
+				020036911A99D20C00362703 /* MCComposeView.m in Sources */,
 				024FAB711A7D8EF900FE8B56 /* MCTabView.m in Sources */,
 				02B1B51D1A4B780E00474F4C /* MCStartView.m in Sources */,
 				02608F821A9431CB00FF9D23 /* MCPostTableView.m in Sources */,
