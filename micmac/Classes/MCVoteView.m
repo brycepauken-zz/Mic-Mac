@@ -15,6 +15,7 @@
 @property (nonatomic, strong) UITapGestureRecognizer *tapRecognizer;
 @property (nonatomic, strong) UIView *surroundingCircle;
 @property (nonatomic) CGFloat surroundingCircleScaleFactor;
+@property (nonatomic) MCVoteViewState voteState;
 
 @end
 
@@ -22,11 +23,13 @@
 
 static const float kCircleThickness = 1.5;
 static const int kPointsAdditionalSpace = 2;
-static const int kPointsMaxFontSize = 24;
+static const int kPointsMaxFontSize = 16;
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if(self) {
+        _voteState = MCVoteViewStateDefault;
+        
         _surroundingCircleScaleFactor = 1;
         _surroundingCircle = [[UIView alloc] initWithFrame:self.bounds];
         [_surroundingCircle setBackgroundColor:[UIColor grayColor]];
@@ -69,13 +72,22 @@ static const int kPointsMaxFontSize = 24;
     [self.pointsLabel setFont:[UIFont fontWithName:@"AvenirNext-Regular" size:fontSize]];
     [self.pointsLabel setText:pointsText];
     [self.pointsLabel sizeToFit];
-    [self.pointsLabel setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2)];
+    [self.pointsLabel setCenter:CGPointMake(self.bounds.size.width/2+0.25, self.bounds.size.height/2+0.25)];
 }
 
 - (void)tapped {
-    self.points++;
-    [self.pointsLabel setTextColor:[UIColor MCOffBlackColor]];
-    [self.surroundingCircle setBackgroundColor:[UIColor MCOffBlackColor]];
+    if(self.voteState == MCVoteViewStateDefault) {
+        [self setVoteState:MCVoteViewStateUpVoted];
+        self.points++;
+        [self.pointsLabel setTextColor:[UIColor MCOffBlackColor]];
+        [self.surroundingCircle setBackgroundColor:[UIColor MCMoreOffBlackColor]];
+    }
+    else {
+        [self setVoteState:MCVoteViewStateDefault];
+        self.points--;
+        [self.pointsLabel setTextColor:[UIColor grayColor]];
+        [self.surroundingCircle setBackgroundColor:[UIColor grayColor]];
+    }
 }
 
 - (void)updateSurroundingCircleMask {
@@ -88,9 +100,9 @@ static const int kPointsMaxFontSize = 24;
     [maskPath appendPath:[UIBezierPath bezierPathWithArcCenter:center radius:innerRadius startAngle:0 endAngle:M_PI*2 clockwise:NO]];
     
     CAShapeLayer *mask = [[CAShapeLayer alloc] init];
+    [mask setContentsScale:[UIScreen mainScreen].scale];
     [mask setFillRule:kCAFillRuleEvenOdd];
     [mask setPath:maskPath.CGPath];
-    [mask setContentsScale:[UIScreen mainScreen].scale];
     
     [self.surroundingCircle.layer setMask:mask];
 }

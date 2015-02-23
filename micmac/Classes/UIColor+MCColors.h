@@ -12,6 +12,7 @@
 
 + (UIColor *)MCLightGrayColor;
 + (UIColor *)MCMainColor;
++ (UIColor *)MCMoreOffBlackColor;
 + (UIColor *)MCOffBlackColor;
 + (UIColor *)MCOffWhiteColor;
 

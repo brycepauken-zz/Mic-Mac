@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, MCVoteViewState) {
+    MCVoteViewStateDefault,
+    MCVoteViewStateUpVoted,
+    MCVoteViewStateDownVoted
+};
+
 @interface MCVoteView : UIView <UIGestureRecognizerDelegate>
 
 - (void)setPoints:(NSInteger)points;
