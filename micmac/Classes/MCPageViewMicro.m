@@ -33,6 +33,7 @@
         }];
         
         _tableView = [[MCPostTableView alloc] initWithFrame:self.contentView.bounds];
+        [_tableView setAutoresizingMask:UIViewAutoResizingFlexibleSize];
         [self.contentView addSubview:_tableView];
     }
     return self;

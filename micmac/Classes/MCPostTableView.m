@@ -34,6 +34,14 @@
     return 1;
 }
 
+- (void)setFrame:(CGRect)frame {
+    [super setFrame:frame];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self reloadData];
+    });
+}
+
 - (void)setPosts:(NSArray *)posts {
     _posts = posts;
     [self reloadData];

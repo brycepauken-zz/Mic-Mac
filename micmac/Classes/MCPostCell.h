@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MCPostCell : UITableViewCell
+@interface MCPostCell : UITableViewCell <UIGestureRecognizerDelegate>
 
 + (CGFloat)heightForCellOfWidth:(CGFloat)width withText:(NSString *)text points:(NSInteger)points;
 - (BOOL)initialized;

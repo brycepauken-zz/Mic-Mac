@@ -8,10 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MCVoteView : UIView
+@interface MCVoteView : UIView <UIGestureRecognizerDelegate>
 
-- (instancetype)initAndSize;
 - (void)setPoints:(NSInteger)points;
-+ (CGFloat)widthForViewWithPoints:(NSInteger)points;
 
 @end

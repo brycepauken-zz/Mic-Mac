@@ -10,103 +10,89 @@
 
 @interface MCVoteView()
 
-@property (nonatomic, strong) UIButton *bottomButton;
-@property (nonatomic, strong) UILabel *pointLabel;
+@property (nonatomic, strong) UILabel *pointsLabel;
 @property (nonatomic) NSInteger points;
-@property (nonatomic, strong) UIButton *topButton;
+@property (nonatomic, strong) UITapGestureRecognizer *tapRecognizer;
+@property (nonatomic, strong) UIView *surroundingCircle;
+@property (nonatomic) CGFloat surroundingCircleScaleFactor;
 
 @end
 
 @implementation MCVoteView
 
-static const int kPointFontSize = 20;
-static const int kPointLabelVerticalMargin = 2;
-static const int kVoteArrowHeight = 10;
-static const int kVoteArrowThickness = 2;
-static const int kVoteArrowWidth = 22;
-
-- (instancetype)initAndSize {
-    self = [self initWithFrame:CGRectZero];
-    if(self) {
-        [self sizeToFit];
-    }
-    return self;
-}
+static const float kCircleThickness = 1.5;
+static const int kPointsAdditionalSpace = 2;
+static const int kPointsMaxFontSize = 24;
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if(self) {
-        _bottomButton = [[self class] voteArrowPointingUp:NO];
-        _topButton = [[self class] voteArrowPointingUp:YES];
+        _surroundingCircleScaleFactor = 1;
+        _surroundingCircle = [[UIView alloc] initWithFrame:self.bounds];
+        [_surroundingCircle setBackgroundColor:[UIColor grayColor]];
         
-        _points = 0;
+        _pointsLabel = [[UILabel alloc] init];
+        [_pointsLabel setFont:[UIFont fontWithName:@"AvenirNext-Regular" size:kPointsMaxFontSize]];
+        [_pointsLabel setTextColor:[UIColor grayColor]];
         
-        _pointLabel = [[UILabel alloc] init];
-        [_pointLabel setFont:[UIFont fontWithName:@"AvenirNext-Regular" size:kPointFontSize]];
-        [_pointLabel setText:@"0"];
-        [_pointLabel setTextColor:[UIColor darkGrayColor]];
+        _tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped)];
+        [_tapRecognizer setDelegate:self];
+        [self addGestureRecognizer:_tapRecognizer];
         
-        [self addSubview:_bottomButton];
-        [self addSubview:_topButton];
-        [self addSubview:_pointLabel];
+        [self setPoints:0];
+        [self updateSurroundingCircleMask];
         
-        [self repositionSubviews];
+        [self addSubview:_surroundingCircle];
+        [self addSubview:_pointsLabel];
     }
     return self;
 }
 
-- (void)repositionSubviews {
-    [self.pointLabel sizeToFit];
-    CGFloat height = self.pointLabel.frame.size.height+kPointLabelVerticalMargin*2+kVoteArrowHeight*2;
-    CGFloat width = MAX(self.pointLabel.frame.size.width, kVoteArrowWidth);
-    
-    [self.topButton setFrame:CGRectMake(width-kVoteArrowWidth, 0, kVoteArrowWidth, kVoteArrowHeight)];
-    [self.bottomButton setFrame:CGRectMake(width-kVoteArrowWidth, height-kVoteArrowHeight, kVoteArrowWidth, kVoteArrowHeight)];
-    [self.pointLabel setCenter:CGPointMake(width/2, height/2)];
-}
-
 - (void)setPoints:(NSInteger)points {
     _points = points;
-    [self.pointLabel setText:[NSString stringWithFormat:@"%li",points]];
-    [self repositionSubviews];
+    
+    int fontSize = kPointsMaxFontSize;
+    CGFloat innerRadius = MIN(self.bounds.size.width, self.bounds.size.height)/2-kCircleThickness+kPointsAdditionalSpace;
+    innerRadius *= innerRadius;
+    NSString *pointsText = [NSString stringWithFormat:@"%li",points];
+    while(fontSize>0) {
+        CGSize pointsSize = [pointsText sizeWithFont:[UIFont fontWithName:@"AvenirNext-Regular" size:fontSize] constrainedToWidth:CGFLOAT_MAX];
+        pointsSize.width/=2;
+        pointsSize.height/=2;
+        if(pointsSize.width*pointsSize.width+pointsSize.height*pointsSize.height<=innerRadius) {
+            break;
+        }
+        else {
+            fontSize--;
+        }
+    }
+    [self.pointsLabel setFont:[UIFont fontWithName:@"AvenirNext-Regular" size:fontSize]];
+    [self.pointsLabel setText:pointsText];
+    [self.pointsLabel sizeToFit];
+    [self.pointsLabel setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2)];
 }
 
-- (CGSize)sizeThatFits:(CGSize)size {
-    return CGSizeMake(self.topButton.frame.origin.x+self.topButton.frame.size.width, self.bottomButton.frame.origin.y+self.bottomButton.frame.size.height);
+- (void)tapped {
+    self.points++;
+    [self.pointsLabel setTextColor:[UIColor MCOffBlackColor]];
+    [self.surroundingCircle setBackgroundColor:[UIColor MCOffBlackColor]];
 }
 
-+ (CGFloat)widthForViewWithPoints:(NSInteger)points {
-    static UIFont *pointFont;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        pointFont = [UIFont fontWithName:@"AvenirNext-Regular" size:kPointFontSize];
-    });
-    CGSize pointSize = [[NSString stringWithFormat:@"%li",points] sizeWithFont:pointFont constrainedToWidth:CGFLOAT_MAX];
-    return MAX(pointSize.width, kVoteArrowWidth);
-}
-
-+ (UIButton *)voteArrowPointingUp:(BOOL)pointingUp {
-    static CGFloat (^verticalOffset)(CGFloat y, BOOL pointingUp) = ^CGFloat(CGFloat y, BOOL pointingUp) {
-        return (pointingUp?y:(kVoteArrowHeight-y));
-    };
+- (void)updateSurroundingCircleMask {
+    CGPoint center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
+    CGFloat minDimension = MIN(self.bounds.size.width, self.bounds.size.height)/2;
+    CGFloat outerRadius = minDimension*self.surroundingCircleScaleFactor;
+    CGFloat innerRadius = MAX(0, (minDimension-kCircleThickness)*self.surroundingCircleScaleFactor);
     
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, kVoteArrowWidth, kVoteArrowHeight)];
-    [button setBackgroundColor:[UIColor darkGrayColor]];
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithArcCenter:center radius:outerRadius startAngle:0 endAngle:M_PI*2 clockwise:NO];
+    [maskPath appendPath:[UIBezierPath bezierPathWithArcCenter:center radius:innerRadius startAngle:0 endAngle:M_PI*2 clockwise:NO]];
     
-    UIBezierPath *buttonMaskPath = [UIBezierPath bezierPath];
-    [buttonMaskPath moveToPoint:CGPointMake(kVoteArrowWidth/2, verticalOffset(0, pointingUp))];
-    [buttonMaskPath addLineToPoint:CGPointMake(0, verticalOffset(kVoteArrowHeight-kVoteArrowThickness, pointingUp))];
-    [buttonMaskPath addLineToPoint:CGPointMake(0, verticalOffset(kVoteArrowHeight, pointingUp))];
-    [buttonMaskPath addLineToPoint:CGPointMake(kVoteArrowWidth/2, verticalOffset(kVoteArrowThickness, pointingUp))];
-    [buttonMaskPath addLineToPoint:CGPointMake(kVoteArrowWidth, verticalOffset(kVoteArrowHeight, pointingUp))];
-    [buttonMaskPath addLineToPoint:CGPointMake(kVoteArrowWidth, verticalOffset(kVoteArrowHeight-kVoteArrowThickness, pointingUp))];
-    [buttonMaskPath closePath];
+    CAShapeLayer *mask = [[CAShapeLayer alloc] init];
+    [mask setFillRule:kCAFillRuleEvenOdd];
+    [mask setPath:maskPath.CGPath];
+    [mask setContentsScale:[UIScreen mainScreen].scale];
     
-    CAShapeLayer *buttonMask = [[CAShapeLayer alloc] init];
-    [buttonMask setPath:buttonMaskPath.CGPath];
-    [button.layer setMask:buttonMask];
-    
-    return button;
+    [self.surroundingCircle.layer setMask:mask];
 }
 
 @end
