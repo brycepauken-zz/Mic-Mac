@@ -42,6 +42,23 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[@"http://micmac.kingfi.sh/api/v1/" stringByAppendingString:requestString]]];
     [request addValue:authToken forHTTPHeaderField:@"X-API-Auth"];
     [request addValue:[(username.length?[username stringByAppendingString:@"."]:@"") stringByAppendingString:password] forHTTPHeaderField:@"X-API-Cred"];
+    
+    if(parameters && parameters.count) {
+        NSMutableString *postString = [[NSMutableString alloc] init];
+        BOOL firstParameter = YES;
+        for(id key in parameters) {
+            if(firstParameter) {
+                firstParameter = NO;
+            }
+            else {
+                [postString appendString:@"&"];
+            }
+            [postString appendFormat:@"%@=%@",[key stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding],[[parameters objectForKey:key] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        }
+        [request setHTTPMethod:@"POST"];
+        [request setHTTPBody:[postString dataUsingEncoding:NSUTF8StringEncoding]];
+    }
+    
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         if(completion) {
             id returnData = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];

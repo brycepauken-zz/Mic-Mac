@@ -94,6 +94,10 @@ static const int kContentVerticalMargin = 14;
     }];
 }
 
+- (NSString *)text {
+    return (self.textView.tag==1?@"":self.textView.text);
+}
+
 - (void)textViewDidBeginEditing:(UITextView *)textView {
     if(self.textView.tag==1) {
         [self.textView setTag:0];

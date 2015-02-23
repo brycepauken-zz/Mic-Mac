@@ -13,5 +13,6 @@
 - (instancetype)initInView:(UIView *)view withPlaceholder:(NSString *)placeholder;
 - (void)dismiss;
 - (void)show;
+- (NSString *)text;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "MCPageViewMicro.h"
 
+#import "MCAPIHandler.h"
 #import "MCComposeView.h"
 #import "MCNavigationBar.h"
 #import "MCPostTableView.h"
@@ -33,17 +34,6 @@
         
         _tableView = [[MCPostTableView alloc] initWithFrame:self.contentView.bounds];
         [self.contentView addSubview:_tableView];
-        
-        NSArray *examplePosts = @[
-                                  @{@"Post":@"Hello World",@"Points":@(99)},
-                                  @{@"Post":@"Some long text with the goal of establishing how to handle lenghty posts",@"Points":@(0)},
-                                  @{@"Post":@"This is not valuable. Negative Points!",@"Points":@(-2)},
-                                  @{@"Post":@"Coming up with these things is harder than you'd think,",@"Points":@(1)},
-                                  @{@"Post":@"at least it is for me,",@"Points":@(1)},
-                                  @{@"Post":@"but I have to keep going so I can see how these tableviews work when nearing the tab bar. This is another fine example of a lengthy post.",@"Points":@(2)},
-                                  @{@"Post":@"Actual posts probably won't be as long as that though. Have we decided on a character limit?",@"Points":@(0)}
-                                  ];
-        [_tableView setPosts:examplePosts];
     }
     return self;
 }
@@ -59,6 +49,13 @@
     }];
     
     [composeView dismiss];
+}
+
+- (void)reloadPosts {
+    __weak MCPageViewMicro *weakSelf = self;
+    [MCAPIHandler makeRequestToFunction:@"Posts" components:@[@"micro", @"new"] parameters:nil completion:^(NSDictionary *data) {
+        [weakSelf.tableView setPosts:[data objectForKey:@"posts"]];
+    }];
 }
 
 - (void)showComposeView {
@@ -77,6 +74,8 @@
     [self.navigationBar setRightButtonImage:[UIImage imageNamed:@"Accept"]];
     [self.navigationBar setRightButtonTapped:^{
         [weakSelf hideComposeView:(MCComposeView *)composeView];
+        [MCAPIHandler makeRequestToFunction:@"Post" components:@[@"micro"] parameters:@{@"post":[composeView text]} completion:^(NSDictionary *data) {
+        }];
     }];
     
     [composeView show];

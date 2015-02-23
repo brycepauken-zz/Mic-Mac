@@ -29,14 +29,6 @@
     if(self) {
         __weak MCMainView *weakSelf = self;
         
-        if(![[MCSettingsManager settingForKey:@"starupCompleted"] boolValue]) {
-            _startView = [[MCStartView alloc] initWithFrame:self.bounds];
-            [_startView setAutoresizingMask:UIViewAutoResizingFlexibleSize];
-            [_startView setHiddenBlock:^{
-                [weakSelf unsetStartView];
-            }];
-        }
-        
         CGRect pageRect = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height-50);
         _pages = @[[[MCPageView alloc] initWithFrame:pageRect name:@"Macro"], [[MCPageViewMicro alloc] initWithFrame:pageRect], [[MCPageView alloc] initWithFrame:pageRect name:@"Me"], [[MCPageView alloc] initWithFrame:pageRect name:@"More"]];
         __weak NSArray *weakPages = _pages;
@@ -44,6 +36,26 @@
             MCPageView *page = [_pages objectAtIndex:i];
             [page setHidden:i!=1];
             [self addSubview:page];
+        }
+        
+        if(![[MCSettingsManager settingForKey:@"starupCompleted"] boolValue]) {
+            _startView = [[MCStartView alloc] initWithFrame:self.bounds];
+            [_startView setAutoresizingMask:UIViewAutoResizingFlexibleSize];
+            [_startView setHiddenBlock:^{
+                for(MCPageView *page in weakSelf.pages) {
+                    if([page respondsToSelector:@selector(reloadPosts)]) {
+                        [page performSelector:@selector(reloadPosts)];
+                    }
+                }
+                [weakSelf unsetStartView];
+            }];
+        }
+        else {
+            for(MCPageView *page in _pages) {
+                if([page respondsToSelector:@selector(reloadPosts)]) {
+                    [page performSelector:@selector(reloadPosts)];
+                }
+            }
         }
         
         _tabView = [[MCTabView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height-60, self.bounds.size.width, 60)];

@@ -50,7 +50,7 @@
     
     NSDictionary *post = [self.posts objectAtIndex:indexPath.row];
     [cell setBothDivividersVisible:indexPath.row==0];
-    [cell setContent:[post objectForKey:@"Post"] withPoints:[[post objectForKey:@"Points"] integerValue]];
+    [cell setContent:[post objectForKey:@"post"] withPoints:[[post objectForKey:@"points"] integerValue]];
     
     return cell;
 }
@@ -65,7 +65,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *post = [self.posts objectAtIndex:indexPath.row];
-    return [MCPostCell heightForCellOfWidth:tableView.frame.size.width withText:[post objectForKey:@"Post"] points:[[post objectForKey:@"Points"] integerValue]];
+    return [MCPostCell heightForCellOfWidth:tableView.frame.size.width withText:[post objectForKey:@"post"] points:[[post objectForKey:@"points"] integerValue]];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

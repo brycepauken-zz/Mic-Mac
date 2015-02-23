@@ -12,4 +12,6 @@
 
 @interface MCPageViewMicro : MCPageView
 
+- (void)reloadPosts;
+
 @end
