@@ -10,4 +10,6 @@
 
 @interface MCInitialMacroView : UIView
 
+- (void)setGroups:(NSArray *)groups;
+
 @end

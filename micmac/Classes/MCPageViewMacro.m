@@ -18,6 +18,7 @@
 @interface MCPageViewMacro()
 
 @property (nonatomic, strong) MCInitialMacroView *initialView;
+@property (nonatomic) BOOL initialViewInitialized;
 @property (nonatomic, strong) MCPostTableView *tableView;
 
 @end
@@ -38,6 +39,7 @@
         [_tableView setAutoresizingMask:UIViewAutoResizingFlexibleSize];
         [self.contentView addSubview:_tableView];
         
+        _initialViewInitialized = NO;
         _initialView = [[MCInitialMacroView alloc] initWithFrame:self.contentView.bounds];
         [_initialView setAutoresizingMask:UIViewAutoResizingFlexibleSize];
         
@@ -65,6 +67,18 @@
     [MCAPIHandler makeRequestToFunction:@"Posts" components:@[@"macro", @"new"] parameters:nil completion:^(NSDictionary *data) {
         [weakSelf.tableView setPosts:[data objectForKey:@"posts"]];
     }];
+}
+
+- (void)setHidden:(BOOL)hidden {
+    [super setHidden:hidden];
+    
+    if(!hidden && self.initialView && !self.initialViewInitialized) {
+        [self setInitialViewInitialized:YES];
+        
+        [MCAPIHandler makeRequestToFunction:@"Groups" components:@[@"initial"] parameters:nil completion:^(NSDictionary *data) {
+            [self.initialView setGroups:[data objectForKey:@"groups"]];
+        }];
+    }
 }
 
 - (void)showComposeView {
