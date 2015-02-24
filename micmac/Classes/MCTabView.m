@@ -82,7 +82,7 @@
     static NSDictionary *stringAttributes;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        CTFontRef fontRef = CTFontCreateWithName(CFSTR("HelveticaNeue"), 12, NULL);
+        CTFontRef fontRef = CTFontCreateWithName(CFSTR("Avenir-Medium"), 12, NULL);
         stringAttributes = [NSDictionary dictionaryWithObjectsAndKeys:(__bridge id)fontRef, kCTFontAttributeName, nil];
         CFRelease(fontRef);
     });
@@ -224,8 +224,8 @@
         CGFloat horizontalCenterOffset = self.bounds.size.width*(1.0/8 + (1.0/4)*i);
         
         NSString *name = [names objectAtIndex:i];
-        CGSize nameSize = [name sizeWithFont:[UIFont fontWithName:@"HelveticaNeue" size:12] constrainedToWidth:MAX(0,self.bounds.size.width/4-4)];
-        [[self class] appendText:name toPath:mutableStaticPath atOffset:CGPointMake(horizontalCenterOffset-nameSize.width/2, self.bounds.size.height-nameSize.height/2)];
+        CGSize nameSize = [name sizeWithFont:[UIFont fontWithName:@"Avenir-Medium" size:12] constrainedToWidth:MAX(0,self.bounds.size.width/4-4)];
+        [[self class] appendText:name toPath:mutableStaticPath atOffset:CGPointMake(horizontalCenterOffset-nameSize.width/2, self.bounds.size.height-nameSize.height/3)];
         
         CGPoint iconOffset = CGPointMake(horizontalCenterOffset-iconSize/2, self.bounds.size.height-32-iconSize/2);
         

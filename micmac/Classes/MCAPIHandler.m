@@ -61,8 +61,8 @@
     
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         if(completion) {
-            id returnData = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            if([returnData respondsToSelector:@selector(objectForKey:)] && [[returnData objectForKey:@"success"] boolValue]) {
+            id returnData = data?[NSJSONSerialization JSONObjectWithData:data options:0 error:nil]:nil;
+            if(returnData && [returnData respondsToSelector:@selector(objectForKey:)] && [[returnData objectForKey:@"success"] boolValue]) {
                 completion(returnData);
             }
             else {

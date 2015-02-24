@@ -77,7 +77,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.posts.count;
+    return (self.posts&&![self.posts isEqual:[NSNull null]])?self.posts.count:0;
 }
 
 @end

@@ -10,6 +10,7 @@
 
 #import "MCPageView.h"
 #import "MCPageViewMicro.h"
+#import "MCPageViewMacro.h"
 #import "MCSettingsManager.h"
 #import "MCStartView.h"
 #import "MCTabView.h"
@@ -30,7 +31,7 @@
         __weak MCMainView *weakSelf = self;
         
         CGRect pageRect = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height-50);
-        _pages = @[[[MCPageView alloc] initWithFrame:pageRect name:@"Macro"], [[MCPageViewMicro alloc] initWithFrame:pageRect], [[MCPageView alloc] initWithFrame:pageRect name:@"Me"], [[MCPageView alloc] initWithFrame:pageRect name:@"More"]];
+        _pages = @[[[MCPageViewMacro alloc] initWithFrame:pageRect], [[MCPageViewMicro alloc] initWithFrame:pageRect], [[MCPageView alloc] initWithFrame:pageRect name:@"Me"], [[MCPageView alloc] initWithFrame:pageRect name:@"More"]];
         __weak NSArray *weakPages = _pages;
         for(int i=0;i<_pages.count;i++) {
             MCPageView *page = [_pages objectAtIndex:i];

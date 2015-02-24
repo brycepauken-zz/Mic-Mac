@@ -21,6 +21,17 @@
     return lightGrayColor;
 }
 
++ (UIColor *)MCLightMainColor {
+    static UIColor *lightMainColor = nil;
+    static dispatch_once_t dispatchOnceToken;
+    
+    dispatch_once(&dispatchOnceToken, ^{
+        lightMainColor = [UIColor colorWithRed:237/255.0f green:128/255.0f blue:133/255.0f alpha:1];
+    });
+    
+    return lightMainColor;
+}
+
 + (UIColor *)MCMainColor {
     static UIColor *mainColor = nil;
     static dispatch_once_t dispatchOnceToken;
@@ -41,6 +52,17 @@
     });
     
     return moreOffBlackColor;
+}
+
++ (UIColor *)MCMoreOffWhiteColor {
+    static UIColor *moreOffWhiteColor = nil;
+    static dispatch_once_t dispatchOnceToken;
+    
+    dispatch_once(&dispatchOnceToken, ^{
+        moreOffWhiteColor = [UIColor colorWithWhite:0.9 alpha:1];
+    });
+    
+    return moreOffWhiteColor;
 }
 
 + (UIColor *)MCOffBlackColor {
