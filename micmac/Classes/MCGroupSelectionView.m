@@ -24,7 +24,7 @@ CGFloat *_rowBeginningOffsets;
 CGFloat *_rowEndingOffsets;
 static const int kButtonMargins = 16;
 static const int kExtraButtonDistance = 50;
-static const int kHorizontalMargins = 6;
+static const int kHorizontalMargins = 0;
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];

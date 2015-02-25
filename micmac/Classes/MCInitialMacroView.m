@@ -17,6 +17,8 @@
 @property (nonatomic) BOOL activityIndicatorShouldHide;
 @property (nonatomic, strong) UIView *contentView;
 @property (nonatomic, strong) MCGroupSelectionView *groupSelectionView;
+@property (nonatomic, strong) UIView *sideFadeLeft;
+@property (nonatomic, strong) UIView *sideFadeRight;
 @property (nonatomic, strong) UILabel *subtitleLabel;
 @property (nonatomic, strong) UILabel *titleLabel;
 
@@ -27,6 +29,7 @@
 static const int kContentViewCornerRadius = 10;
 static const int kContentViewMargin = 20;
 static const int kLabelVerticalMargins = 10;
+static const int kSideFadeWidth = 10;
 static const int kSubtitleFontSize = 15;
 static NSString *kSubtitleMultilineText = @"Select a few topics that\ninterest you to get started.";
 static NSString *kSubtitleText = @"Select a few topics that interest you to get started.";
@@ -65,6 +68,26 @@ static NSString *kTitleText = @"Just One More Step";
         
         _activityIndicatorView = [[MCActivityIndicatorView alloc] init];
         [_contentView addSubview:_activityIndicatorView];
+        
+        _sideFadeLeft = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSideFadeWidth, _contentView.bounds.size.height)];
+        [_sideFadeLeft setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleRightMargin];
+        CAGradientLayer *leftSideGradient = [CAGradientLayer layer];
+        [leftSideGradient setColors:@[(id)[UIColor MCMainColor].CGColor, (id)[[UIColor MCMainColor] colorWithAlphaComponent:0].CGColor]];
+        [leftSideGradient setEndPoint:CGPointMake(1, 0.5)];
+        [leftSideGradient setFrame:_sideFadeLeft.bounds];
+        [leftSideGradient setStartPoint:CGPointMake(0, 0.5)];
+        [_sideFadeLeft.layer addSublayer:leftSideGradient];
+        [_contentView addSubview:_sideFadeLeft];
+        
+        _sideFadeRight = [[UIView alloc] initWithFrame:CGRectMake(_contentView.bounds.size.width-kSideFadeWidth, 0, kSideFadeWidth, _contentView.bounds.size.height)];
+        [_sideFadeRight setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleLeftMargin];
+        CAGradientLayer *rightSideGradient = [CAGradientLayer layer];
+        [rightSideGradient setColors:@[(id)[UIColor MCMainColor].CGColor, (id)[[UIColor MCMainColor] colorWithAlphaComponent:0].CGColor]];
+        [rightSideGradient setEndPoint:CGPointMake(0, 0.5)];
+        [rightSideGradient setFrame:_sideFadeRight.bounds];
+        [rightSideGradient setStartPoint:CGPointMake(1, 0.5)];
+        [_sideFadeRight.layer addSublayer:rightSideGradient];
+        [_contentView addSubview:_sideFadeRight];
         
         [self addSubview:_contentView];
     }
