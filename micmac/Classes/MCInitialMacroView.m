@@ -9,12 +9,14 @@
 #import "MCInitialMacroView.h"
 
 #import "MCActivityIndicatorView.h"
+#import "MCGroupSelectionView.h"
 
 @interface MCInitialMacroView()
 
 @property (nonatomic, strong) MCActivityIndicatorView *activityIndicatorView;
+@property (nonatomic) BOOL activityIndicatorShouldHide;
 @property (nonatomic, strong) UIView *contentView;
-@property (nonatomic, strong) NSArray *groups;
+@property (nonatomic, strong) MCGroupSelectionView *groupSelectionView;
 @property (nonatomic, strong) UILabel *subtitleLabel;
 @property (nonatomic, strong) UILabel *titleLabel;
 
@@ -57,6 +59,10 @@ static NSString *kTitleText = @"Just One More Step";
         [_subtitleLabel setCenter:CGPointMake(self.bounds.size.width/2, 40)];
         [_contentView addSubview:_subtitleLabel];
         
+        _groupSelectionView = [[MCGroupSelectionView alloc] init];
+        [_groupSelectionView setAlpha:0];
+        [_contentView addSubview:_groupSelectionView];
+        
         _activityIndicatorView = [[MCActivityIndicatorView alloc] init];
         [_contentView addSubview:_activityIndicatorView];
         
@@ -85,13 +91,38 @@ static NSString *kTitleText = @"Just One More Step";
     [self.subtitleLabel setFrame:CGRectMake((self.contentView.bounds.size.width-self.subtitleLabel.frame.size.width)/2, kLabelVerticalMargins*2+self.titleLabel.frame.size.height, self.subtitleLabel.frame.size.width, self.subtitleLabel.frame.size.height)];
     CGFloat bottomSubtitleOffset = self.subtitleLabel.frame.origin.y+self.subtitleLabel.frame.size.height;
     [self.activityIndicatorView setCenter:CGPointMake(self.contentView.bounds.size.width/2, bottomSubtitleOffset+(self.contentView.bounds.size.height-bottomSubtitleOffset)/2-8)];
+    [self.groupSelectionView setFrame:CGRectMake(0, bottomSubtitleOffset+kLabelVerticalMargins, self.contentView.bounds.size.width, self.contentView.bounds.size.height-(bottomSubtitleOffset+kLabelVerticalMargins+kContentViewCornerRadius))];
 }
 
 - (void)setGroups:(NSArray *)groups {
-    _groups = groups;
-    if(groups && ![groups isEqual:[NSNull null]] && groups.count) {
-        
+    [self.groupSelectionView setGroups:groups];
+    [self tryHidingActivityIndicator];
+}
+
+- (void)tryHidingActivityIndicator {
+    BOOL showGroupSelectionView = NO;
+    @synchronized(self) {
+        if(self.activityIndicatorShouldHide) {
+            [self.activityIndicatorView stopAnimating];
+            showGroupSelectionView = YES;
+        }
+        else {
+            [self setActivityIndicatorShouldHide:YES];
+        }
     }
+    if(showGroupSelectionView) {
+        [self.groupSelectionView setTransform:CGAffineTransformMakeScale(0.8, 0.8)];
+        [UIView animateWithDuration:0.25 delay:0.1 options:0 animations:^{
+            [self.groupSelectionView setAlpha:1];
+            [self.groupSelectionView setTransform:CGAffineTransformMakeScale(1, 1)];
+        } completion:nil];
+    }
+}
+
+- (void)willShow {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self tryHidingActivityIndicator];
+    });
 }
 
 @end

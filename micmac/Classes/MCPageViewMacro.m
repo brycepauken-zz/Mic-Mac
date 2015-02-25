@@ -74,6 +74,7 @@
     
     if(!hidden && self.initialView && !self.initialViewInitialized) {
         [self setInitialViewInitialized:YES];
+        [self.initialView willShow];
         
         [MCAPIHandler makeRequestToFunction:@"Groups" components:@[@"initial"] parameters:nil completion:^(NSDictionary *data) {
             [self.initialView setGroups:[data objectForKey:@"groups"]];

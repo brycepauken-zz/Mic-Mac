@@ -24,12 +24,14 @@
 		024E24F91A7B0F0C00976A9C /* NSString+MCMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 024E24F81A7B0F0C00976A9C /* NSString+MCMethods.m */; };
 		024FAB711A7D8EF900FE8B56 /* MCTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 024FAB701A7D8EF900FE8B56 /* MCTabView.m */; };
 		024FAB741A7D99A600FE8B56 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 024FAB721A7D999400FE8B56 /* CoreText.framework */; };
+		0251DD911A9D44C90002550E /* MCGroupSelectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0251DD901A9D44C90002550E /* MCGroupSelectionView.m */; };
 		0255AC251A9A8CCA0093161E /* Accept.png in Resources */ = {isa = PBXBuildFile; fileRef = 0255AC231A9A8CCA0093161E /* Accept.png */; };
 		0255AC261A9A8CCA0093161E /* Accept@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0255AC241A9A8CCA0093161E /* Accept@2x.png */; };
 		0255AC291A9A8CD50093161E /* Cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 0255AC271A9A8CD50093161E /* Cancel.png */; };
 		0255AC2A1A9A8CD50093161E /* Cancel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0255AC281A9A8CD50093161E /* Cancel@2x.png */; };
 		025718821A52325F00916FEB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 025718811A52325F00916FEB /* CoreLocation.framework */; };
 		025718841A52472700916FEB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 025718831A52472700916FEB /* Images.xcassets */; };
+		025A2F771A9D57B70091DB04 /* MCGroupButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 025A2F761A9D57B70091DB04 /* MCGroupButton.m */; };
 		025A830D1A82BDF2006C616E /* MCAPIHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 025A830C1A82BDF2006C616E /* MCAPIHandler.m */; };
 		02608F821A9431CB00FF9D23 /* MCPostTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02608F811A9431CB00FF9D23 /* MCPostTableView.m */; };
 		027DCC2A1A7EFC9D0054EEB8 /* MCPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 027DCC291A7EFC9D0054EEB8 /* MCPageView.m */; };
@@ -87,12 +89,16 @@
 		024FAB6F1A7D8EF900FE8B56 /* MCTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCTabView.h; sourceTree = "<group>"; };
 		024FAB701A7D8EF900FE8B56 /* MCTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCTabView.m; sourceTree = "<group>"; };
 		024FAB721A7D999400FE8B56 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		0251DD8F1A9D44C90002550E /* MCGroupSelectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCGroupSelectionView.h; sourceTree = "<group>"; };
+		0251DD901A9D44C90002550E /* MCGroupSelectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCGroupSelectionView.m; sourceTree = "<group>"; };
 		0255AC231A9A8CCA0093161E /* Accept.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Accept.png; sourceTree = "<group>"; };
 		0255AC241A9A8CCA0093161E /* Accept@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Accept@2x.png"; sourceTree = "<group>"; };
 		0255AC271A9A8CD50093161E /* Cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cancel.png; sourceTree = "<group>"; };
 		0255AC281A9A8CD50093161E /* Cancel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cancel@2x.png"; sourceTree = "<group>"; };
 		025718811A52325F00916FEB /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		025718831A52472700916FEB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		025A2F751A9D57B70091DB04 /* MCGroupButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCGroupButton.h; sourceTree = "<group>"; };
+		025A2F761A9D57B70091DB04 /* MCGroupButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCGroupButton.m; sourceTree = "<group>"; };
 		025A830B1A82BDF2006C616E /* MCAPIHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCAPIHandler.h; sourceTree = "<group>"; };
 		025A830C1A82BDF2006C616E /* MCAPIHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCAPIHandler.m; sourceTree = "<group>"; };
 		02608F801A9431CB00FF9D23 /* MCPostTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPostTableView.h; sourceTree = "<group>"; };
@@ -239,6 +245,10 @@
 				02B1B5111A4B780E00474F4C /* MCCommon.m */,
 				0200368F1A99D20C00362703 /* MCComposeView.h */,
 				020036901A99D20C00362703 /* MCComposeView.m */,
+				025A2F751A9D57B70091DB04 /* MCGroupButton.h */,
+				025A2F761A9D57B70091DB04 /* MCGroupButton.m */,
+				0251DD8F1A9D44C90002550E /* MCGroupSelectionView.h */,
+				0251DD901A9D44C90002550E /* MCGroupSelectionView.m */,
 				02BE063D1A9C46C100B616E6 /* MCInitialMacroView.h */,
 				02BE063E1A9C46C100B616E6 /* MCInitialMacroView.m */,
 				02BE063A1A9C45E000B616E6 /* MCPageViewMacro.h */,
@@ -422,6 +432,8 @@
 				02B1B51C1A4B780E00474F4C /* MCMainView.m in Sources */,
 				02B1B51B1A4B780E00474F4C /* MCCommon.m in Sources */,
 				02C6BBD41A85AC3D003DAC24 /* MCActivityIndicatorView.m in Sources */,
+				025A2F771A9D57B70091DB04 /* MCGroupButton.m in Sources */,
+				0251DD911A9D44C90002550E /* MCGroupSelectionView.m in Sources */,
 				02921A071A7B8B2400094182 /* MCAlertViewButton.m in Sources */,
 				02B1B51A1A4B780E00474F4C /* MCAppDelegate.m in Sources */,
 				02B1B5401A51249000474F4C /* MCButton.m in Sources */,
