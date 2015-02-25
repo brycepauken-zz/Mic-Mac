@@ -16,6 +16,7 @@
 @property (nonatomic) NSInteger nextButtonIndex;
 @property (nonatomic, strong) NSMutableArray *rows;
 @property (nonatomic, strong) NSMutableArray *selectedButtons;
+@property (nonatomic, copy) void (^selectionChanged)();
 
 @end
 
@@ -30,6 +31,7 @@ static const int kHorizontalMargins = 0;
     self = [super initWithFrame:frame];
     if(self) {
         _rowEndingOffsets = malloc(sizeof(CGFloat));
+        _selectedButtons = [[NSMutableArray alloc] init];
         
         [self setDelegate:self];
         [self setShowsHorizontalScrollIndicator:NO];
@@ -48,6 +50,9 @@ static const int kHorizontalMargins = 0;
         else {
             [button setSelected:NO];
             [self.selectedButtons removeObjectAtIndex:selectionIndex];
+        }
+        if(self.selectionChanged) {
+            self.selectionChanged();
         }
     }
 }
@@ -68,7 +73,6 @@ static const int kHorizontalMargins = 0;
                 }
             }
         }
-        self.selectedButtons = [[NSMutableArray alloc] init];
         self.rows = [[NSMutableArray alloc] init];
         for(int i=0;i<numberOfRows;i++) {
             [self.rows addObject:[[NSMutableArray alloc] init]];
@@ -80,6 +84,10 @@ static const int kHorizontalMargins = 0;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self updateButtons];
+}
+
+- (NSArray *)selectedIndexes {
+    return self.selectedButtons;
 }
 
 - (void)setFrame:(CGRect)frame {
@@ -123,7 +131,7 @@ static const int kHorizontalMargins = 0;
                     if(horizontalOffset<=self.contentOffset.x+self.bounds.size.width+kExtraButtonDistance) {
                         MCGroupButton *button = [[MCGroupButton alloc] init];
                         [button setTag:self.nextButtonIndex];
-                        [button setTitleAndReframe:[self.groups objectAtIndex:self.nextButtonIndex++]];
+                        [button setTitleAndReframe:[[self.groups objectAtIndex:self.nextButtonIndex++] objectForKey:@"name"]];
                         _rowEndingOffsets[rowIndex] = horizontalOffset+button.frame.size.width;
                         [button addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
                         [button setFrame:CGRectMake(horizontalOffset, verticalOffset+(buttonHeight+kButtonMargins)*rowIndex, button.frame.size.width, button.frame.size.height)];

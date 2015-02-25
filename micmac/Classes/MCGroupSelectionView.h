@@ -10,6 +10,9 @@
 
 @interface MCGroupSelectionView : UIScrollView <UIScrollViewDelegate>
 
+- (NSArray *)groups;
+- (NSArray *)selectedIndexes;
 - (void)setGroups:(NSArray *)groups;
+- (void)setSelectionChanged:(void (^)())selectionChanged;
 
 @end

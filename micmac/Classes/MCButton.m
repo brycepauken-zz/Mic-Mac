@@ -53,4 +53,8 @@
     [self.label setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2)];
 }
 
+- (void)setTitleSize:(CGFloat)size {
+    [self.label setFont:[UIFont fontWithName:@"Avenir-Heavy" size:size]];
+}
+
 @end

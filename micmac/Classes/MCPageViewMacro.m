@@ -39,9 +39,20 @@
         [_tableView setAutoresizingMask:UIViewAutoResizingFlexibleSize];
         [self.contentView addSubview:_tableView];
         
-        _initialViewInitialized = NO;
-        _initialView = [[MCInitialMacroView alloc] initWithFrame:self.contentView.bounds];
-        [_initialView setAutoresizingMask:UIViewAutoResizingFlexibleSize];
+        if(![[MCSettingsManager settingForKey:@"macroSetupCompleted"] boolValue]) {
+            _initialViewInitialized = NO;
+            _initialView = [[MCInitialMacroView alloc] initWithFrame:self.contentView.bounds];
+            __weak MCInitialMacroView *weakInitialView = _initialView;
+            [_initialView setAutoresizingMask:UIViewAutoResizingFlexibleSize];
+            [_initialView setCompletionBlock:^(NSArray *groups) {
+                [MCSettingsManager setSetting:[NSNumber numberWithBool:YES] forKey:@"macroSetupCompleted"];
+                [weakInitialView setUserInteractionEnabled:NO];
+                [UIView animateWithDuration:0.2 animations:^{
+                    [weakInitialView setAlpha:0];
+                    [weakInitialView setTransform:CGAffineTransformMakeScale(0.8, 0.8)];
+                }];
+            }];
+        }
         
         [self.contentView addSubview:_tableView];
         [self.contentView addSubview:_initialView];
@@ -64,7 +75,7 @@
 
 - (void)reloadPosts {
     __weak MCPageViewMacro *weakSelf = self;
-    [MCAPIHandler makeRequestToFunction:@"Posts" components:@[@"macro", @"new"] parameters:nil completion:^(NSDictionary *data) {
+    [MCAPIHandler makeRequestToFunction:@"Posts" components:@[@"macro", @"all", @"new"] parameters:nil completion:^(NSDictionary *data) {
         [weakSelf.tableView setPosts:[data objectForKey:@"posts"]];
     }];
 }

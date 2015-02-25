@@ -11,5 +11,6 @@
 @interface MCButton : UIButton
 
 - (void)setTitle:(NSString *)title;
+- (void)setTitleSize:(CGFloat)size;
 
 @end

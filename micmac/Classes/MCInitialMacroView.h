@@ -10,6 +10,7 @@
 
 @interface MCInitialMacroView : UIView
 
+- (void)setCompletionBlock:(void (^)(NSArray *))completionBlock;
 - (void)setGroups:(NSArray *)groups;
 - (void)willShow;
 
