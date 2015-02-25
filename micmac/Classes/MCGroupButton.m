@@ -16,17 +16,17 @@
 
 @implementation MCGroupButton
 
-static const int kButtonBorderThickness = 2;
+static const CGFloat kButtonBorderThickness = 1.5;
 static const int kButtonCornerRadius = 4;
-static const int kButtonHeight = 38;
+static const int kButtonHeight = 34;
 static const int kButtonHorizontalMargins = 8;
-static const int kLabelFontSize = 16;
+static const int kLabelFontSize = 14;
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if(self) {
         _label = [[UILabel alloc] init];
-        [_label setFont:[UIFont fontWithName:@"Avenir-Heavy" size:kLabelFontSize]];
+        [_label setFont:[UIFont fontWithName:@"Avenir-Medium" size:kLabelFontSize]];
         [_label setTextColor:[UIColor MCOffWhiteColor]];
         
         [self setBackgroundColor:[UIColor MCMainColor]];

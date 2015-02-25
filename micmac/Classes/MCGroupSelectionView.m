@@ -15,12 +15,12 @@
 @property (nonatomic, strong) NSArray *groups;
 @property (nonatomic) NSInteger nextButtonIndex;
 @property (nonatomic, strong) NSMutableArray *rows;
+@property (nonatomic, strong) NSMutableArray *selectedButtons;
 
 @end
 
 @implementation MCGroupSelectionView
 
-CGFloat *_rowBeginningOffsets;
 CGFloat *_rowEndingOffsets;
 static const int kButtonMargins = 16;
 static const int kExtraButtonDistance = 50;
@@ -29,7 +29,6 @@ static const int kHorizontalMargins = 0;
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if(self) {
-        _rowBeginningOffsets = malloc(sizeof(CGFloat));
         _rowEndingOffsets = malloc(sizeof(CGFloat));
         
         [self setDelegate:self];
@@ -40,7 +39,17 @@ static const int kHorizontalMargins = 0;
 }
 
 - (void)buttonTapped:(UIButton *)button {
-    [button setSelected:YES];
+    @synchronized(self) {
+        NSUInteger selectionIndex = [self.selectedButtons indexOfObject:@(button.tag)];
+        if(selectionIndex==NSNotFound) {
+            [button setSelected:YES];
+            [self.selectedButtons addObject:@(button.tag)];
+        }
+        else {
+            [button setSelected:NO];
+            [self.selectedButtons removeObjectAtIndex:selectionIndex];
+        }
+    }
 }
 
 - (void)reloadButtons {
@@ -49,9 +58,7 @@ static const int kHorizontalMargins = 0;
         
         int numberOfRows = (kButtonMargins+self.bounds.size.height)/([MCGroupButton buttonHeight]+kButtonMargins);
         self.nextButtonIndex = 0;
-        free(_rowBeginningOffsets);
         free(_rowEndingOffsets);
-        _rowBeginningOffsets = malloc(numberOfRows*sizeof(CGFloat));
         _rowEndingOffsets = calloc(numberOfRows, sizeof(CGFloat));
         
         if(self.rows && self.rows.count) {
@@ -61,10 +68,10 @@ static const int kHorizontalMargins = 0;
                 }
             }
         }
+        self.selectedButtons = [[NSMutableArray alloc] init];
         self.rows = [[NSMutableArray alloc] init];
         for(int i=0;i<numberOfRows;i++) {
             [self.rows addObject:[[NSMutableArray alloc] init]];
-            _rowBeginningOffsets[i] = kHorizontalMargins;
             _rowEndingOffsets[i] = kHorizontalMargins;
         }
     }
@@ -115,11 +122,14 @@ static const int kHorizontalMargins = 0;
                     //if button will be visible
                     if(horizontalOffset<=self.contentOffset.x+self.bounds.size.width+kExtraButtonDistance) {
                         MCGroupButton *button = [[MCGroupButton alloc] init];
+                        [button setTag:self.nextButtonIndex];
                         [button setTitleAndReframe:[self.groups objectAtIndex:self.nextButtonIndex++]];
                         _rowEndingOffsets[rowIndex] = horizontalOffset+button.frame.size.width;
                         [button addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
                         [button setFrame:CGRectMake(horizontalOffset, verticalOffset+(buttonHeight+kButtonMargins)*rowIndex, button.frame.size.width, button.frame.size.height)];
-                        [button setTag:rowIndex];
+                        if([self.selectedButtons indexOfObject:@(button.tag)]!=NSNotFound) {
+                            [button setSelected:YES];
+                        }
                         [self addSubview:button];
                         [[self.rows objectAtIndex:rowIndex] addObject:button];
                         continue;
