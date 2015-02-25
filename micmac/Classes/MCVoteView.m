@@ -10,32 +10,37 @@
 
 @interface MCVoteView()
 
+@property (nonatomic) CGFloat circleThickness;
 @property (nonatomic, strong) UILabel *pointsLabel;
+@property (nonatomic, strong) NSString *pointsLabelFontName;
 @property (nonatomic) NSInteger points;
 @property (nonatomic, strong) UITapGestureRecognizer *tapRecognizer;
 @property (nonatomic, strong) UIView *surroundingCircle;
 @property (nonatomic) CGFloat surroundingCircleScaleFactor;
+@property (nonatomic, copy) void (^voteChangedBlock)(MCVoteViewState state);
 @property (nonatomic) MCVoteViewState voteState;
 
 @end
 
 @implementation MCVoteView
 
-static const float kCircleThickness = 1.5;
+static const float kCircleInitialThickness = 1.5;
 static const int kPointsAdditionalSpace = 2;
 static const int kPointsMaxFontSize = 16;
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if(self) {
+        _circleThickness = kCircleInitialThickness;
+        _pointsLabelFontName = @"AvenirNext-Regular";
+        _surroundingCircleScaleFactor = 1;
         _voteState = MCVoteViewStateDefault;
         
-        _surroundingCircleScaleFactor = 1;
         _surroundingCircle = [[UIView alloc] initWithFrame:self.bounds];
         [_surroundingCircle setBackgroundColor:[UIColor grayColor]];
         
         _pointsLabel = [[UILabel alloc] init];
-        [_pointsLabel setFont:[UIFont fontWithName:@"AvenirNext-Regular" size:kPointsMaxFontSize]];
+        [_pointsLabel setFont:[UIFont fontWithName:_pointsLabelFontName size:kPointsMaxFontSize]];
         [_pointsLabel setTextColor:[UIColor grayColor]];
         
         _tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped)];
@@ -55,11 +60,11 @@ static const int kPointsMaxFontSize = 16;
     _points = points;
     
     int fontSize = kPointsMaxFontSize;
-    CGFloat innerRadius = MIN(self.bounds.size.width, self.bounds.size.height)/2-kCircleThickness+kPointsAdditionalSpace;
+    CGFloat innerRadius = MIN(self.bounds.size.width, self.bounds.size.height)/2-self.circleThickness+kPointsAdditionalSpace;
     innerRadius *= innerRadius;
     NSString *pointsText = [NSString stringWithFormat:@"%li",points];
     while(fontSize>0) {
-        CGSize pointsSize = [pointsText sizeWithFont:[UIFont fontWithName:@"AvenirNext-Regular" size:fontSize] constrainedToWidth:CGFLOAT_MAX];
+        CGSize pointsSize = [pointsText sizeWithFont:[UIFont fontWithName:_pointsLabelFontName size:fontSize] constrainedToWidth:CGFLOAT_MAX];
         pointsSize.width/=2;
         pointsSize.height/=2;
         if(pointsSize.width*pointsSize.width+pointsSize.height*pointsSize.height<=innerRadius) {
@@ -69,7 +74,7 @@ static const int kPointsMaxFontSize = 16;
             fontSize--;
         }
     }
-    [self.pointsLabel setFont:[UIFont fontWithName:@"AvenirNext-Regular" size:fontSize]];
+    [self.pointsLabel setFont:[UIFont fontWithName:_pointsLabelFontName size:fontSize]];
     [self.pointsLabel setText:pointsText];
     [self.pointsLabel sizeToFit];
     [self.pointsLabel setCenter:CGPointMake(self.bounds.size.width/2+0.25, self.bounds.size.height/2+0.25)];
@@ -78,23 +83,31 @@ static const int kPointsMaxFontSize = 16;
 - (void)tapped {
     if(self.voteState == MCVoteViewStateDefault) {
         [self setVoteState:MCVoteViewStateUpVoted];
+        [self setPointsLabelFontName:@"AvenirNext-DemiBold"];
         self.points++;
-        [self.pointsLabel setTextColor:[UIColor MCOffBlackColor]];
-        [self.surroundingCircle setBackgroundColor:[UIColor MCMoreOffBlackColor]];
+        [self.pointsLabel setTextColor:[UIColor MCMainColor]];
+        [self.surroundingCircle setBackgroundColor:[UIColor MCMainColor]];
+        [self setCircleThickness:kCircleInitialThickness*1.25];
     }
     else {
         [self setVoteState:MCVoteViewStateDefault];
+        [self setPointsLabelFontName:@"AvenirNext-Regular"];
         self.points--;
         [self.pointsLabel setTextColor:[UIColor grayColor]];
         [self.surroundingCircle setBackgroundColor:[UIColor grayColor]];
+        [self setCircleThickness:kCircleInitialThickness];
     }
+    if(self.voteChangedBlock) {
+        self.voteChangedBlock(self.voteState);
+    }
+    [self updateSurroundingCircleMask];
 }
 
 - (void)updateSurroundingCircleMask {
     CGPoint center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
     CGFloat minDimension = MIN(self.bounds.size.width, self.bounds.size.height)/2;
     CGFloat outerRadius = minDimension*self.surroundingCircleScaleFactor;
-    CGFloat innerRadius = MAX(0, (minDimension-kCircleThickness)*self.surroundingCircleScaleFactor);
+    CGFloat innerRadius = MAX(0, (minDimension-self.circleThickness)*self.surroundingCircleScaleFactor);
     
     UIBezierPath *maskPath = [UIBezierPath bezierPathWithArcCenter:center radius:outerRadius startAngle:0 endAngle:M_PI*2 clockwise:NO];
     [maskPath appendPath:[UIBezierPath bezierPathWithArcCenter:center radius:innerRadius startAngle:0 endAngle:M_PI*2 clockwise:NO]];

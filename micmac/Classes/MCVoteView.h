@@ -17,5 +17,6 @@ typedef NS_ENUM(NSInteger, MCVoteViewState) {
 @interface MCVoteView : UIView <UIGestureRecognizerDelegate>
 
 - (void)setPoints:(NSInteger)points;
+- (void)setVoteChangedBlock:(void (^)(MCVoteViewState))voteChangedBlock;
 
 @end

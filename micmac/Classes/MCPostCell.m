@@ -100,6 +100,9 @@ static const int kVoteViewSize = 32;
 
 - (void)setUpCell {
     [self setInitialized:YES];
+    __weak MCPostCell *weakSelf = self;
+    
+    [self setClipsToBounds:YES];
     
     self.selectedBackground = [[UIView alloc] initWithFrame:self.bounds];
     [self.selectedBackground setAutoresizingMask:UIViewAutoResizingFlexibleSize];
@@ -121,6 +124,9 @@ static const int kVoteViewSize = 32;
     
     self.voteView = [[MCVoteView alloc] initWithFrame:CGRectMake(0, 0, kVoteViewSize, kVoteViewSize)];
     [self.voteView setOpaque:YES];
+    [self.voteView setVoteChangedBlock:^(MCVoteViewState state) {
+        [weakSelf voteViewStateChanged:state];
+    }];
     
     self.gestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longGesture:)];
     [self.gestureRecognizer setCancelsTouchesInView:NO];
@@ -136,6 +142,29 @@ static const int kVoteViewSize = 32;
     [self addSubview:self.bottomDivider];
     [self addSubview:self.contentLabel];
     [self addSubview:self.voteView];
+}
+
+- (void)voteViewStateChanged:(MCVoteViewState)state {
+    if(state == MCVoteViewStateUpVoted) {
+        UIView *circleOverlay = [[UIView alloc] initWithFrame:self.voteView.frame];
+        [circleOverlay setUserInteractionEnabled:NO];
+        
+        CAShapeLayer *circleOverlayLayer = [CAShapeLayer layer];
+        [circleOverlayLayer setFillColor:nil];
+        [circleOverlayLayer setLineWidth:5];
+        [circleOverlayLayer setPath:[UIBezierPath bezierPathWithArcCenter:CGPointMake(circleOverlay.bounds.size.width/2, circleOverlay.bounds.size.height/2) radius:circleOverlay.bounds.size.width/2 startAngle:0 endAngle:M_PI*2 clockwise:NO].CGPath];
+        [circleOverlayLayer setStrokeColor:[UIColor MCMainColor].CGColor];
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            [circleOverlay setAlpha:0];
+            [circleOverlay setTransform:CGAffineTransformMakeScale(5, 5)];
+        } completion:^(BOOL finished) {
+            [circleOverlay removeFromSuperview];
+        }];
+        
+        [circleOverlay.layer addSublayer:circleOverlayLayer];
+        [self addSubview:circleOverlay];
+    }
 }
 
 @end
