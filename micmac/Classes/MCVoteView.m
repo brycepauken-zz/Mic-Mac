@@ -80,26 +80,24 @@ static const int kPointsMaxFontSize = 16;
     [self.pointsLabel setCenter:CGPointMake(self.bounds.size.width/2+0.25, self.bounds.size.height/2+0.25)];
 }
 
+- (void)setVoteState:(MCVoteViewState)voteState {
+    _voteState = voteState;
+    [self updateVoteStyle];
+}
+
 - (void)tapped {
     if(self.voteState == MCVoteViewStateDefault) {
         [self setVoteState:MCVoteViewStateUpVoted];
-        [self setPointsLabelFontName:@"AvenirNext-DemiBold"];
         self.points++;
-        [self.pointsLabel setTextColor:[UIColor MCMainColor]];
-        [self.surroundingCircle setBackgroundColor:[UIColor MCMainColor]];
-        [self setCircleThickness:kCircleInitialThickness*1.25];
     }
     else {
         [self setVoteState:MCVoteViewStateDefault];
-        [self setPointsLabelFontName:@"AvenirNext-Regular"];
         self.points--;
-        [self.pointsLabel setTextColor:[UIColor grayColor]];
-        [self.surroundingCircle setBackgroundColor:[UIColor grayColor]];
-        [self setCircleThickness:kCircleInitialThickness];
     }
     if(self.voteChangedBlock) {
         self.voteChangedBlock(self.voteState);
     }
+    [self updateVoteStyle];
     [self updateSurroundingCircleMask];
 }
 
@@ -118,6 +116,21 @@ static const int kPointsMaxFontSize = 16;
     [mask setPath:maskPath.CGPath];
     
     [self.surroundingCircle.layer setMask:mask];
+}
+
+- (void)updateVoteStyle {
+    if(self.voteState == MCVoteViewStateDefault) {
+        [self setPointsLabelFontName:@"AvenirNext-Regular"];
+        [self.pointsLabel setTextColor:[UIColor grayColor]];
+        [self.surroundingCircle setBackgroundColor:[UIColor grayColor]];
+        [self setCircleThickness:kCircleInitialThickness];
+    }
+    else if(self.voteState == MCVoteViewStateUpVoted) {
+        [self setPointsLabelFontName:@"AvenirNext-DemiBold"];
+        [self.pointsLabel setTextColor:[UIColor MCMainColor]];
+        [self.surroundingCircle setBackgroundColor:[UIColor MCMainColor]];
+        [self setCircleThickness:kCircleInitialThickness*1.25];
+    }
 }
 
 @end

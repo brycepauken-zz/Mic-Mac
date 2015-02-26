@@ -110,7 +110,7 @@ static const int kVoteViewSize = 32;
     [self.topDivider setHidden:!bothVisible];
 }
 
-- (void)setContent:(NSString *)content withPoints:(NSInteger)points postTime:(NSTimeInterval)postTime numberOfReplies:(NSInteger)replies groups:(NSArray *)groups nonHighlightedGroupIndexes:(NSArray *)nonHighlightedGroupIndexes {
+- (void)setContent:(NSString *)content withPoints:(NSInteger)points vote:(MCVoteViewState)vote postTime:(NSTimeInterval)postTime numberOfReplies:(NSInteger)replies groups:(NSArray *)groups nonHighlightedGroupIndexes:(NSArray *)nonHighlightedGroupIndexes {
     if(self.groupLabels && self.groupLabels.count) {
         for(UILabel *label in self.groupLabels) {
             [label removeFromSuperview];
@@ -142,6 +142,9 @@ static const int kVoteViewSize = 32;
     
     [self.contentLabel setText:content];
     [self.infoLabel setText:[NSString stringWithFormat:@"%@ | %li Replies",[NSString timeToHumanReadableString:postTime],replies]];
+    
+    [self.voteView setVoteState:vote];
+    [self.voteView setPoints:points];
     
     [self repositionSubviews];
 }

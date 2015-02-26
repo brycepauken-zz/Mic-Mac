@@ -44,7 +44,12 @@
 }
 
 - (void)setPosts:(NSArray *)posts {
-    _posts = posts;
+    NSMutableArray *mutablePosts = [[NSMutableArray alloc] initWithCapacity:posts.count];
+    for(NSDictionary *post in posts) {
+        [mutablePosts addObject:[post mutableCopy]];
+    }
+    _posts = mutablePosts;
+    
     [self reloadData];
 }
 
@@ -64,7 +69,7 @@
     NSDictionary *post = [self.posts objectAtIndex:indexPath.row];
     [cell setBothDivividersVisible:indexPath.row==0];
     [cell setCellIndexPath:indexPath];
-    [cell setContent:[post objectForKey:@"post"] withPoints:[[post objectForKey:@"points"] integerValue] postTime:[[post objectForKey:@"time"] doubleValue] numberOfReplies:0 groups:nil nonHighlightedGroupIndexes:nil];
+    [cell setContent:[post objectForKey:@"post"] withPoints:[[post objectForKey:@"points"] integerValue] vote:[[post objectForKey:@"vote"] integerValue] postTime:[[post objectForKey:@"time"] doubleValue] numberOfReplies:0 groups:nil nonHighlightedGroupIndexes:nil];
     
     return cell;
 }
@@ -87,7 +92,19 @@
 }
 
 - (void)voteViewStateChanged:(MCVoteViewState)state forIndexPath:(NSIndexPath *)indexPath {
+    NSMutableDictionary *post = [self.posts objectAtIndex:indexPath.row];
     
+    MCVoteViewState previousState = [[post objectForKey:@"vote"] integerValue];
+    [post setObject:@(state) forKey:@"vote"];
+    
+    if(previousState == MCVoteViewStateDownVoted) {
+        previousState = -1;
+    }
+    if(state == MCVoteViewStateDownVoted) {
+        state = -1;
+    }
+    
+    [post setObject:@([[post objectForKey:@"points"] integerValue]+(state-previousState)) forKey:@"points"];
 }
 
 @end

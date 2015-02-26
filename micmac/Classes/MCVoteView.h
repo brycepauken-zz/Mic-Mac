@@ -9,14 +9,15 @@
 #import <UIKit/UIKit.h>
 
 typedef NS_ENUM(NSInteger, MCVoteViewState) {
-    MCVoteViewStateDefault,
-    MCVoteViewStateUpVoted,
-    MCVoteViewStateDownVoted
+    MCVoteViewStateDefault = 0,
+    MCVoteViewStateUpVoted = 1,
+    MCVoteViewStateDownVoted = 2
 };
 
 @interface MCVoteView : UIView <UIGestureRecognizerDelegate>
 
 - (void)setPoints:(NSInteger)points;
 - (void)setVoteChangedBlock:(void (^)(MCVoteViewState))voteChangedBlock;
+- (void)setVoteState:(MCVoteViewState)voteState;
 
 @end
