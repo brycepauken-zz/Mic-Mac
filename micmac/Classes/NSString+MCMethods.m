@@ -41,14 +41,14 @@
         int minutes = time/60;
         return [NSString stringWithFormat:@"%i Minute%c Ago",(minutes<=10?minutes:5*(int)round(minutes/5)),(minutes==1?'\0':'s')];
     }
-    else if(time < 216000) {
+    else if(time < 86400) {
         //1-59 hours ago
         int hours = time/3600;
         return [NSString stringWithFormat:@"%i Hour%c Ago",(hours<=10?hours:5*(int)round(hours/5)),(hours==1?'\0':'s')];
     }
     else {
         //days ago
-        int days = time/216000;
+        int days = time/86400;
         return [NSString stringWithFormat:@"%i Day%c Ago",days,(days==1?'\0':'s')];
     }
 }
