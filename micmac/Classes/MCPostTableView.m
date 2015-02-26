@@ -44,11 +44,13 @@
 }
 
 - (void)setPosts:(NSArray *)posts {
-    NSMutableArray *mutablePosts = [[NSMutableArray alloc] initWithCapacity:posts.count];
-    for(NSDictionary *post in posts) {
-        [mutablePosts addObject:[post mutableCopy]];
+    if(posts && ![posts isEqual:[NSNull null]] && posts.count) {
+        NSMutableArray *mutablePosts = [[NSMutableArray alloc] initWithCapacity:posts.count];
+        for(NSDictionary *post in posts) {
+            [mutablePosts addObject:[post mutableCopy]];
+        }
+        _posts = mutablePosts;
     }
-    _posts = mutablePosts;
     
     [self reloadData];
 }
@@ -94,6 +96,21 @@
 - (void)voteViewStateChanged:(MCVoteViewState)state forIndexPath:(NSIndexPath *)indexPath {
     NSMutableDictionary *post = [self.posts objectAtIndex:indexPath.row];
     
+    NSString *voteString;
+    switch(state) {
+        case MCVoteViewStateUpVoted:
+            voteString = @"up";
+            break;
+        case MCVoteViewStateDownVoted:
+            voteString = @"down";
+            break;
+        default:
+            voteString = @"none";
+            break;
+    }
+    [MCAPIHandler makeRequestToFunction:@"Vote" components:@[[post objectForKey:@"id"], voteString] parameters:nil completion:nil];
+    
+    //update local values
     MCVoteViewState previousState = [[post objectForKey:@"vote"] integerValue];
     [post setObject:@(state) forKey:@"vote"];
     
