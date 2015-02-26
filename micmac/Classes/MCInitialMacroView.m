@@ -144,8 +144,8 @@ static NSString *kTitleText = @"Just One More Step";
     
     [self.contentView setFrame:CGRectInset(self.bounds, kContentViewMargin, kContentViewMargin)];
     
-    CGSize singleLineLabelSize = [[NSString stringWithFormat:kSubtitleText, _topicsString, _topicsStringSuffix] sizeWithFont:self.subtitleLabel.font constrainedToWidth:CGFLOAT_MAX];
-    CGSize multilineLabelSize = [[NSString stringWithFormat:kSubtitleMultilineText, _topicsString, _topicsStringSuffix] sizeWithFont:self.subtitleLabel.font constrainedToWidth:CGFLOAT_MAX];
+    CGSize singleLineLabelSize = [[NSString stringWithFormat:kSubtitleText, _topicsString, _topicsStringSuffix] sizeWithFont:self.subtitleLabel.font constrainedToWidth:MAXFLOAT];
+    CGSize multilineLabelSize = [[NSString stringWithFormat:kSubtitleMultilineText, _topicsString, _topicsStringSuffix] sizeWithFont:self.subtitleLabel.font constrainedToWidth:MAXFLOAT];
     [self.subtitleLabel setFrame:CGRectMake(self.subtitleLabel.frame.origin.x, self.subtitleLabel.frame.origin.y, singleLineLabelSize.width, multilineLabelSize.height)];
     if(singleLineLabelSize.width<self.contentView.bounds.size.width-20) {
         [self.subtitleLabel setText:[NSString stringWithFormat:kSubtitleText, _topicsString, _topicsStringSuffix]];

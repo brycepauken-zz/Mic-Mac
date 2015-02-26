@@ -64,7 +64,7 @@ static const int kPointsMaxFontSize = 16;
     innerRadius *= innerRadius;
     NSString *pointsText = [NSString stringWithFormat:@"%li",points];
     while(fontSize>0) {
-        CGSize pointsSize = [pointsText sizeWithFont:[UIFont fontWithName:_pointsLabelFontName size:fontSize] constrainedToWidth:CGFLOAT_MAX];
+        CGSize pointsSize = [pointsText sizeWithFont:[UIFont fontWithName:_pointsLabelFontName size:fontSize] constrainedToWidth:MAXFLOAT];
         pointsSize.width/=2;
         pointsSize.height/=2;
         if(pointsSize.width*pointsSize.width+pointsSize.height*pointsSize.height<=innerRadius) {

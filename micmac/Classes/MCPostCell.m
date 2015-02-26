@@ -15,6 +15,7 @@
 @property (nonatomic, strong) UIView *bottomDivider;
 @property (nonatomic, strong) UILabel *contentLabel;
 @property (nonatomic, strong) UILongPressGestureRecognizer *gestureRecognizer;
+@property (nonatomic, strong) UILabel *infoLabel;
 @property (nonatomic) BOOL initialized;
 @property (nonatomic, strong) UIView *selectedBackground;
 @property (nonatomic, strong) UIView *topDivider;
@@ -26,6 +27,7 @@
 
 static const int kContentFontSize = 18;
 static const int kContentVerticalMargin = 16;
+static const int kInfoFontSize = 14;
 static const int kVoteViewHorzontalMargin = 10;
 static const int kVoteViewSize = 32;
 
@@ -52,12 +54,15 @@ static const int kVoteViewSize = 32;
 
 + (CGFloat)heightForCellOfWidth:(CGFloat)width withText:(NSString *)text points:(NSInteger)points {
     static UIFont *contentFont;
+    static UIFont *infoFont;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         contentFont = [UIFont systemFontOfSize:kContentFontSize];
+        infoFont = [UIFont systemFontOfSize:kInfoFontSize];
     });
     CGSize contentSize = [text sizeWithFont:contentFont constrainedToWidth:width-kVoteViewSize-kVoteViewHorzontalMargin*3];
-    return MAX(contentSize.height+kContentVerticalMargin*2, 80);
+    CGSize infoSize = [@"Just Now (Placeholder)" sizeWithFont:infoFont constrainedToWidth:MAXFLOAT];
+    return MAX(contentSize.height+kContentVerticalMargin*2.5+infoSize.height, 80);
 }
 
 - (void)longGesture:(UILongPressGestureRecognizer *)gestureRecognizer {
@@ -70,6 +75,13 @@ static const int kVoteViewSize = 32;
 }
 
 - (void)repositionSubviews {
+    CGFloat textWidth = self.bounds.size.width-self.voteView.frame.size.width-kVoteViewHorzontalMargin*3;
+    CGSize contentSize = [self.contentLabel.text sizeWithFont:self.contentLabel.font constrainedToWidth:textWidth];
+    [self.contentLabel setFrame:CGRectMake(kVoteViewHorzontalMargin, kContentVerticalMargin, contentSize.width, contentSize.height)];
+    
+    CGSize infoSize = [self.infoLabel.text sizeWithFont:self.infoLabel.font constrainedToWidth:MAXFLOAT];
+    [self.infoLabel setFrame:CGRectMake(kVoteViewHorzontalMargin, self.bounds.size.height-infoSize.height-kVoteViewHorzontalMargin, textWidth, infoSize.height)];
+    
     [self.voteView setCenter:CGPointMake(self.bounds.size.width-self.voteView.frame.size.width/2-kVoteViewHorzontalMargin, self.bounds.size.height/2)];
 }
 
@@ -77,10 +89,9 @@ static const int kVoteViewSize = 32;
     [self.topDivider setHidden:!bothVisible];
 }
 
-- (void)setContent:(NSString *)content withPoints:(NSInteger)points {
+- (void)setContent:(NSString *)content withPoints:(NSInteger)points postTime:(NSTimeInterval)postTime numberOfReplies:(NSInteger)replies {
     [self.contentLabel setText:content];
-    CGSize contentSize = [content sizeWithFont:self.contentLabel.font constrainedToWidth:self.bounds.size.width-self.voteView.frame.size.width-kVoteViewHorzontalMargin*3];
-    [self.contentLabel setFrame:CGRectMake(kVoteViewHorzontalMargin, kContentVerticalMargin, contentSize.width, contentSize.height)];
+    [self.infoLabel setText:[NSString stringWithFormat:@"%@ | %li Replies",[NSString timeToHumanReadableString:postTime],replies]];
     
     [self repositionSubviews];
 }
@@ -122,6 +133,11 @@ static const int kVoteViewSize = 32;
     [self.contentLabel setOpaque:YES];
     [self.contentLabel setTextColor:[UIColor darkGrayColor]];
     
+    self.infoLabel = [[UILabel alloc] init];
+    [self.infoLabel setFont:[UIFont systemFontOfSize:kInfoFontSize]];
+    [self.infoLabel setOpaque:YES];
+    [self.infoLabel setTextColor:[UIColor MCLightMainColor]];
+    
     self.voteView = [[MCVoteView alloc] initWithFrame:CGRectMake(0, 0, kVoteViewSize, kVoteViewSize)];
     [self.voteView setOpaque:YES];
     [self.voteView setVoteChangedBlock:^(MCVoteViewState state) {
@@ -141,6 +157,7 @@ static const int kVoteViewSize = 32;
     [self addSubview:self.topDivider];
     [self addSubview:self.bottomDivider];
     [self addSubview:self.contentLabel];
+    [self addSubview:self.infoLabel];
     [self addSubview:self.voteView];
 }
 

@@ -58,7 +58,7 @@
     
     NSDictionary *post = [self.posts objectAtIndex:indexPath.row];
     [cell setBothDivividersVisible:indexPath.row==0];
-    [cell setContent:[post objectForKey:@"post"] withPoints:[[post objectForKey:@"points"] integerValue]];
+    [cell setContent:[post objectForKey:@"post"] withPoints:[[post objectForKey:@"points"] integerValue] postTime:[[post objectForKey:@"time"] doubleValue] numberOfReplies:0];
     
     return cell;
 }

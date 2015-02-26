@@ -12,5 +12,6 @@
 
 - (NSString *)md5;
 - (CGSize)sizeWithFont:(UIFont *)font constrainedToWidth:(CGFloat)width;
++ (NSString *)timeToHumanReadableString:(NSTimeInterval)time;
 
 @end

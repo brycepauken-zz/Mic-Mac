@@ -13,7 +13,7 @@
 + (CGFloat)heightForCellOfWidth:(CGFloat)width withText:(NSString *)text points:(NSInteger)points;
 - (BOOL)initialized;
 - (void)setBothDivividersVisible:(BOOL)bothVisible;
-- (void)setContent:(NSString *)content withPoints:(NSInteger)points ;
+- (void)setContent:(NSString *)content withPoints:(NSInteger)points postTime:(NSTimeInterval)postTime numberOfReplies:(NSInteger)replies;
 - (void)setUpCell;
 
 @end
