@@ -15,8 +15,9 @@
 + (CGFloat)heightForCellOfWidth:(CGFloat)width withText:(NSString *)text showGroups:(BOOL)groups;
 - (BOOL)initialized;
 - (void)setBothDivividersVisible:(BOOL)bothVisible;
+- (void)setCellIndexPath:(NSIndexPath *)cellIndexPath;
 - (void)setContent:(NSString *)content withPoints:(NSInteger)points postTime:(NSTimeInterval)postTime numberOfReplies:(NSInteger)replies groups:(NSArray *)groups nonHighlightedGroupIndexes:(NSArray *)nonHighlightedGroupIndexes;
 - (void)setUpCell;
-- (void)setVoteChangedBlock:(void (^)(MCVoteViewState))voteChangedBlock;
+- (void)setVoteChangedBlock:(void (^)(MCVoteViewState, NSIndexPath *))voteChangedBlock;
 
 @end

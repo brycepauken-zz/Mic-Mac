@@ -13,6 +13,7 @@
 @interface MCPostCell()
 
 @property (nonatomic, strong) UIView *bottomDivider;
+@property (nonatomic, strong) NSIndexPath *cellIndexPath;
 @property (nonatomic, strong) UILabel *contentLabel;
 @property (nonatomic, strong) UILongPressGestureRecognizer *gestureRecognizer;
 @property (nonatomic, strong) NSMutableArray *groupLabels;
@@ -20,7 +21,7 @@
 @property (nonatomic) BOOL initialized;
 @property (nonatomic, strong) UIView *selectedBackground;
 @property (nonatomic, strong) UIView *topDivider;
-@property (nonatomic, copy) void (^voteChangedBlock)(MCVoteViewState state);
+@property (nonatomic, copy) void (^voteChangedBlock)(MCVoteViewState state, NSIndexPath *cellIndexPath);
 @property (nonatomic, strong) MCVoteView *voteView;
 
 @end
@@ -233,7 +234,7 @@ static const int kVoteViewSize = 32;
     }
     
     if(self.voteChangedBlock) {
-        self.voteChangedBlock(state);
+        self.voteChangedBlock(state, self.cellIndexPath);
     }
 }
 

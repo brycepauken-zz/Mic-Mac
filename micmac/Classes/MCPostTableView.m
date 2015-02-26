@@ -56,13 +56,14 @@
     if(![cell initialized]) {
         __weak MCPostTableView *weakSelf = self;
         [cell setUpCell];
-        [cell setVoteChangedBlock:^(MCVoteViewState state) {
-            [weakSelf voteViewStateChanged:state forIndexPath:indexPath];
+        [cell setVoteChangedBlock:^(MCVoteViewState state, NSIndexPath *cellIndexPath) {
+            [weakSelf voteViewStateChanged:state forIndexPath:cellIndexPath];
         }];
     }
     
     NSDictionary *post = [self.posts objectAtIndex:indexPath.row];
     [cell setBothDivividersVisible:indexPath.row==0];
+    [cell setCellIndexPath:indexPath];
     [cell setContent:[post objectForKey:@"post"] withPoints:[[post objectForKey:@"points"] integerValue] postTime:[[post objectForKey:@"time"] doubleValue] numberOfReplies:0 groups:nil nonHighlightedGroupIndexes:nil];
     
     return cell;
