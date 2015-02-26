@@ -10,10 +10,10 @@
 
 @interface MCPostCell : UITableViewCell <UIGestureRecognizerDelegate>
 
-+ (CGFloat)heightForCellOfWidth:(CGFloat)width withText:(NSString *)text points:(NSInteger)points;
++ (CGFloat)heightForCellOfWidth:(CGFloat)width withText:(NSString *)text showGroups:(BOOL)groups;
 - (BOOL)initialized;
 - (void)setBothDivividersVisible:(BOOL)bothVisible;
-- (void)setContent:(NSString *)content withPoints:(NSInteger)points postTime:(NSTimeInterval)postTime numberOfReplies:(NSInteger)replies;
+- (void)setContent:(NSString *)content withPoints:(NSInteger)points postTime:(NSTimeInterval)postTime numberOfReplies:(NSInteger)replies groups:(NSArray *)groups nonHighlightedGroupIndexes:(NSArray *)nonHighlightedGroupIndexes;
 - (void)setUpCell;
 
 @end

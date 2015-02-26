@@ -15,6 +15,7 @@
 @property (nonatomic, strong) UIView *bottomDivider;
 @property (nonatomic, strong) UILabel *contentLabel;
 @property (nonatomic, strong) UILongPressGestureRecognizer *gestureRecognizer;
+@property (nonatomic, strong) NSMutableArray *groupLabels;
 @property (nonatomic, strong) UILabel *infoLabel;
 @property (nonatomic) BOOL initialized;
 @property (nonatomic, strong) UIView *selectedBackground;
@@ -27,7 +28,7 @@
 
 static const int kContentFontSize = 18;
 static const int kContentVerticalMargin = 16;
-static const int kInfoFontSize = 14;
+static const int kInfoFontSize = 12;
 static const int kVoteViewHorzontalMargin = 10;
 static const int kVoteViewSize = 32;
 
@@ -52,7 +53,7 @@ static const int kVoteViewSize = 32;
     return YES;
 }
 
-+ (CGFloat)heightForCellOfWidth:(CGFloat)width withText:(NSString *)text points:(NSInteger)points {
++ (CGFloat)heightForCellOfWidth:(CGFloat)width withText:(NSString *)text showGroups:(BOOL)groups {
     static UIFont *contentFont;
     static UIFont *infoFont;
     static dispatch_once_t onceToken;
@@ -62,7 +63,8 @@ static const int kVoteViewSize = 32;
     });
     CGSize contentSize = [text sizeWithFont:contentFont constrainedToWidth:width-kVoteViewSize-kVoteViewHorzontalMargin*3];
     CGSize infoSize = [@"Just Now (Placeholder)" sizeWithFont:infoFont constrainedToWidth:MAXFLOAT];
-    return MAX(contentSize.height+kContentVerticalMargin*2.5+infoSize.height, 80);
+    CGSize groupSize = (groups?[@"GROUP (Placeholder)" sizeWithFont:infoFont constrainedToWidth:MAXFLOAT]:CGSizeZero);
+    return MAX(contentSize.height+(groupSize.height?groupSize.height+kContentVerticalMargin:0)+kContentVerticalMargin*2.5+infoSize.height, 80);
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
@@ -83,8 +85,18 @@ static const int kVoteViewSize = 32;
 
 - (void)repositionSubviews {
     CGFloat textWidth = self.bounds.size.width-self.voteView.frame.size.width-kVoteViewHorzontalMargin*3;
+    
+    CGRect lastGroupLabelFrame = CGRectMake(kVoteViewHorzontalMargin, kContentVerticalMargin, 0, 0);
+    if(self.groupLabels && self.groupLabels.count) {
+        for(UILabel *groupLabel in self.groupLabels) {
+            CGSize groupLabelSize = [groupLabel.text sizeWithFont:groupLabel.font constrainedToWidth:MAXFLOAT];
+            [groupLabel setFrame:CGRectMake(lastGroupLabelFrame.origin.x+lastGroupLabelFrame.size.width, kVoteViewHorzontalMargin, groupLabelSize.width, groupLabelSize.height)];
+            lastGroupLabelFrame = groupLabel.frame;
+        }
+    }
+    
     CGSize contentSize = [self.contentLabel.text sizeWithFont:self.contentLabel.font constrainedToWidth:textWidth];
-    [self.contentLabel setFrame:CGRectMake(kVoteViewHorzontalMargin, kContentVerticalMargin, contentSize.width, contentSize.height)];
+    [self.contentLabel setFrame:CGRectMake(kVoteViewHorzontalMargin, kContentVerticalMargin+(lastGroupLabelFrame.size.height?lastGroupLabelFrame.size.height+kContentVerticalMargin/2+2:0), contentSize.width, contentSize.height)];
     
     CGSize infoSize = [self.infoLabel.text sizeWithFont:self.infoLabel.font constrainedToWidth:MAXFLOAT];
     [self.infoLabel setFrame:CGRectMake(kVoteViewHorzontalMargin, self.bounds.size.height-infoSize.height-kVoteViewHorzontalMargin, textWidth, infoSize.height)];
@@ -96,7 +108,36 @@ static const int kVoteViewSize = 32;
     [self.topDivider setHidden:!bothVisible];
 }
 
-- (void)setContent:(NSString *)content withPoints:(NSInteger)points postTime:(NSTimeInterval)postTime numberOfReplies:(NSInteger)replies {
+- (void)setContent:(NSString *)content withPoints:(NSInteger)points postTime:(NSTimeInterval)postTime numberOfReplies:(NSInteger)replies groups:(NSArray *)groups nonHighlightedGroupIndexes:(NSArray *)nonHighlightedGroupIndexes {
+    if(self.groupLabels && self.groupLabels.count) {
+        for(UILabel *label in self.groupLabels) {
+            [label removeFromSuperview];
+        }
+    }
+    
+    //create labels at top of cell for groups
+    self.groupLabels = [[NSMutableArray alloc] initWithCapacity:groups.count];
+    for(int i=0;i<groups.count;i++) {
+        UIColor *textColor = ([nonHighlightedGroupIndexes containsObject:@(i)]?[UIColor MCLightMainColor]:[UIColor MCMainColor]);
+        
+        UILabel *groupLabel = [[UILabel alloc] init];
+        [groupLabel setFont:[UIFont fontWithName:@"Avenir-Heavy" size:kInfoFontSize]];
+        [groupLabel setOpaque:YES];
+        [groupLabel setTag:0];
+        [groupLabel setText:[NSString stringWithFormat:@"%c%@%c",(i==0)?'\0':' ', [[groups objectAtIndex:i] uppercaseString], (i==groups.count-1)?'\0':',']];
+        [groupLabel setTextColor:textColor];
+        [groupLabel sizeToFit];
+        
+        CALayer *bottomLabel = [CALayer layer];
+        [bottomLabel setBackgroundColor:textColor.CGColor];
+        [bottomLabel setContentsScale:[[UIScreen mainScreen] scale]];
+        [bottomLabel setFrame:CGRectMake(0, groupLabel.bounds.size.height, groupLabel.bounds.size.width+1, 1)];
+        [groupLabel.layer addSublayer:bottomLabel];
+        
+        [self addSubview:groupLabel];
+        [self.groupLabels addObject:groupLabel];
+    }
+    
     [self.contentLabel setText:content];
     [self.infoLabel setText:[NSString stringWithFormat:@"%@ | %li Replies",[NSString timeToHumanReadableString:postTime],replies]];
     
