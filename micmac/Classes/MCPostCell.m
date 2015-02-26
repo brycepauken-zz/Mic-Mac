@@ -41,7 +41,7 @@ static const int kVoteViewSize = 32;
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
     if(gestureRecognizer == self.gestureRecognizer) {
-        if(CGRectContainsPoint(self.voteView.frame, [touch locationInView:self])) {
+        if([self hitTest:[touch locationInView:self] withEvent:nil]==self.voteView) {
             return NO;
         }
     }
@@ -63,6 +63,13 @@ static const int kVoteViewSize = 32;
     CGSize contentSize = [text sizeWithFont:contentFont constrainedToWidth:width-kVoteViewSize-kVoteViewHorzontalMargin*3];
     CGSize infoSize = [@"Just Now (Placeholder)" sizeWithFont:infoFont constrainedToWidth:MAXFLOAT];
     return MAX(contentSize.height+kContentVerticalMargin*2.5+infoSize.height, 80);
+}
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+    if(CGRectContainsPoint(CGRectInset(self.voteView.frame, -25, -25), point)) {
+        return self.voteView;
+    }
+    return [super hitTest:point withEvent:event];
 }
 
 - (void)longGesture:(UILongPressGestureRecognizer *)gestureRecognizer {
