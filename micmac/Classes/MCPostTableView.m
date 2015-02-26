@@ -8,6 +8,7 @@
 
 #import "MCPostTableView.h"
 
+#import "MCAPIHandler.h"
 #import "MCPostCell.h"
 
 @interface MCPostTableView()
@@ -53,7 +54,11 @@
         cell = [[MCPostCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"MCPostCell"];
     }
     if(![cell initialized]) {
+        __weak MCPostTableView *weakSelf = self;
         [cell setUpCell];
+        [cell setVoteChangedBlock:^(MCVoteViewState state) {
+            [weakSelf voteViewStateChanged:state forIndexPath:indexPath];
+        }];
     }
     
     NSDictionary *post = [self.posts objectAtIndex:indexPath.row];
@@ -78,6 +83,10 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return (self.posts&&![self.posts isEqual:[NSNull null]])?self.posts.count:0;
+}
+
+- (void)voteViewStateChanged:(MCVoteViewState)state forIndexPath:(NSIndexPath *)indexPath {
+    
 }
 
 @end

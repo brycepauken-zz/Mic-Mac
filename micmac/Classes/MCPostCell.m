@@ -8,7 +8,7 @@
 
 #import "MCPostCell.h"
 
-#import "MCVoteView.h"
+#import "MCAPIHandler.h"
 
 @interface MCPostCell()
 
@@ -20,6 +20,7 @@
 @property (nonatomic) BOOL initialized;
 @property (nonatomic, strong) UIView *selectedBackground;
 @property (nonatomic, strong) UIView *topDivider;
+@property (nonatomic, copy) void (^voteChangedBlock)(MCVoteViewState state);
 @property (nonatomic, strong) MCVoteView *voteView;
 
 @end
@@ -229,6 +230,10 @@ static const int kVoteViewSize = 32;
         
         [circleOverlay.layer addSublayer:circleOverlayLayer];
         [self addSubview:circleOverlay];
+    }
+    
+    if(self.voteChangedBlock) {
+        self.voteChangedBlock(state);
     }
 }
 

@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "MCVoteView.h"
+
 @interface MCPostCell : UITableViewCell <UIGestureRecognizerDelegate>
 
 + (CGFloat)heightForCellOfWidth:(CGFloat)width withText:(NSString *)text showGroups:(BOOL)groups;
@@ -15,5 +17,6 @@
 - (void)setBothDivividersVisible:(BOOL)bothVisible;
 - (void)setContent:(NSString *)content withPoints:(NSInteger)points postTime:(NSTimeInterval)postTime numberOfReplies:(NSInteger)replies groups:(NSArray *)groups nonHighlightedGroupIndexes:(NSArray *)nonHighlightedGroupIndexes;
 - (void)setUpCell;
+- (void)setVoteChangedBlock:(void (^)(MCVoteViewState))voteChangedBlock;
 
 @end
