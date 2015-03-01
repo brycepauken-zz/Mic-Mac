@@ -11,6 +11,7 @@
 #import "MCAPIHandler.h"
 #import "MCButton.h"
 #import "MCComposeView.h"
+#import "MCGroupSelectionView.h"
 #import "MCInitialMacroView.h"
 #import "MCNavigationBar.h"
 #import "MCOptionSignifierView.h"
@@ -35,7 +36,7 @@
         __weak MCPageViewMacro *weakSelf = self;
         
         [self.navigationBar setDropDownBlock:^{
-            MCPointingView *pointingView = [[MCPointingView alloc] initWithFrame:CGRectMake(0, 0, 0, 200)];
+            MCPointingView *pointingView = [[MCPointingView alloc] initWithFrame:CGRectMake(0, 0, 0, 220)];
             
             MCButton *newButton = [[MCButton alloc] initWithFrame:CGRectMake(0, 10, 100, 40)];
             [newButton setTitle:@"View All\nPosts"];
@@ -58,6 +59,13 @@
             
             MCSearchBar *searchBar = [[MCSearchBar alloc] initWithFrame:CGRectMake(10, 90, [MCPointingView contentViewWidth]-20, 30)];
             [[pointingView contentView] addSubview:searchBar];
+            
+            MCGroupSelectionView *groupSelectionView = [[MCGroupSelectionView alloc] initWithFrame:CGRectMake(0, 125, [MCPointingView contentViewWidth], 100)];
+            [[pointingView contentView] addSubview:groupSelectionView];
+            
+            [MCAPIHandler makeRequestToFunction:@"Groups" components:@[@"initial"] parameters:nil completion:^(NSDictionary *data) {
+                [groupSelectionView setGroups:[data objectForKey:@"groups"]];
+            }];
             
             [pointingView setPoint:CGPointMake(weakSelf.bounds.size.width/2, weakSelf.navigationBar.frame.origin.y+weakSelf.navigationBar.frame.size.height+10)];
             [pointingView show];
