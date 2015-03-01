@@ -34,6 +34,12 @@
         
         _tableView = [[MCPostTableView alloc] initWithFrame:self.contentView.bounds];
         [_tableView setAutoresizingMask:UIViewAutoResizingFlexibleSize];
+        [_tableView setRefreshStarted:^{
+            [MCAPIHandler makeRequestToFunction:@"Posts" components:@[@"micro", @"new"] parameters:nil completion:^(NSDictionary *data) {
+                [weakSelf.tableView endRefresh];
+                [weakSelf.tableView setPosts:[data objectForKey:@"posts"]];
+            }];
+        }];
         [self.contentView addSubview:_tableView];
     }
     return self;

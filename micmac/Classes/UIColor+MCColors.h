@@ -10,6 +10,7 @@
 
 @interface UIColor (MCColors)
 
++ (UIColor *)MCLighterMainColor;
 + (UIColor *)MCLightGrayColor;
 + (UIColor *)MCLightMainColor;
 + (UIColor *)MCMainColor;

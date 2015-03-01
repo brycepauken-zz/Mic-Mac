@@ -15,14 +15,18 @@
 @property (nonatomic, strong) CADisplayLink *displayLink;
 @property (nonatomic, strong) NSRunLoop *displayLinkRunLoop;
 @property (nonatomic) CFTimeInterval displayLinkTimestamp;
+@property (nonatomic) BOOL isHiding;
+@property (nonatomic) BOOL shouldHideCompletely;
 
 @end
 
 @implementation MCActivityIndicatorView
 
-- (instancetype)init {
-    self = [super initWithFrame:CGRectMake(0, 0, 80, 50)];
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
     if(self) {
+        _shouldHideCompletely = YES;
+        
         _circlesOverlayMask = [[CAShapeLayer alloc] init];
         [_circlesOverlayMask setFrame:self.bounds];
         
@@ -40,16 +44,24 @@
     return self;
 }
 
+- (instancetype)init {
+    return [self initWithFrame:CGRectMake(0, 0, 80, 50)];
+}
+
 - (void)displayLinkCalled {
     if(!self.displayLinkTimestamp) {
         self.displayLinkTimestamp = self.displayLink.timestamp;
     }
     CFTimeInterval elapsedTime = self.displayLink.timestamp-self.displayLinkTimestamp;
     elapsedTime = elapsedTime - trunc(elapsedTime);
+    if(self.isHiding && elapsedTime > 0.9) {
+        [self.displayLink removeFromRunLoop:self.displayLinkRunLoop forMode:NSRunLoopCommonModes];
+        self.displayLinkRunLoop = nil;
+    }
     
-    static CGFloat addRadius = 16;
+    CGFloat addRadius = self.bounds.size.height*0.32;
     static CGFloat gravity = -5;
-    static CGFloat minRadius = 8;
+    CGFloat minRadius = self.bounds.size.height*0.16;
     static CGFloat upwardVelocity = 1.5;
     
     CGFloat t1 = elapsedTime;
@@ -73,6 +85,7 @@
 
 - (void)startAnimatingWithFadeIn:(BOOL)fadeIn {
     if(!self.displayLinkRunLoop) {
+        self.isHiding = NO;
         self.displayLinkTimestamp = 0;
         self.displayLinkRunLoop = [NSRunLoop currentRunLoop];
         [self.displayLink addToRunLoop:self.displayLinkRunLoop forMode:NSRunLoopCommonModes];
@@ -87,13 +100,18 @@
 
 - (void)stopAnimating {
     if(self.displayLinkRunLoop) {
-        [UIView animateWithDuration:0.2 animations:^{
-            [self setAlpha:0];
-            [self setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.5, 0.5)];
-        } completion:^(BOOL finished){
-            [self.displayLink removeFromRunLoop:self.displayLinkRunLoop forMode:NSRunLoopCommonModes];
-            self.displayLinkRunLoop = nil;
-        }];
+        if(self.shouldHideCompletely) {
+            [UIView animateWithDuration:0.2 animations:^{
+                [self setAlpha:0];
+                [self setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 0.5, 0.5)];
+            } completion:^(BOOL finished){
+                [self.displayLink removeFromRunLoop:self.displayLinkRunLoop forMode:NSRunLoopCommonModes];
+                self.displayLinkRunLoop = nil;
+            }];
+        }
+        else {
+            [self setIsHiding:YES];
+        }
     }
 }
 

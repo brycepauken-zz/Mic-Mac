@@ -8,12 +8,16 @@
 
 #import "MCPostTableView.h"
 
+#import "MCActivityIndicatorView.h"
 #import "MCAPIHandler.h"
 #import "MCPostCell.h"
 
 @interface MCPostTableView()
 
+@property (nonatomic, strong) UITableViewController *controller;
 @property (nonatomic, strong) NSArray *posts;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (nonatomic, copy) void (^refreshStarted)();
 
 @end
 
@@ -22,6 +26,13 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if(self) {
+        _controller = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
+        [_controller setTableView:self];
+        
+        _refreshControl = [[UIRefreshControl alloc] init];
+        [_refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+        [_controller setRefreshControl:_refreshControl];
+        
         [self registerClass:[MCPostCell class] forCellReuseIdentifier:@"MCPostCell"];
         [self setBackgroundColor:[UIColor MCOffWhiteColor]];
         [self setDataSource:self];
@@ -31,8 +42,18 @@
     return self;
 }
 
+- (void)endRefresh {
+    [self.refreshControl endRefreshing];
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
+}
+
+- (void)refresh {
+    if(self.refreshStarted) {
+        self.refreshStarted();
+    }
 }
 
 - (void)setFrame:(CGRect)frame {

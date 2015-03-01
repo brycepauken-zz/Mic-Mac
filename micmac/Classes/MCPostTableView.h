@@ -10,6 +10,8 @@
 
 @interface MCPostTableView : UITableView <UITableViewDataSource, UITableViewDelegate>
 
+- (void)endRefresh;
 - (void)setPosts:(NSArray *)posts;
+- (void)setRefreshStarted:(void (^)())refreshStarted;
 
 @end

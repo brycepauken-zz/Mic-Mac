@@ -10,6 +10,7 @@
 
 @interface MCActivityIndicatorView : UIView
 
+- (void)setShouldHideCompletely:(BOOL)shouldHideCompletely;
 - (void)startAnimatingWithFadeIn:(BOOL)fadeIn;
 - (void)stopAnimating;
 

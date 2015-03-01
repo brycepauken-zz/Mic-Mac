@@ -10,6 +10,35 @@
 
 @implementation UIColor (MCColors)
 
+- (UIColor *)darkerColorByPercent:(CGFloat)percent {
+    percent = 1-percent;
+    CGFloat r, g, b, a;
+    if ([self getRed:&r green:&g blue:&b alpha:&a]) {
+        return [UIColor colorWithRed:r*percent green:g*percent blue:b*percent alpha:a];
+    }
+    return nil;
+}
+
+- (UIColor *)lighterColorByPercent:(CGFloat)percent {
+    percent = 1-percent;
+    CGFloat r, g, b, a;
+    if ([self getRed:&r green:&g blue:&b alpha:&a]) {
+        return [UIColor colorWithRed:1-(1-r)*percent green:1-(1-g)*percent blue:1-(1-b)*percent alpha:a];
+    }
+    return nil;
+}
+
++ (UIColor *)MCLighterMainColor {
+    static UIColor *lighterMainColor = nil;
+    static dispatch_once_t dispatchOnceToken;
+    
+    dispatch_once(&dispatchOnceToken, ^{
+        lighterMainColor = [[self MCMainColor] lighterColorByPercent:0.35];
+    });
+    
+    return lighterMainColor;
+}
+
 + (UIColor *)MCLightGrayColor {
     static UIColor *lightGrayColor = nil;
     static dispatch_once_t dispatchOnceToken;
@@ -26,7 +55,7 @@
     static dispatch_once_t dispatchOnceToken;
     
     dispatch_once(&dispatchOnceToken, ^{
-        lightMainColor = [UIColor colorWithRed:237/255.0f green:128/255.0f blue:133/255.0f alpha:1];
+        lightMainColor = [[self MCMainColor] lighterColorByPercent:0.25];
     });
     
     return lightMainColor;
