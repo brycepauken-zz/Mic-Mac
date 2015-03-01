@@ -16,6 +16,7 @@
 #import "MCOptionSignifierView.h"
 #import "MCPointingView.h"
 #import "MCPostTableView.h"
+#import "MCSearchBar.h"
 #import "MCSettingsManager.h"
 
 @interface MCPageViewMacro()
@@ -54,6 +55,9 @@
             [optionSignifierBottom setCenter:CGPointMake([MCPointingView contentViewWidth]/2, 70)];
             [optionSignifierBottom setTitle:@"or search for a bubble"];
             [[pointingView contentView] addSubview:optionSignifierBottom];
+            
+            MCSearchBar *searchBar = [[MCSearchBar alloc] initWithFrame:CGRectMake(10, 90, [MCPointingView contentViewWidth]-20, 30)];
+            [[pointingView contentView] addSubview:searchBar];
             
             [pointingView setPoint:CGPointMake(weakSelf.bounds.size.width/2, weakSelf.navigationBar.frame.origin.y+weakSelf.navigationBar.frame.size.height+10)];
             [pointingView show];
