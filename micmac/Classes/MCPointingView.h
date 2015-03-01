@@ -10,6 +10,8 @@
 
 @interface MCPointingView : UIView
 
+- (UIView *)contentView;
++ (CGFloat)contentViewWidth;
 - (void)setPoint:(CGPoint)point;
 - (void)show;
 

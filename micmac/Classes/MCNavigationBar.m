@@ -11,6 +11,9 @@
 @interface MCNavigationBar()
 
 @property (nonatomic, strong) UIView *bottomOverlay;
+@property (nonatomic, copy) void (^dropDownBlock)();
+@property (nonatomic, strong) UIView *dropDownIndicator;
+@property (nonatomic, strong) CAShapeLayer *dropDownPathLayer;
 @property (nonatomic, strong) UIButton *leftButton;
 @property (nonatomic, copy) void (^leftButtonTapped)();
 @property (nonatomic, strong) UIButton *rightButton;
@@ -20,6 +23,9 @@
 @end
 
 @implementation MCNavigationBar
+
+static const int dropDownIndicatorHeight = 4;
+static const int dropDownIndicatorWidth = 8;
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -34,11 +40,29 @@
         [_rightButton setHidden:YES];
         [self addSubview:_rightButton];
         
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(self.bounds.size.width/4, 20, self.bounds.size.width/2, self.bounds.size.height-20)];
-        [_titleLabel setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleWidth];
+        _titleLabel = [[UILabel alloc] init];
+        [_titleLabel setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin];
+        [_titleLabel setClipsToBounds:NO];
         [_titleLabel setFont:[UIFont fontWithName:@"Avenir-Heavy" size:20]];
         [_titleLabel setTextAlignment:NSTextAlignmentCenter];
         [_titleLabel setTextColor:[UIColor MCOffWhiteColor]];
+        UILongPressGestureRecognizer *titleTapRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(titleTapped:)];
+        [titleTapRecognizer setMinimumPressDuration:0.001];
+        [_titleLabel addGestureRecognizer:titleTapRecognizer];
+        
+        _dropDownIndicator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, dropDownIndicatorWidth, dropDownIndicatorHeight)];
+        UIBezierPath *dropDownPath = [[UIBezierPath alloc] init];
+        [dropDownPath moveToPoint:CGPointMake(_dropDownIndicator.bounds.size.width/2, _dropDownIndicator.bounds.size.height)];
+        [dropDownPath addLineToPoint:CGPointMake(_dropDownIndicator.bounds.size.width, 0)];
+        [dropDownPath addLineToPoint:CGPointZero];
+        [dropDownPath closePath];
+        _dropDownPathLayer = [[CAShapeLayer alloc] init];
+        [_dropDownPathLayer setFillColor:[UIColor MCOffWhiteColor].CGColor];
+        [_dropDownPathLayer setFrame:_dropDownIndicator.bounds];
+        [_dropDownPathLayer setPath:dropDownPath.CGPath];
+        [_dropDownIndicator setHidden:YES];
+        [_dropDownIndicator.layer addSublayer:_dropDownPathLayer];
+        [_titleLabel addSubview:_dropDownIndicator];
         
         _bottomOverlay = [[UIView alloc] initWithFrame:CGRectMake(0, self.bounds.size.height, self.bounds.size.width, 4)];
         [_bottomOverlay setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleWidth];
@@ -64,11 +88,14 @@
 }
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-    if(CGRectContainsPoint(CGRectInset(self.leftButton.frame, -20, -20), point)) {
+    if(!self.leftButton.hidden && CGRectContainsPoint(CGRectInset(self.leftButton.frame, -20, -20), point)) {
         return self.leftButton;
     }
-    if(CGRectContainsPoint(CGRectInset(self.rightButton.frame, -20, -20), point)) {
+    if(!self.rightButton.hidden && CGRectContainsPoint(CGRectInset(self.rightButton.frame, -20, -20), point)) {
         return self.rightButton;
+    }
+    if(CGRectContainsPoint(CGRectInset(self.titleLabel.frame, -20, -20), point)) {
+        return self.titleLabel;
     }
     return [super hitTest:point withEvent:event];
 }
@@ -88,6 +115,11 @@
     UIGraphicsEndImageContext();
     
     return result;
+}
+
+- (void)setDropDownBlock:(void (^)())dropDownBlock {
+    _dropDownBlock = dropDownBlock;
+    [self.dropDownIndicator setHidden:!dropDownBlock];
 }
 
 - (void)setFrame:(CGRect)frame {
@@ -115,7 +147,28 @@
 }
 
 - (void)setTitle:(NSString *)title {
+    CGFloat verticalCenter = 20+(self.bounds.size.height-20)/2;
     [self.titleLabel setText:title];
+    [self.titleLabel sizeToFit];
+    [self.titleLabel setCenter:CGPointMake(self.bounds.size.width/2, verticalCenter)];
+    [self.dropDownIndicator setCenter:CGPointMake(self.titleLabel.bounds.size.width+10, self.titleLabel.bounds.size.height/2)];
+}
+
+- (void)titleTapped:(UILongPressGestureRecognizer *)gestureRecognizer {
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    if(gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        [self.titleLabel setTextColor:[UIColor MCMoreOffWhiteColor]];
+        [self.dropDownPathLayer setFillColor:[UIColor MCMoreOffWhiteColor].CGColor];
+    }
+    else if(gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        [self.titleLabel setTextColor:[UIColor MCOffWhiteColor]];
+        [self.dropDownPathLayer setFillColor:[UIColor MCOffWhiteColor].CGColor];
+    }
+    [CATransaction commit];
+    if(gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+        self.dropDownBlock();
+    }
 }
 
 - (void)updateBottomOverlayMask {

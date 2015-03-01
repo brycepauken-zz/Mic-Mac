@@ -43,6 +43,7 @@
 		02921A0D1A7B8E2B00094182 /* ButtonNo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02921A091A7B8E2B00094182 /* ButtonNo@2x.png */; };
 		02921A0E1A7B8E2B00094182 /* ButtonYes.png in Resources */ = {isa = PBXBuildFile; fileRef = 02921A0A1A7B8E2B00094182 /* ButtonYes.png */; };
 		02921A0F1A7B8E2B00094182 /* ButtonYes@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 02921A0B1A7B8E2B00094182 /* ButtonYes@2x.png */; };
+		02B0D5E51AA2FD5800907A4D /* MCOptionSignifierView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B0D5E41AA2FD5800907A4D /* MCOptionSignifierView.m */; };
 		02B1B51A1A4B780E00474F4C /* MCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B1B50F1A4B780E00474F4C /* MCAppDelegate.m */; };
 		02B1B51B1A4B780E00474F4C /* MCCommon.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B1B5111A4B780E00474F4C /* MCCommon.m */; };
 		02B1B51C1A4B780E00474F4C /* MCMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02B1B5131A4B780E00474F4C /* MCMainView.m */; };
@@ -115,6 +116,8 @@
 		02921A091A7B8E2B00094182 /* ButtonNo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonNo@2x.png"; sourceTree = "<group>"; };
 		02921A0A1A7B8E2B00094182 /* ButtonYes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ButtonYes.png; sourceTree = "<group>"; };
 		02921A0B1A7B8E2B00094182 /* ButtonYes@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ButtonYes@2x.png"; sourceTree = "<group>"; };
+		02B0D5E31AA2FD5800907A4D /* MCOptionSignifierView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCOptionSignifierView.h; sourceTree = "<group>"; };
+		02B0D5E41AA2FD5800907A4D /* MCOptionSignifierView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCOptionSignifierView.m; sourceTree = "<group>"; };
 		02B1B50E1A4B780E00474F4C /* MCAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCAppDelegate.h; sourceTree = "<group>"; };
 		02B1B50F1A4B780E00474F4C /* MCAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCAppDelegate.m; sourceTree = "<group>"; };
 		02B1B5101A4B780E00474F4C /* MCCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCCommon.h; sourceTree = "<group>"; };
@@ -267,6 +270,8 @@
 				02B1B5131A4B780E00474F4C /* MCMainView.m */,
 				027DCC2B1A7F007A0054EEB8 /* MCNavigationBar.h */,
 				027DCC2C1A7F007A0054EEB8 /* MCNavigationBar.m */,
+				02B0D5E31AA2FD5800907A4D /* MCOptionSignifierView.h */,
+				02B0D5E41AA2FD5800907A4D /* MCOptionSignifierView.m */,
 				02F454431A82F86100A689F3 /* MCSettingsManager.h */,
 				02F454441A82F86100A689F3 /* MCSettingsManager.m */,
 				02B1B5141A4B780E00474F4C /* MCStartView.h */,
@@ -433,6 +438,7 @@
 				02B1B51B1A4B780E00474F4C /* MCCommon.m in Sources */,
 				02C6BBD41A85AC3D003DAC24 /* MCActivityIndicatorView.m in Sources */,
 				025A2F771A9D57B70091DB04 /* MCGroupButton.m in Sources */,
+				02B0D5E51AA2FD5800907A4D /* MCOptionSignifierView.m in Sources */,
 				0251DD911A9D44C90002550E /* MCGroupSelectionView.m in Sources */,
 				02921A071A7B8B2400094182 /* MCAlertViewButton.m in Sources */,
 				02B1B51A1A4B780E00474F4C /* MCAppDelegate.m in Sources */,

@@ -77,7 +77,7 @@
     static dispatch_once_t dispatchOnceToken;
     
     dispatch_once(&dispatchOnceToken, ^{
-        moreOffBlackColor = [UIColor colorWithWhite:0.1 alpha:1];
+        moreOffBlackColor = [UIColor colorWithWhite:0.15 alpha:1];
     });
     
     return moreOffBlackColor;
@@ -88,7 +88,7 @@
     static dispatch_once_t dispatchOnceToken;
     
     dispatch_once(&dispatchOnceToken, ^{
-        moreOffWhiteColor = [UIColor colorWithWhite:0.9 alpha:1];
+        moreOffWhiteColor = [UIColor colorWithWhite:0.85 alpha:1];
     });
     
     return moreOffWhiteColor;

@@ -9,8 +9,11 @@
 #import "MCPageViewMicro.h"
 
 #import "MCAPIHandler.h"
+#import "MCButton.h"
 #import "MCComposeView.h"
 #import "MCNavigationBar.h"
+#import "MCOptionSignifierView.h"
+#import "MCPointingView.h"
 #import "MCPostTableView.h"
 #import "MCSettingsManager.h"
 
@@ -27,6 +30,24 @@
     if(self) {
         __weak MCPageViewMicro *weakSelf = self;
         
+        [self.navigationBar setDropDownBlock:^{
+            MCPointingView *pointingView = [[MCPointingView alloc] initWithFrame:CGRectMake(0, 0, 0, 60)];
+            
+            MCButton *newButton = [[MCButton alloc] initWithFrame:CGRectMake(0, 10, 100, 40)];
+            [newButton setTitle:@"New"];
+            [[pointingView contentView] addSubview:newButton];
+            
+            MCButton *hotButton = [[MCButton alloc] initWithFrame:CGRectMake([MCPointingView contentViewWidth]-100, 10, 100, 40)];
+            [hotButton setTitle:@"Hot"];
+            [[pointingView contentView] addSubview:hotButton];
+            
+            MCOptionSignifierView *optionSignifier = [[MCOptionSignifierView alloc] initWithFrame:CGRectMake(0, 0, [MCPointingView contentViewWidth]-210, 40)];
+            [optionSignifier setCenter:CGPointMake([MCPointingView contentViewWidth]/2, 30)];
+            [[pointingView contentView] addSubview:optionSignifier];
+            
+            [pointingView setPoint:CGPointMake(weakSelf.bounds.size.width/2, weakSelf.navigationBar.frame.origin.y+weakSelf.navigationBar.frame.size.height+10)];
+            [pointingView show];
+        }];
         [self.navigationBar setRightButtonImage:[UIImage imageNamed:@"Compose"]];
         [self.navigationBar setRightButtonTapped:^{
             [weakSelf showComposeView];

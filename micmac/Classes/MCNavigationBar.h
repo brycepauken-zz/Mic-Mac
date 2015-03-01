@@ -10,6 +10,7 @@
 
 @interface MCNavigationBar : UIView
 
+- (void)setDropDownBlock:(void (^)())dropDownBlock;
 - (void)setLeftButtonImage:(UIImage *)image;
 - (void)setLeftButtonTapped:(void (^)())leftButtonTapped;
 - (void)setRightButtonImage:(UIImage *)image;
