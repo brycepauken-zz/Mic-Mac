@@ -10,4 +10,6 @@
 
 @interface MCOptionSignifierView : UIView
 
+- (void)setTitle:(NSString *)title;
+
 @end

@@ -22,6 +22,7 @@
         _label = [[UILabel alloc] init];
         [_label setAutoresizingMask:UIViewAutoResizingFlexibleMargins];
         [_label setFont:[UIFont fontWithName:@"Avenir-Heavy" size:20]];
+        [_label setNumberOfLines:2];
         [_label setTextAlignment:NSTextAlignmentCenter];
         [_label setTextColor:[UIColor MCOffWhiteColor]];
         

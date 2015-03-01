@@ -155,19 +155,21 @@ static const int dropDownIndicatorWidth = 8;
 }
 
 - (void)titleTapped:(UILongPressGestureRecognizer *)gestureRecognizer {
-    [CATransaction begin];
-    [CATransaction setDisableActions:YES];
-    if(gestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        [self.titleLabel setTextColor:[UIColor MCMoreOffWhiteColor]];
-        [self.dropDownPathLayer setFillColor:[UIColor MCMoreOffWhiteColor].CGColor];
-    }
-    else if(gestureRecognizer.state == UIGestureRecognizerStateEnded) {
-        [self.titleLabel setTextColor:[UIColor MCOffWhiteColor]];
-        [self.dropDownPathLayer setFillColor:[UIColor MCOffWhiteColor].CGColor];
-    }
-    [CATransaction commit];
-    if(gestureRecognizer.state == UIGestureRecognizerStateEnded) {
-        self.dropDownBlock();
+    if(self.dropDownBlock) {
+        [CATransaction begin];
+        [CATransaction setDisableActions:YES];
+        if(gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+            [self.titleLabel setTextColor:[UIColor MCMoreOffWhiteColor]];
+            [self.dropDownPathLayer setFillColor:[UIColor MCMoreOffWhiteColor].CGColor];
+        }
+        else if(gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+            [self.titleLabel setTextColor:[UIColor MCOffWhiteColor]];
+            [self.dropDownPathLayer setFillColor:[UIColor MCOffWhiteColor].CGColor];
+        }
+        [CATransaction commit];
+        if(gestureRecognizer.state == UIGestureRecognizerStateEnded) {
+            self.dropDownBlock();
+        }
     }
 }
 

@@ -51,8 +51,13 @@ static const int kLabelMargin = 5;
     [self.divider setFrame:CGRectMake(0, self.bounds.size.height/2-1, self.bounds.size.width, 1)];
     [self.label setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2)];
     
-    CGFloat labelSize = MIN(self.label.frame.size.width, self.label.frame.size.height)+kLabelMargin*2;
-    [self.labelBackground setFrame:CGRectMake((self.bounds.size.width-labelSize)/2, (self.bounds.size.height-labelSize)/2, labelSize, labelSize)];
+    [self.labelBackground setFrame:CGRectMake((self.bounds.size.width-self.label.frame.size.width)/2-kLabelMargin, (self.bounds.size.height-self.label.frame.size.height)/2-kLabelMargin, self.label.frame.size.width+kLabelMargin*2, self.label.frame.size.height+kLabelMargin*2)];
+}
+
+- (void)setTitle:(NSString *)title {
+    [self.label setText:title];
+    [self.label sizeToFit];
+    [self setNeedsLayout];
 }
 
 @end

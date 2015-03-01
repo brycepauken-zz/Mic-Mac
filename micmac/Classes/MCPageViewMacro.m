@@ -9,9 +9,12 @@
 #import "MCPageViewMacro.h"
 
 #import "MCAPIHandler.h"
+#import "MCButton.h"
 #import "MCComposeView.h"
 #import "MCInitialMacroView.h"
 #import "MCNavigationBar.h"
+#import "MCOptionSignifierView.h"
+#import "MCPointingView.h"
 #import "MCPostTableView.h"
 #import "MCSettingsManager.h"
 
@@ -30,6 +33,31 @@
     if(self) {
         __weak MCPageViewMacro *weakSelf = self;
         
+        [self.navigationBar setDropDownBlock:^{
+            MCPointingView *pointingView = [[MCPointingView alloc] initWithFrame:CGRectMake(0, 0, 0, 200)];
+            
+            MCButton *newButton = [[MCButton alloc] initWithFrame:CGRectMake(0, 10, 100, 40)];
+            [newButton setTitle:@"View All\nPosts"];
+            [newButton setTitleSize:12];
+            [[pointingView contentView] addSubview:newButton];
+            
+            MCButton *hotButton = [[MCButton alloc] initWithFrame:CGRectMake([MCPointingView contentViewWidth]-100, 10, 100, 40)];
+            [hotButton setTitle:@"Discover\nBubbles"];
+            [hotButton setTitleSize:12];
+            [[pointingView contentView] addSubview:hotButton];
+            
+            MCOptionSignifierView *optionSignifier = [[MCOptionSignifierView alloc] initWithFrame:CGRectMake(0, 0, [MCPointingView contentViewWidth]-210, 40)];
+            [optionSignifier setCenter:CGPointMake([MCPointingView contentViewWidth]/2, 30)];
+            [[pointingView contentView] addSubview:optionSignifier];
+            
+            MCOptionSignifierView *optionSignifierBottom = [[MCOptionSignifierView alloc] initWithFrame:CGRectMake(0, 0, [MCPointingView contentViewWidth]-20, 40)];
+            [optionSignifierBottom setCenter:CGPointMake([MCPointingView contentViewWidth]/2, 70)];
+            [optionSignifierBottom setTitle:@"or search for a bubble"];
+            [[pointingView contentView] addSubview:optionSignifierBottom];
+            
+            [pointingView setPoint:CGPointMake(weakSelf.bounds.size.width/2, weakSelf.navigationBar.frame.origin.y+weakSelf.navigationBar.frame.size.height+10)];
+            [pointingView show];
+        }];
         [self.navigationBar setRightButtonImage:[UIImage imageNamed:@"Compose"]];
         [self.navigationBar setRightButtonTapped:^{
             [weakSelf showComposeView];
