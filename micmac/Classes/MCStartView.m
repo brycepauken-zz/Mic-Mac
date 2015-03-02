@@ -505,8 +505,7 @@
             }
             else {
                 CLLocation *location = [locations lastObject];
-                [MCAPIHandler makeRequestToFunction:@"Locationinfo" components:@[[NSString stringWithFormat:@"%f,-117.233840",location.coordinate.latitude]] parameters:nil completion:^(NSDictionary *data) {
-                    NSLog(@"hello %@",[NSString stringWithFormat:@"%f,%f",location.coordinate.latitude,location.coordinate.longitude]);
+                [MCAPIHandler makeRequestToFunction:@"Locationinfo" components:@[[NSString stringWithFormat:@"%f,%f",location.coordinate.latitude,location.coordinate.longitude]] parameters:nil completion:^(NSDictionary *data) {
                     [self setCollegeID:[data objectForKey:@"id"]];
                     [self setCollegeName:[data objectForKey:@"name"]];
                     [self updateCollegeLabel];

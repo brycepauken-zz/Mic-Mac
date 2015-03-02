@@ -12,6 +12,7 @@
 
 - (UIView *)contentView;
 + (CGFloat)contentViewWidth;
+- (void)dismiss;
 - (void)setPoint:(CGPoint)point;
 - (void)show;
 

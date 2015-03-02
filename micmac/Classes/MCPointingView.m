@@ -56,6 +56,8 @@ static const int kPointingViewCornerRadius = 8;
         [_windowOverlay setAlpha:0];
         [_windowOverlay setAutoresizingMask:UIViewAutoResizingFlexibleSize];
         [_windowOverlay setBackgroundColor:[UIColor blackColor]];
+        UITapGestureRecognizer *windowOverlayTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(windowOverlayTapped)];
+        [_windowOverlay addGestureRecognizer:windowOverlayTapRecognizer];
         
         _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayLinkCalled)];
         [_displayLink setFrameInterval:1];
@@ -72,6 +74,13 @@ static const int kPointingViewCornerRadius = 8;
 
 + (CGFloat)contentViewWidth {
     return kPointingViewContentViewWidth;
+}
+
+- (void)dismiss {
+    [self setUserInteractionEnabled:NO];
+    [UIView animateWithDuration:0.2 animations:^{
+        [self setAlpha:0];
+    }];
 }
 
 - (void)displayLinkCalled {
@@ -96,12 +105,12 @@ static const int kPointingViewCornerRadius = 8;
 
 - (void)layoutSubviews {
     [self.mainView setFrame:CGRectMake((self.bounds.size.width-kPointingViewContentViewWidth)/2-kPointingViewBorderSize, self.point.y, kPointingViewContentViewWidth+kPointingViewBorderSize*2, kPointingViewArrowHeight+self.contentViewHeight+kPointingViewBorderSize*2)];
-    
 }
 
 - (void)show {
     UIView *appMainView = [MCCommon mainView];
     [self setFrame:appMainView.bounds];
+    [self setUserInteractionEnabled:YES];
     
     [self.contentView setFrame:CGRectMake(kPointingViewBorderSize, kPointingViewArrowHeight+kPointingViewBorderSize, kPointingViewContentViewWidth, self.contentViewHeight)];
     [self.contentView setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 0)];
@@ -151,13 +160,11 @@ static const int kPointingViewCornerRadius = 8;
         [self.mainViewBorder setPath:mask.CGPath];
     }
     
-    
-    //UIBezierPath *mask = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, kPointingViewArrowHeight, self.mainView.bounds.size.width, rectHeight) cornerRadius:kPointingViewCornerRadius];
-    //[mask appendPath:arrow];
-    
-    
-    
     [self.contentView setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, contentViewScale)];
+}
+
+- (void)windowOverlayTapped {
+    [self dismiss];
 }
 
 @end
