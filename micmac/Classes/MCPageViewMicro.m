@@ -19,7 +19,10 @@
 
 @interface MCPageViewMicro()
 
+@property (nonatomic, strong) NSString *currentSection;
+@property (nonatomic, strong) MCPointingView *pointingView;
 @property (nonatomic, strong) MCPostTableView *tableView;
+@property (nonatomic, strong) NSMutableDictionary *sections;
 
 @end
 
@@ -30,23 +33,30 @@
     if(self) {
         __weak MCPageViewMicro *weakSelf = self;
         
+        _currentSection = @"new";
+        _sections = [NSMutableDictionary dictionaryWithObjectsAndKeys:@[],@"new", @[],@"hot", nil];
+        
         [self.navigationBar setDropDownBlock:^{
-            MCPointingView *pointingView = [[MCPointingView alloc] initWithFrame:CGRectMake(0, 0, 0, 60)];
+            weakSelf.pointingView = [[MCPointingView alloc] initWithFrame:CGRectMake(0, 0, 0, 60)];
             
             MCButton *newButton = [[MCButton alloc] initWithFrame:CGRectMake(0, 10, 100, 40)];
+            [newButton addTarget:weakSelf action:@selector(dropDownButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+            [newButton setTag:0];
             [newButton setTitle:@"New"];
-            [[pointingView contentView] addSubview:newButton];
+            [[weakSelf.pointingView contentView] addSubview:newButton];
             
             MCButton *hotButton = [[MCButton alloc] initWithFrame:CGRectMake([MCPointingView contentViewWidth]-100, 10, 100, 40)];
+            [hotButton addTarget:weakSelf action:@selector(dropDownButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+            [hotButton setTag:1];
             [hotButton setTitle:@"Hot"];
-            [[pointingView contentView] addSubview:hotButton];
+            [[weakSelf.pointingView contentView] addSubview:hotButton];
             
             MCOptionSignifierView *optionSignifier = [[MCOptionSignifierView alloc] initWithFrame:CGRectMake(0, 0, [MCPointingView contentViewWidth]-210, 40)];
             [optionSignifier setCenter:CGPointMake([MCPointingView contentViewWidth]/2, 30)];
-            [[pointingView contentView] addSubview:optionSignifier];
+            [[weakSelf.pointingView contentView] addSubview:optionSignifier];
             
-            [pointingView setPoint:CGPointMake(weakSelf.bounds.size.width/2, weakSelf.navigationBar.frame.origin.y+weakSelf.navigationBar.frame.size.height+10)];
-            [pointingView show];
+            [weakSelf.pointingView setPoint:CGPointMake(weakSelf.bounds.size.width/2, weakSelf.navigationBar.frame.origin.y+weakSelf.navigationBar.frame.size.height+10)];
+            [weakSelf.pointingView show];
         }];
         [self.navigationBar setRightButtonImage:[UIImage imageNamed:@"Compose"]];
         [self.navigationBar setRightButtonTapped:^{
@@ -56,14 +66,26 @@
         _tableView = [[MCPostTableView alloc] initWithFrame:self.contentView.bounds];
         [_tableView setAutoresizingMask:UIViewAutoResizingFlexibleSize];
         [_tableView setRefreshStarted:^{
-            [MCAPIHandler makeRequestToFunction:@"Posts" components:@[@"micro", @"new"] parameters:nil completion:^(NSDictionary *data) {
-                [weakSelf.tableView endRefresh];
-                [weakSelf.tableView setPosts:[data objectForKey:@"posts"]];
-            }];
+            [weakSelf reloadPosts];
+        }];
+        [_tableView setPostsUpdated:^(NSArray *posts) {
+            [weakSelf.sections setObject:posts forKey:weakSelf.currentSection];
         }];
         [self.contentView addSubview:_tableView];
+        
+        [self updateTitle];
     }
     return self;
+}
+
+- (void)dropDownButtonTapped:(UIButton *)button {
+    if(self.pointingView) {
+        [self.pointingView dismiss];
+        [self setPointingView:nil];
+    }
+    [self setCurrentSection:(button.tag==0?@"new":@"hot")];
+    [self updateTitle];
+    [self.tableView setPosts:[self.sections objectForKey:self.currentSection]];
 }
 
 - (void)hideComposeView:(MCComposeView *)composeView {
@@ -81,8 +103,13 @@
 
 - (void)reloadPosts {
     __weak MCPageViewMicro *weakSelf = self;
-    [MCAPIHandler makeRequestToFunction:@"Posts" components:@[@"micro", @"new"] parameters:nil completion:^(NSDictionary *data) {
-        [weakSelf.tableView setPosts:[data objectForKey:@"posts"]];
+    [MCAPIHandler makeRequestToFunction:@"Posts" components:@[@"micro", self.currentSection] parameters:nil completion:^(NSDictionary *data) {
+        [weakSelf.tableView endRefresh];
+        if(data) {
+            [weakSelf.sections setObject:[data objectForKey:@"new"] forKey:@"new"];
+            [weakSelf.sections setObject:[data objectForKey:@"hot"] forKey:@"hot"];
+            [weakSelf.tableView setPosts:[weakSelf.sections objectForKey:weakSelf.currentSection]];
+        }
     }];
 }
 
@@ -108,6 +135,10 @@
     }];
     
     [composeView show];
+}
+
+- (void)updateTitle {
+    [self.navigationBar setTitle:[NSString stringWithFormat:@"%@ Posts",[_currentSection capitalizedString]]];
 }
 
 @end

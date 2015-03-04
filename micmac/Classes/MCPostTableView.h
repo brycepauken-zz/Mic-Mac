@@ -12,6 +12,7 @@
 
 - (void)endRefresh;
 - (void)setPosts:(NSArray *)posts;
+- (void)setPostsUpdated:(void (^)(NSArray *))postsUpdated;
 - (void)setRefreshStarted:(void (^)())refreshStarted;
 
 @end

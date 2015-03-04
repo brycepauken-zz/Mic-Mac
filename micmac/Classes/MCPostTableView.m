@@ -16,6 +16,7 @@
 
 @property (nonatomic, strong) UITableViewController *controller;
 @property (nonatomic, strong) NSArray *posts;
+@property (nonatomic, copy) void (^postsUpdated)(NSArray *posts);
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, copy) void (^refreshStarted)();
 
@@ -143,6 +144,10 @@
     }
     
     [post setObject:@([[post objectForKey:@"points"] integerValue]+(state-previousState)) forKey:@"points"];
+    
+    if(self.postsUpdated) {
+        self.postsUpdated(self.posts);
+    }
 }
 
 @end

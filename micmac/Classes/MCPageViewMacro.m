@@ -115,8 +115,8 @@
 
 - (void)reloadPosts {
     __weak MCPageViewMacro *weakSelf = self;
-    [MCAPIHandler makeRequestToFunction:@"Posts" components:@[@"macro", @"all", @"new"] parameters:nil completion:^(NSDictionary *data) {
-        [weakSelf.tableView setPosts:[data objectForKey:@"posts"]];
+    [MCAPIHandler makeRequestToFunction:@"Posts" components:@[@"macro", @"all"] parameters:nil completion:^(NSDictionary *data) {
+        [weakSelf.tableView setPosts:[data objectForKey:@"new"]];
     }];
 }
 
