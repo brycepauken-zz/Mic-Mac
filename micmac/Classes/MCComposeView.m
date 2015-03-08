@@ -8,12 +8,16 @@
 
 #import "MCComposeView.h"
 
+#import "MCPointingView.h"
+
 @interface MCComposeView()
 
+@property (nonatomic, strong) NSArray *groups;
+@property (nonatomic, strong) UITextField *groupSelectionField;
 @property (nonatomic, strong) UIView *groupSelectionView;
 @property (nonatomic, strong) NSString *placeholder;
+@property (nonatomic, strong) MCPointingView *pointingView;
 @property (nonatomic, strong) UILabel *remainingCharacters;
-@property (nonatomic) BOOL showsGroups;
 @property (nonatomic, strong) UITextView *textView;
 @property (nonatomic, strong) UIView *windowOverlay;
 
@@ -33,7 +37,6 @@ static const int kGroupSelectionHeight = 40;
     self = [super init];
     if(self) {
         _placeholder = placeholder;
-        _showsGroups = NO;
         
         [self setupInView:view];
     }
@@ -48,23 +51,53 @@ static const int kGroupSelectionHeight = 40;
         [self removeFromSuperview];
     }];
     [UIView animateWithDuration:0.3 animations:^{
-        [self.textView setFrame:CGRectMake(0, -kContentDefaultHeight, self.bounds.size.width, kContentDefaultHeight)];
+        [self.textView setFrame:CGRectMake(0, -kContentDefaultHeight-kGroupSelectionHeight, self.bounds.size.width, kContentDefaultHeight)];
+        [self.groupSelectionView setFrame:CGRectMake(0, -kGroupSelectionHeight, self.bounds.size.width, kGroupSelectionHeight)];
     }];
 }
 
-- (void)setShowsGroups:(BOOL)showsGroups {
-    _showsGroups = showsGroups;
+- (void)groupSelectionFieldDidChange {
+    NSString *lowercaseSearchText = [self.groupSelectionField.text lowercaseString];
+    CGFloat searchTextWidth = [self.groupSelectionField.text sizeWithFont:self.groupSelectionField.font constrainedToWidth:MAXFLOAT].width;
     
-    if(showsGroups) {
+    CGFloat textOffset = 0;
+    int i;
+    for(i=0;i<self.groups.count;i++) {
+        if([[[[self.groups objectAtIndex:i] objectForKey:@"name"] lowercaseString] hasPrefix:lowercaseSearchText]) {
+            break;
+        }
+    }
+    
+    if(self.pointingView) {
+        [self.pointingView dismiss];
+    }
+    
+    if(i<self.groups.count) {
+        self.pointingView = [[MCPointingView alloc] initWithFrame:CGRectMake(0, 0, 0, 40)];
+        [self.pointingView setPoint:CGPointMake(self.groupSelectionField.frame.origin.x+textOffset+searchTextWidth/2, self.groupSelectionField.frame.origin.y+self.groupSelectionField.bounds.size.height)];
+        [self.pointingView setTitle:[[self.groups objectAtIndex:i] objectForKey:@"name"]];
+        [self.pointingView showInView:self.groupSelectionView];
+    }
+}
+
+- (void)setGroups:(NSArray *)groups {
+    _groups = groups;
+    
+    if(groups) {
         self.groupSelectionView = [[UIView alloc] initWithFrame:CGRectMake(0, -kGroupSelectionHeight, self.bounds.size.width, kGroupSelectionHeight)];
+        [self.groupSelectionView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
         [self.groupSelectionView setBackgroundColor:[UIColor MCOffWhiteColor]];
         
-        UITextField *groupSelectionField = [[UITextField alloc] initWithFrame:CGRectInset(self.groupSelectionView.bounds, 16, 5)];
-        [groupSelectionField setFont:[UIFont systemFontOfSize:kGroupSelectionHFontSize]];
-        [groupSelectionField setPlaceholder:@"Enter Bubbles to Post In"];
-        [self.groupSelectionView addSubview:groupSelectionField];
+        self.groupSelectionField = [[UITextField alloc] initWithFrame:CGRectInset(self.groupSelectionView.bounds, 16, 5)];
+        [self.groupSelectionField addTarget:self action:@selector(groupSelectionFieldDidChange) forControlEvents:UIControlEventEditingChanged];
+        [self.groupSelectionField setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+        [self.groupSelectionField setDelegate:self];
+        [self.groupSelectionField setFont:[UIFont systemFontOfSize:kGroupSelectionHFontSize]];
+        [self.groupSelectionField setPlaceholder:@"Enter Bubbles to Post In"];
+        [self.groupSelectionView addSubview:self.groupSelectionField];
         
         UIView *groupSelectionViewDivider = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.groupSelectionView.bounds.size.width, 1)];
+        [groupSelectionViewDivider setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
         [groupSelectionViewDivider setBackgroundColor:[UIColor MCLightGrayColor]];
         [self.groupSelectionView addSubview:groupSelectionViewDivider];
         
@@ -97,6 +130,7 @@ static const int kGroupSelectionHeight = 40;
     [self.textView setTextContainerInset:UIEdgeInsetsMake(kContentVerticalMargin, kContentHorizontalMargin, kContentVerticalMargin, kContentHorizontalMargin)];
     
     self.remainingCharacters = [[UILabel alloc] init];
+    [self.remainingCharacters setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin];
     [self.remainingCharacters setFont:[UIFont systemFontOfSize:kContentFontSize]];
     [self.remainingCharacters setTextColor:[UIColor lightGrayColor]];
     [self.textView addSubview:self.remainingCharacters];

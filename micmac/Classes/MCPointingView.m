@@ -12,128 +12,70 @@
 
 @interface MCPointingView()
 
-@property (nonatomic, strong) UIView *contentView;
-@property (nonatomic) CGFloat contentViewHeight;
-@property (nonatomic, strong) CADisplayLink *displayLink;
-@property (nonatomic) CFTimeInterval displayLinkTimestamp;
-@property (nonatomic, strong) UIView *mainView;
-@property (nonatomic, strong) CAShapeLayer *mainViewBorder;
-@property (nonatomic) CGFloat mainViewProgress;
 @property (nonatomic) CGPoint point;
-@property (nonatomic, strong) UIView *windowOverlay;
+@property (nonatomic, strong) CAShapeLayer *shapeLayer;
+@property (nonatomic, strong) UILabel *titleLabel;
 
 @end
 
 @implementation MCPointingView
 
-static const int kPointingViewArrowHeight = 12;
-static const int kPointingViewArrowWidth = 30;
-static const int kPointingViewBorderThickness = 1;
-static const int kPointingViewBorderSize = 10;
-static const int kPointingViewContentViewWidth = 260;
-static const int kPointingViewCornerRadius = 8;
+static const int kPointingViewArrowHeight = 8;
+static const int kPointingViewArrowWidth = 16;
+static const int kPointingViewBorderSize = 8;
+static const int kPointingViewCornerRadius = 4;
+static const int kPointingViewFontSize = 16;
+static const int kPointingViewHorizontalMargin = 10;
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if(self) {
-        _point = CGPointMake(80, 80);
+        _shapeLayer = [[CAShapeLayer alloc] init];
+        [_shapeLayer setFillColor:[UIColor MCOffWhiteColor].CGColor];
+        [_shapeLayer setShadowColor:[UIColor MCOffBlackColor].CGColor];
+        [_shapeLayer setShadowOffset:CGSizeMake(0, -1)];
+        [_shapeLayer setShadowOpacity:0.4];
+        [_shapeLayer setShadowRadius:1];
+        [self.layer insertSublayer:_shapeLayer atIndex:0];
         
-        _mainView = [[UIView alloc] init];
-        
-        _mainViewBorder = [[CAShapeLayer alloc] init];
-        [_mainViewBorder setFillColor:[UIColor MCMainColor].CGColor];
-        [_mainViewBorder setLineWidth:kPointingViewBorderThickness];
-        [_mainViewBorder setStrokeColor:[UIColor MCMoreOffWhiteColor].CGColor];
-        [_mainView.layer insertSublayer:_mainViewBorder atIndex:0];
-        
-        _contentViewHeight = frame.size.height;
-        _contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kPointingViewContentViewWidth, _contentViewHeight)];
-        [_contentView.layer setAnchorPoint:CGPointMake(0.5, 0)];
-        [_contentView setBackgroundColor:[UIColor MCMainColor]];
-        [_mainView addSubview:_contentView];
-        
-        _windowOverlay = [[UIView alloc] init];
-        [_windowOverlay setAlpha:0];
-        [_windowOverlay setAutoresizingMask:UIViewAutoResizingFlexibleSize];
-        [_windowOverlay setBackgroundColor:[UIColor blackColor]];
-        UITapGestureRecognizer *windowOverlayTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(windowOverlayTapped)];
-        [_windowOverlay addGestureRecognizer:windowOverlayTapRecognizer];
-        
-        _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(displayLinkCalled)];
-        [_displayLink setFrameInterval:1];
-        [_displayLink setPaused:YES];
-        [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
-        
-        [self setAutoresizingMask:UIViewAutoResizingFlexibleSize];
-        
-        [self addSubview:_windowOverlay];
-        [self addSubview:_mainView];
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        [_titleLabel setBackgroundColor:[UIColor MCOffWhiteColor]];
+        [_titleLabel setFont:[UIFont fontWithName:@"Avenir-Medium" size:kPointingViewFontSize]];
+        [_titleLabel setTextColor:[UIColor MCOffBlackColor]];
+        [self addSubview:_titleLabel];
     }
     return self;
 }
 
-+ (CGFloat)contentViewWidth {
-    return kPointingViewContentViewWidth;
-}
-
 - (void)dismiss {
     [self setUserInteractionEnabled:NO];
-    [UIView animateWithDuration:0.2 animations:^{
-        [self setAlpha:0];
-    }];
-}
-
-- (void)displayLinkCalled {
-    if(!self.displayLinkTimestamp) {
-        self.displayLinkTimestamp = self.displayLink.timestamp;
-    }
-    CFTimeInterval progress = MAX(0,MIN(1,(self.displayLink.timestamp-self.displayLinkTimestamp)/0.3))*2;
-    if(progress==2) {
-        [self.displayLink setPaused:YES];
-    }
-    if(progress<1) {
-        progress = progress*progress*progress;
-    }
-    else {
-        progress -= 2;
-        progress = (progress*progress*progress)+2;
-    }
-    [self setMainViewProgress:progress/2];
-    
-    [self updateMainViewMask];
+    [self removeFromSuperview];
 }
 
 - (void)layoutSubviews {
-    [self.mainView setFrame:CGRectMake((self.bounds.size.width-kPointingViewContentViewWidth)/2-kPointingViewBorderSize, self.point.y, kPointingViewContentViewWidth+kPointingViewBorderSize*2, kPointingViewArrowHeight+self.contentViewHeight+kPointingViewBorderSize*2)];
+    [self setFrame:CGRectMake(MAX(kPointingViewHorizontalMargin, self.point.x-self.titleLabel.frame.size.width/2-kPointingViewBorderSize), self.point.y, self.titleLabel.frame.size.width+kPointingViewBorderSize*2, kPointingViewArrowHeight+self.titleLabel.frame.size.height+kPointingViewBorderSize*2)];
 }
 
-- (void)show {
-    UIView *appMainView = [MCCommon mainView];
-    [self setFrame:appMainView.bounds];
+- (void)setTitle:(NSString *)title {
+    [self.titleLabel setText:title];
+    [self.titleLabel sizeToFit];
+    [self.titleLabel setFrame:CGRectMake(kPointingViewBorderSize, kPointingViewArrowHeight+kPointingViewBorderSize, self.titleLabel.frame.size.width, self.titleLabel.frame.size.height)];
+}
+
+- (void)showInView:(UIView *)view {
     [self setUserInteractionEnabled:YES];
+    [view addSubview:self];
     
-    [self.contentView setFrame:CGRectMake(kPointingViewBorderSize, kPointingViewArrowHeight+kPointingViewBorderSize, kPointingViewContentViewWidth, self.contentViewHeight)];
-    [self.contentView setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, 0)];
-    
-    [self.windowOverlay setAlpha:0.5];
-    [self.windowOverlay setFrame:self.bounds];
-    [appMainView addSubview:self];
-    
-    [self setMainViewProgress:0];
-    [self.displayLink setPaused:NO];
-    
-    [self setNeedsLayout];
+    [self layoutSubviews];
+    [self updateMainViewMask];
 }
 
 - (void)updateMainViewMask {
-    CGFloat totalHeight = self.mainView.bounds.size.height*self.mainViewProgress;
-    CGPoint relativePoint = [self convertPoint:self.point toView:self.mainView];
+    CGPoint relativePoint = [self convertPoint:self.point toView:self];
     
-    CGFloat arrowHeight = MIN(totalHeight, kPointingViewArrowHeight);
-    CGFloat rectHeight = MAX(0, totalHeight-kPointingViewArrowHeight);
-    CGFloat contentViewScale = MAX(0, MIN(self.contentViewHeight, totalHeight-kPointingViewArrowHeight-kPointingViewBorderSize*2))/self.contentViewHeight;
+    CGFloat rectHeight = self.bounds.size.height-kPointingViewArrowHeight;
     
-    //just draw arrow
+    /*//just draw arrow
     if(arrowHeight < kPointingViewArrowHeight) {
         UIBezierPath *mask = [UIBezierPath bezierPath];
         [mask moveToPoint:CGPointMake(relativePoint.x, 0)];
@@ -158,13 +100,16 @@ static const int kPointingViewCornerRadius = 8;
         [mask addLineToPoint:CGPointMake(relativePoint.x-kPointingViewArrowWidth/2, arrowHeight)];
         [mask closePath];
         [self.mainViewBorder setPath:mask.CGPath];
-    }
+    }*/
     
-    [self.contentView setTransform:CGAffineTransformScale(CGAffineTransformIdentity, 1, contentViewScale)];
-}
-
-- (void)windowOverlayTapped {
-    [self dismiss];
+    UIBezierPath *mask = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, kPointingViewArrowHeight, self.bounds.size.width, rectHeight) cornerRadius:kPointingViewCornerRadius];
+    [mask moveToPoint:CGPointMake(relativePoint.x, 0)];
+    [mask addLineToPoint:CGPointMake(relativePoint.x+kPointingViewArrowWidth/2, kPointingViewArrowHeight)];
+    [mask addLineToPoint:CGPointMake(relativePoint.x+kPointingViewArrowWidth/2, kPointingViewArrowHeight+rectHeight/2)];
+    [mask addLineToPoint:CGPointMake(relativePoint.x-kPointingViewArrowWidth/2, kPointingViewArrowHeight+rectHeight/2)];
+    [mask addLineToPoint:CGPointMake(relativePoint.x-kPointingViewArrowWidth/2, kPointingViewArrowHeight)];
+    [mask closePath];
+    [self.shapeLayer setPath:mask.CGPath];
 }
 
 @end

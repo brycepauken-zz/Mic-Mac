@@ -8,11 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MCComposeView : UIView <UITextViewDelegate>
+@interface MCComposeView : UIView <UITextFieldDelegate, UITextViewDelegate>
 
 - (instancetype)initInView:(UIView *)view withPlaceholder:(NSString *)placeholder;
 - (void)dismiss;
-- (void)setShowsGroups:(BOOL)showsGroups;
+- (void)setGroups:(NSArray *)groups;
 - (void)show;
 - (NSString *)text;
 

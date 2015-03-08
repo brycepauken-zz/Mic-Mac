@@ -22,8 +22,10 @@
 
 @interface MCPageViewMacro()
 
+@property (nonatomic, strong) MCComposeView *composeView;
+@property (nonatomic, strong) NSMutableArray *followingGroups;
 @property (nonatomic, strong) MCInitialMacroView *initialView;
-@property (nonatomic) BOOL initialViewInitialized;
+@property (nonatomic) BOOL initialized;
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) NSMutableDictionary *sections;
 @property (nonatomic, strong) MCPostTableView *tableViewNew;
@@ -38,6 +40,7 @@
     if(self) {
         __weak MCPageViewMacro *weakSelf = self;
         
+        _followingGroups = [[NSMutableArray alloc] init];
         _sections = [NSMutableDictionary dictionaryWithObjectsAndKeys:@[],@"new", @[],@"hot", nil];
         
         [self.navigationBar setRightButtonImage:[UIImage imageNamed:@"Compose"]];
@@ -78,7 +81,7 @@
         [_scrollView addSubview:_tableViewHot];
         
         if(![[MCSettingsManager settingForKey:@"macroSetupCompleted"] boolValue]) {
-            _initialViewInitialized = NO;
+            _initialized = NO;
             _initialView = [[MCInitialMacroView alloc] initWithFrame:self.contentView.bounds];
             __weak MCInitialMacroView *weakInitialView = _initialView;
             [_initialView setAutoresizingMask:UIViewAutoResizingFlexibleSize];
@@ -142,37 +145,52 @@
     });
 }
 
+- (void)setFollowingGroups:(NSMutableArray *)followingGroups {
+    _followingGroups = followingGroups;
+    
+    if(self.composeView) {
+        [self.composeView setGroups:followingGroups];
+    }
+}
+
 - (void)setHidden:(BOOL)hidden {
     [super setHidden:hidden];
     
-    if(!hidden && self.initialView && !self.initialViewInitialized) {
-        [self setInitialViewInitialized:YES];
-        [self.initialView willShow];
+    if(!hidden && !self.initialized) {
+        self.initialized = YES;
         
-        [MCAPIHandler makeRequestToFunction:@"Groups" components:@[@"initial"] parameters:nil completion:^(NSDictionary *data) {
-            [self.initialView setGroups:[data objectForKey:@"groups"]];
-        }];
+        if(self.initialView) {
+            [self.initialView willShow];
+            [MCAPIHandler makeRequestToFunction:@"Groups" components:@[@"initial"] parameters:nil completion:^(NSDictionary *data) {
+                [self.initialView setGroups:[data objectForKey:@"groups"]];
+            }];
+        }
+        else {
+            [MCAPIHandler makeRequestToFunction:@"Groups" components:@[@"following"] parameters:nil completion:^(NSDictionary *data) {
+                self.followingGroups = [[data objectForKey:@"groups"] mutableCopy];
+            }];
+        }
     }
 }
 
 - (void)showComposeView {
-    MCComposeView *composeView = [[MCComposeView alloc] initInView:self.contentView withPlaceholder:@"New Post in Macro Section"];
-    [composeView setShowsGroups:YES];
+    self.composeView = [[MCComposeView alloc] initInView:self.contentView withPlaceholder:@"New Post in Macro Section"];
+    [self.composeView setGroups:self.followingGroups];
     
     __weak MCPageViewMacro *weakSelf = self;
     [self.navigationBar setLeftButtonImage:[UIImage imageNamed:@"Cancel"]];
     [self.navigationBar setLeftButtonTapped:^{
-        [weakSelf hideComposeView:(MCComposeView *)composeView];
+        [weakSelf hideComposeView:weakSelf.composeView];
     }];
     [self.navigationBar setRightButtonImage:[UIImage imageNamed:@"Accept"]];
     [self.navigationBar setRightButtonTapped:^{
-        [weakSelf hideComposeView:(MCComposeView *)composeView];
-        [MCAPIHandler makeRequestToFunction:@"Post" components:@[@"macro"] parameters:@{@"post":[composeView text]} completion:^(NSDictionary *data) {
+        [weakSelf hideComposeView:weakSelf.composeView];
+        [MCAPIHandler makeRequestToFunction:@"Post" components:@[@"macro"] parameters:@{@"post":[weakSelf.composeView text]} completion:^(NSDictionary *data) {
             
         }];
     }];
     
-    [composeView show];
+    [self.composeView show];
 }
 
 @end
