@@ -24,7 +24,10 @@
 
 @property (nonatomic, strong) MCInitialMacroView *initialView;
 @property (nonatomic) BOOL initialViewInitialized;
-@property (nonatomic, strong) MCPostTableView *tableView;
+@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) NSMutableDictionary *sections;
+@property (nonatomic, strong) MCPostTableView *tableViewNew;
+@property (nonatomic, strong) MCPostTableView *tableViewHot;
 
 @end
 
@@ -35,49 +38,44 @@
     if(self) {
         __weak MCPageViewMacro *weakSelf = self;
         
-        [self.navigationBar setDropDownBlock:^{
-            MCPointingView *pointingView = [[MCPointingView alloc] initWithFrame:CGRectMake(0, 0, 0, 220)];
-            
-            MCButton *newButton = [[MCButton alloc] initWithFrame:CGRectMake(0, 10, 100, 40)];
-            [newButton setTitle:@"View All\nPosts"];
-            [newButton setTitleSize:12];
-            [[pointingView contentView] addSubview:newButton];
-            
-            MCButton *hotButton = [[MCButton alloc] initWithFrame:CGRectMake([MCPointingView contentViewWidth]-100, 10, 100, 40)];
-            [hotButton setTitle:@"Discover\nBubbles"];
-            [hotButton setTitleSize:12];
-            [[pointingView contentView] addSubview:hotButton];
-            
-            MCOptionSignifierView *optionSignifier = [[MCOptionSignifierView alloc] initWithFrame:CGRectMake(0, 0, [MCPointingView contentViewWidth]-210, 40)];
-            [optionSignifier setCenter:CGPointMake([MCPointingView contentViewWidth]/2, 30)];
-            [[pointingView contentView] addSubview:optionSignifier];
-            
-            MCOptionSignifierView *optionSignifierBottom = [[MCOptionSignifierView alloc] initWithFrame:CGRectMake(0, 0, [MCPointingView contentViewWidth]-20, 40)];
-            [optionSignifierBottom setCenter:CGPointMake([MCPointingView contentViewWidth]/2, 70)];
-            [optionSignifierBottom setTitle:@"or search for a bubble"];
-            [[pointingView contentView] addSubview:optionSignifierBottom];
-            
-            MCSearchBar *searchBar = [[MCSearchBar alloc] initWithFrame:CGRectMake(10, 90, [MCPointingView contentViewWidth]-20, 30)];
-            [[pointingView contentView] addSubview:searchBar];
-            
-            MCGroupSelectionView *groupSelectionView = [[MCGroupSelectionView alloc] initWithFrame:CGRectMake(0, 125, [MCPointingView contentViewWidth], 100)];
-            [[pointingView contentView] addSubview:groupSelectionView];
-            
-            [MCAPIHandler makeRequestToFunction:@"Groups" components:@[@"initial"] parameters:nil completion:^(NSDictionary *data) {
-                [groupSelectionView setGroups:[data objectForKey:@"groups"]];
-            }];
-            
-            [pointingView setPoint:CGPointMake(weakSelf.bounds.size.width/2, weakSelf.navigationBar.frame.origin.y+weakSelf.navigationBar.frame.size.height+10)];
-            [pointingView show];
-        }];
+        _sections = [NSMutableDictionary dictionaryWithObjectsAndKeys:@[],@"new", @[],@"hot", nil];
+        
         [self.navigationBar setRightButtonImage:[UIImage imageNamed:@"Compose"]];
         [self.navigationBar setRightButtonTapped:^{
             [weakSelf showComposeView];
         }];
+        [self.navigationBar setTitles:@[@"New Macro Posts", @"Hot Macro Posts", @"Trending Bubbles", @"Following Bubbles"]];
         
-        _tableView = [[MCPostTableView alloc] initWithFrame:self.contentView.bounds];
-        [_tableView setAutoresizingMask:UIViewAutoResizingFlexibleSize];
-        [self.contentView addSubview:_tableView];
+        _scrollView = [[UIScrollView alloc] initWithFrame:self.contentView.bounds];
+        [_scrollView setAutoresizingMask:UIViewAutoResizingFlexibleSize];
+        [_scrollView setBackgroundColor:[UIColor colorWithWhite:0.925 alpha:1]];
+        [_scrollView setDelegate:self];
+        [_scrollView setPagingEnabled:YES];
+        [_scrollView setShowsHorizontalScrollIndicator:NO];
+        [_scrollView setShowsVerticalScrollIndicator:NO];
+        [self.contentView addSubview:_scrollView];
+        
+        _tableViewNew = [[MCPostTableView alloc] initWithFrame:self.contentView.bounds];
+        [_tableViewNew setAutoresizingMask:UIViewAutoResizingFlexibleSize];
+        [_tableViewNew setRefreshStarted:^{
+            [weakSelf.tableViewHot showRefreshIndicator];
+            [weakSelf reloadPosts];
+        }];
+        [_tableViewNew setPostsUpdated:^(NSArray *posts) {
+            [weakSelf.sections setObject:posts forKey:@"new"];
+        }];
+        [_scrollView addSubview:_tableViewNew];
+        
+        _tableViewHot = [[MCPostTableView alloc] init];
+        [_tableViewHot setAutoresizingMask:UIViewAutoResizingFlexibleSize];
+        [_tableViewHot setRefreshStarted:^{
+            [weakSelf.tableViewNew showRefreshIndicator];
+            [weakSelf reloadPosts];
+        }];
+        [_tableViewHot setPostsUpdated:^(NSArray *posts) {
+            [weakSelf.sections setObject:posts forKey:@"hot"];
+        }];
+        [_scrollView addSubview:_tableViewHot];
         
         if(![[MCSettingsManager settingForKey:@"macroSetupCompleted"] boolValue]) {
             _initialViewInitialized = NO;
@@ -94,7 +92,6 @@
             }];
         }
         
-        [self.contentView addSubview:_tableView];
         [self.contentView addSubview:_initialView];
     }
     return self;
@@ -113,11 +110,36 @@
     [composeView dismiss];
 }
 
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    [self.scrollView setContentSize:CGSizeMake(self.contentView.bounds.size.width*4, self.contentView.bounds.size.height)];
+    [self.scrollView setContentOffset:CGPointMake(self.contentView.bounds.size.width*self.scrollView.tag, 0)];
+    [self.tableViewHot setFrame:CGRectMake(self.contentView.bounds.size.width, 0, self.contentView.bounds.size.width, self.contentView.bounds.size.height)];
+}
+
 - (void)reloadPosts {
     __weak MCPageViewMacro *weakSelf = self;
     [MCAPIHandler makeRequestToFunction:@"Posts" components:@[@"macro", @"all"] parameters:nil completion:^(NSDictionary *data) {
-        [weakSelf.tableView setPosts:[data objectForKey:@"new"]];
+        [weakSelf.tableViewNew endRefresh];
+        [weakSelf.tableViewHot endRefresh];
+        if(data) {
+            [weakSelf.sections setObject:[data objectForKey:@"new"] forKey:@"new"];
+            [weakSelf.sections setObject:[data objectForKey:@"hot"] forKey:@"hot"];
+            [weakSelf.tableViewNew setPosts:[weakSelf.sections objectForKey:@"new"]];
+            [weakSelf.tableViewHot setPosts:[weakSelf.sections objectForKey:@"hot"]];
+        }
     }];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat scrollFactor = scrollView.contentOffset.x/scrollView.bounds.size.width;
+    [self.navigationBar setScrollFactor:scrollFactor];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSInteger page = (int)(scrollFactor + 0.5);
+        [self.scrollView setTag:page];
+        [self.navigationBar setPage:page];
+    });
 }
 
 - (void)setHidden:(BOOL)hidden {

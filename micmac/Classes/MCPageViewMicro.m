@@ -40,7 +40,7 @@
         [self.navigationBar setRightButtonTapped:^{
             [weakSelf showComposeView];
         }];
-        [self.navigationBar setTitles:@[@"New Posts", @"Hot Posts"]];
+        [self.navigationBar setTitles:@[@"New Micro Posts", @"Hot Micro Posts"]];
         
         _scrollView = [[UIScrollView alloc] initWithFrame:self.contentView.bounds];
         [_scrollView setAutoresizingMask:UIViewAutoResizingFlexibleSize];

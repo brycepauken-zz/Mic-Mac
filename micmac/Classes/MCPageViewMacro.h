@@ -10,6 +10,6 @@
 
 #import "MCPageView.h"
 
-@interface MCPageViewMacro : MCPageView
+@interface MCPageViewMacro : MCPageView <UIScrollViewDelegate>
 
 @end
