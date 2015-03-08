@@ -16,9 +16,11 @@
 @property (nonatomic, strong) CAShapeLayer *dropDownPathLayer;
 @property (nonatomic, strong) UIButton *leftButton;
 @property (nonatomic, copy) void (^leftButtonTapped)();
+@property (nonatomic, strong) UIPageControl *pageControl;
 @property (nonatomic, strong) UIButton *rightButton;
 @property (nonatomic, copy) void (^rightButtonTapped)();
 @property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UIScrollView *titleScrollView;
 
 @end
 
@@ -26,6 +28,8 @@
 
 static const int dropDownIndicatorHeight = 4;
 static const int dropDownIndicatorWidth = 8;
+static const int titleScrollViewHeight = 40;
+static const int titleScrollViewSpacing = 120;
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -33,12 +37,15 @@ static const int dropDownIndicatorWidth = 8;
         _leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
         [_leftButton addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [_leftButton setHidden:YES];
-        [self addSubview:_leftButton];
         
         _rightButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 25, 25)];
         [_rightButton addTarget:self action:@selector(buttonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [_rightButton setHidden:YES];
-        [self addSubview:_rightButton];
+        
+        _pageControl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, 0, 200, 20)];
+        [_pageControl setCurrentPage:0];
+        [_pageControl setHidden:YES];
+        [_pageControl setTransform:CGAffineTransformMakeScale(0.75, 0.75)];
         
         _titleLabel = [[UILabel alloc] init];
         [_titleLabel setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin];
@@ -70,6 +77,9 @@ static const int dropDownIndicatorWidth = 8;
         
         [self setBackgroundColor:[UIColor MCMainColor]];
         
+        [self addSubview:_leftButton];
+        [self addSubview:_rightButton];
+        [self addSubview:_pageControl];
         [self addSubview:_titleLabel];
         [self addSubview:_bottomOverlay];
         
@@ -94,7 +104,7 @@ static const int dropDownIndicatorWidth = 8;
     if(!self.rightButton.hidden && CGRectContainsPoint(CGRectInset(self.rightButton.frame, -20, -20), point)) {
         return self.rightButton;
     }
-    if(CGRectContainsPoint(CGRectInset(self.titleLabel.frame, -20, -20), point)) {
+    if(!self.titleLabel.hidden && CGRectContainsPoint(CGRectInset(self.titleLabel.frame, -20, -20), point)) {
         return self.titleLabel;
     }
     return [super hitTest:point withEvent:event];
@@ -129,6 +139,8 @@ static const int dropDownIndicatorWidth = 8;
     [self.leftButton setFrame:CGRectMake(buttonMargin, buttonMargin+20, self.rightButton.bounds.size.width, self.leftButton.bounds.size.height)];
     [self.rightButton setFrame:CGRectMake(self.bounds.size.width-self.rightButton.bounds.size.width-buttonMargin, buttonMargin+20, self.rightButton.bounds.size.width, self.rightButton.bounds.size.height)];
     
+    [self.pageControl setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height-10)];
+    
     [self updateBottomOverlayMask];
 }
 
@@ -139,6 +151,10 @@ static const int dropDownIndicatorWidth = 8;
     [self.leftButton setHidden:!image];
 }
 
+- (void)setPage:(NSInteger)page {
+    [self.pageControl setCurrentPage:page];
+}
+
 - (void)setRightButtonImage:(UIImage *)image {
     if(image) {
         [self.rightButton setImage:[[self class] maskImageFromImage:image] forState:UIControlStateNormal];
@@ -146,12 +162,67 @@ static const int dropDownIndicatorWidth = 8;
     [self.rightButton setHidden:!image];
 }
 
+- (void)setScrollFactor:(CGFloat)factor {
+    if(self.titleScrollView) {
+        [self.titleScrollView setContentOffset:CGPointMake(factor*self.titleScrollView.bounds.size.width, 0)];
+        
+        for(UIView *view in self.titleScrollView.subviews) {
+            [view setAlpha:MIN(1, MAX(0, factor<=view.tag?factor-(view.tag-1):(view.tag+1)-factor))];
+        }
+    }
+}
+
 - (void)setTitle:(NSString *)title {
+    [self.titleLabel setHidden:NO];
+    if(self.titleScrollView && self.titleScrollView.superview) {
+        [self.titleScrollView removeFromSuperview];
+    }
+    [self setTitleScrollView:nil];
+    
     CGFloat verticalCenter = 20+(self.bounds.size.height-20)/2;
     [self.titleLabel setText:title];
     [self.titleLabel sizeToFit];
     [self.titleLabel setCenter:CGPointMake(self.bounds.size.width/2, verticalCenter)];
     [self.dropDownIndicator setCenter:CGPointMake(self.titleLabel.bounds.size.width+10, self.titleLabel.bounds.size.height/2)];
+    
+    [self.pageControl setHidden:YES];
+}
+
+- (void)setTitles:(NSArray *)titles {
+    [self.titleLabel setHidden:YES];
+    for(UIGestureRecognizer *recognizer in self.titleLabel.gestureRecognizers) {
+        [self.titleLabel removeGestureRecognizer:recognizer];
+    }
+    if(self.titleScrollView && self.titleScrollView.superview) {
+        [self.titleScrollView removeFromSuperview];
+    }
+    CGFloat verticalCenter = 20+(self.bounds.size.height-20)/2;
+    [self setTitleScrollView:[[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, titleScrollViewSpacing, titleScrollViewHeight)]];
+    [self.titleScrollView setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin];
+    [self.titleScrollView setClipsToBounds:NO];
+    [self.titleScrollView setContentSize:CGSizeMake(titleScrollViewSpacing*titles.count, titleScrollViewHeight)];
+    [self.titleScrollView setScrollEnabled:NO];
+    [self.titleScrollView setShowsHorizontalScrollIndicator:NO];
+    [self.titleScrollView setShowsVerticalScrollIndicator:NO];
+    for(int i=0;i<titles.count;i++) {
+        UILabel *titleLabel = [[UILabel alloc] init];
+        [titleLabel setAlpha:i==0?1:0];
+        [titleLabel setFont:[UIFont fontWithName:@"Avenir-Heavy" size:18]];
+        [titleLabel setTag:i];
+        [titleLabel setTextAlignment:NSTextAlignmentCenter];
+        [titleLabel setTextColor:[UIColor MCOffWhiteColor]];
+        [titleLabel setText:[titles objectAtIndex:i]];
+        [titleLabel sizeToFit];
+        [titleLabel setCenter:CGPointMake(titleScrollViewSpacing/2+titleScrollViewSpacing*i, titleScrollViewHeight/2)];
+        [self.titleScrollView addSubview:titleLabel];
+    }
+    [self addSubview:self.titleScrollView];
+    [self.titleScrollView setCenter:CGPointMake(self.bounds.size.width/2, verticalCenter-6)];
+    
+    [self.pageControl setHidden:NO];
+    [self.pageControl setNumberOfPages:titles.count];
+    
+    [self setFrame:self.frame];
 }
 
 - (void)titleTapped:(UILongPressGestureRecognizer *)gestureRecognizer {

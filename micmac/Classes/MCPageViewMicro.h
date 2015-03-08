@@ -10,7 +10,7 @@
 
 #import "MCPageView.h"
 
-@interface MCPageViewMicro : MCPageView
+@interface MCPageViewMicro : MCPageView <UIScrollViewDelegate>
 
 - (void)reloadPosts;
 

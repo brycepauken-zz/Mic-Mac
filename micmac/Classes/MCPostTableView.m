@@ -77,6 +77,10 @@
     [self reloadData];
 }
 
+- (void)showRefreshIndicator {
+    [self.refreshControl beginRefreshing];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MCPostCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MCPostCell"];
     if(!cell) {

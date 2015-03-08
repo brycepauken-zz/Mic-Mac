@@ -13,8 +13,11 @@
 - (void)setDropDownBlock:(void (^)())dropDownBlock;
 - (void)setLeftButtonImage:(UIImage *)image;
 - (void)setLeftButtonTapped:(void (^)())leftButtonTapped;
+- (void)setPage:(NSInteger)page;
 - (void)setRightButtonImage:(UIImage *)image;
 - (void)setRightButtonTapped:(void (^)())rightButtonTapped;
+- (void)setScrollFactor:(CGFloat)factor;
 - (void)setTitle:(NSString *)title;
+- (void)setTitles:(NSArray *)titles;
 
 @end
