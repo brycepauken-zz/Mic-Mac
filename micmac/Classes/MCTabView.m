@@ -38,7 +38,7 @@
         [backgroundGradientLayer setColors:@[(id)[[UIColor MCOffWhiteColor] colorWithAlphaComponent:0].CGColor, (id)[UIColor MCOffWhiteColor].CGColor]];
         [backgroundGradientLayer setEndPoint:CGPointMake(0.5, (self.bounds.size.height-50)/self.bounds.size.height)];
         [backgroundGradientLayer setFrame:_background.bounds];
-        [backgroundGradientLayer setStartPoint:CGPointMake(0.5, (self.bounds.size.height-54)/self.bounds.size.height)];
+        [backgroundGradientLayer setStartPoint:CGPointMake(0.5, (self.bounds.size.height-52)/self.bounds.size.height)];
         [_background.layer insertSublayer:backgroundGradientLayer atIndex:0];
         
         _currentHighlightOffset = 0.25;
@@ -217,7 +217,7 @@
     
     CGMutablePathRef mutableStaticPath = CGPathCreateMutable();
     
-    CGPathAddPath(mutableStaticPath, NULL, CGPathCreateWithRect(self.bounds, NULL));
+    CGPathAddPath(mutableStaticPath, NULL, CGPathCreateWithRect(CGRectMake(0, 0, self.bounds.size.width*2, self.bounds.size.height), NULL));
     
     NSArray *names = @[@"Macro", @"Micro", @"Me", @"More"];
     for(int i=0;i<4;i++) {
