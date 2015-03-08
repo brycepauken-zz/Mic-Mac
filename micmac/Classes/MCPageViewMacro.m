@@ -156,12 +156,8 @@
 }
 
 - (void)showComposeView {
-    NSString *collegeName = [MCSettingsManager settingForKey:@"collegeName"];
-    NSString *composePlaceholder = @"";
-    if(collegeName.length) {
-        composePlaceholder = [NSString stringWithFormat:@"New Post in %@'%@ Macro Section",collegeName,[collegeName hasSuffix:@"s"]?@"":@"s"];
-    }
-    MCComposeView *composeView = [[MCComposeView alloc] initInView:self.contentView withPlaceholder:composePlaceholder];
+    MCComposeView *composeView = [[MCComposeView alloc] initInView:self.contentView withPlaceholder:@"New Post in Macro Section"];
+    [composeView setShowsGroups:YES];
     
     __weak MCPageViewMacro *weakSelf = self;
     [self.navigationBar setLeftButtonImage:[UIImage imageNamed:@"Cancel"]];

@@ -12,6 +12,7 @@
 
 - (instancetype)initInView:(UIView *)view withPlaceholder:(NSString *)placeholder;
 - (void)dismiss;
+- (void)setShowsGroups:(BOOL)showsGroups;
 - (void)show;
 - (NSString *)text;
 

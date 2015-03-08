@@ -10,8 +10,10 @@
 
 @interface MCComposeView()
 
+@property (nonatomic, strong) UIView *groupSelectionView;
 @property (nonatomic, strong) NSString *placeholder;
 @property (nonatomic, strong) UILabel *remainingCharacters;
+@property (nonatomic) BOOL showsGroups;
 @property (nonatomic, strong) UITextView *textView;
 @property (nonatomic, strong) UIView *windowOverlay;
 
@@ -24,11 +26,14 @@ static const int kContentFontSize = 18;
 static const int kContentHorizontalMargin = 10;
 static const int kContentMaxChars = 180;
 static const int kContentVerticalMargin = 14;
+static const int kGroupSelectionHFontSize = 14;
+static const int kGroupSelectionHeight = 40;
 
 - (instancetype)initInView:(UIView *)view withPlaceholder:(NSString *)placeholder {
     self = [super init];
     if(self) {
         _placeholder = placeholder;
+        _showsGroups = NO;
         
         [self setupInView:view];
     }
@@ -47,6 +52,30 @@ static const int kContentVerticalMargin = 14;
     }];
 }
 
+- (void)setShowsGroups:(BOOL)showsGroups {
+    _showsGroups = showsGroups;
+    
+    if(showsGroups) {
+        self.groupSelectionView = [[UIView alloc] initWithFrame:CGRectMake(0, -kGroupSelectionHeight, self.bounds.size.width, kGroupSelectionHeight)];
+        [self.groupSelectionView setBackgroundColor:[UIColor MCOffWhiteColor]];
+        
+        UITextField *groupSelectionField = [[UITextField alloc] initWithFrame:CGRectInset(self.groupSelectionView.bounds, 16, 5)];
+        [groupSelectionField setFont:[UIFont systemFontOfSize:kGroupSelectionHFontSize]];
+        [groupSelectionField setPlaceholder:@"Enter Bubbles to Post In"];
+        [self.groupSelectionView addSubview:groupSelectionField];
+        
+        UIView *groupSelectionViewDivider = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.groupSelectionView.bounds.size.width, 1)];
+        [groupSelectionViewDivider setBackgroundColor:[UIColor MCLightGrayColor]];
+        [self.groupSelectionView addSubview:groupSelectionViewDivider];
+        
+        [self addSubview:self.groupSelectionView];
+    }
+    else if(self.groupSelectionView && self.groupSelectionView.superview) {
+        [self.groupSelectionView removeFromSuperview];
+        self.groupSelectionView = nil;
+    }
+}
+
 - (void)setupInView:(UIView *)view {
     [self setAutoresizingMask:UIViewAutoResizingFlexibleSize];
     [self setFrame:view.bounds];
@@ -56,7 +85,7 @@ static const int kContentVerticalMargin = 14;
     [self.windowOverlay setAutoresizingMask:UIViewAutoResizingFlexibleSize];
     [self.windowOverlay setBackgroundColor:[UIColor blackColor]];
     
-    self.textView = [[UITextView alloc] initWithFrame:CGRectMake(0, -kContentDefaultHeight, self.bounds.size.width, kContentDefaultHeight)];
+    self.textView = [[UITextView alloc] initWithFrame:CGRectMake(0, -kContentDefaultHeight-kGroupSelectionHeight, self.bounds.size.width, kContentDefaultHeight)];
     [self.textView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [self.textView setBackgroundColor:[UIColor MCOffWhiteColor]];
     [self.textView setDelegate:self];
@@ -91,6 +120,7 @@ static const int kContentVerticalMargin = 14;
     }];
     [UIView animateWithDuration:0.3 animations:^{
         [self.textView setFrame:CGRectMake(0, 0, self.bounds.size.width, kContentDefaultHeight)];
+        [self.groupSelectionView setFrame:CGRectMake(0, kContentDefaultHeight, self.bounds.size.width, kGroupSelectionHeight)];
     }];
 }
 
