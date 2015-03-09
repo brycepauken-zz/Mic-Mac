@@ -95,9 +95,10 @@
     }
     
     NSDictionary *post = [self.posts objectAtIndex:indexPath.row];
+    
     [cell setBothDivividersVisible:indexPath.row==0];
     [cell setCellIndexPath:indexPath];
-    [cell setContent:[post objectForKey:@"post"] withPoints:[[post objectForKey:@"points"] integerValue] vote:[[post objectForKey:@"vote"] integerValue] postTime:[[post objectForKey:@"time"] doubleValue] numberOfReplies:0 groups:nil nonHighlightedGroupIndexes:nil];
+    [cell setContent:[post objectForKey:@"post"] withPoints:[[post objectForKey:@"points"] integerValue] vote:[[post objectForKey:@"vote"] integerValue] postTime:[[post objectForKey:@"time"] doubleValue] numberOfReplies:0 groups:[post objectForKey:@"sections"]];
     
     return cell;
 }
@@ -112,7 +113,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSDictionary *post = [self.posts objectAtIndex:indexPath.row];
-    return [MCPostCell heightForCellOfWidth:tableView.frame.size.width withText:[post objectForKey:@"post"] showGroups:NO];
+    return [MCPostCell heightForCellOfWidth:tableView.frame.size.width withText:[post objectForKey:@"post"] showGroups:[[post objectForKey:@"sections"] count]];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

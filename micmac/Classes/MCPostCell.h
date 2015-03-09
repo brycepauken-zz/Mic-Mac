@@ -16,7 +16,7 @@
 - (BOOL)initialized;
 - (void)setBothDivividersVisible:(BOOL)bothVisible;
 - (void)setCellIndexPath:(NSIndexPath *)cellIndexPath;
-- (void)setContent:(NSString *)content withPoints:(NSInteger)points vote:(MCVoteViewState)vote postTime:(NSTimeInterval)postTime numberOfReplies:(NSInteger)replies groups:(NSArray *)groups nonHighlightedGroupIndexes:(NSArray *)nonHighlightedGroupIndexes;
+- (void)setContent:(NSString *)content withPoints:(NSInteger)points vote:(MCVoteViewState)vote postTime:(NSTimeInterval)postTime numberOfReplies:(NSInteger)replies groups:(NSArray *)groups;
 - (void)setUpCell;
 - (void)setVoteChangedBlock:(void (^)(MCVoteViewState, NSIndexPath *))voteChangedBlock;
 
