@@ -61,6 +61,7 @@
 		02C6BBD41A85AC3D003DAC24 /* MCActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C6BBD31A85AC3D003DAC24 /* MCActivityIndicatorView.m */; };
 		02CF62351A78787B0038265D /* MCAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 02CF62341A78787B0038265D /* MCAlertView.m */; };
 		02DAC4D11A9562EB00E91193 /* MCPostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 02DAC4D01A9562EB00E91193 /* MCPostCell.m */; };
+		02E7B1511AAD1C51008DEFF6 /* NSAttributedString+MCMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 02E7B1501AAD1C51008DEFF6 /* NSAttributedString+MCMethods.m */; };
 		02F454421A82D83100A689F3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02F454401A82D82800A689F3 /* SystemConfiguration.framework */; };
 		02F454451A82F86100A689F3 /* MCSettingsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 02F454441A82F86100A689F3 /* MCSettingsManager.m */; };
 		02F454481A82FE6B00A689F3 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02F454461A82FE5500A689F3 /* Security.framework */; };
@@ -151,6 +152,8 @@
 		02CF62341A78787B0038265D /* MCAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCAlertView.m; sourceTree = "<group>"; };
 		02DAC4CF1A9562EB00E91193 /* MCPostCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCPostCell.h; sourceTree = "<group>"; };
 		02DAC4D01A9562EB00E91193 /* MCPostCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCPostCell.m; sourceTree = "<group>"; };
+		02E7B14F1AAD1C51008DEFF6 /* NSAttributedString+MCMethods.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+MCMethods.h"; sourceTree = "<group>"; };
+		02E7B1501AAD1C51008DEFF6 /* NSAttributedString+MCMethods.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+MCMethods.m"; sourceTree = "<group>"; };
 		02F454401A82D82800A689F3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		02F454431A82F86100A689F3 /* MCSettingsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MCSettingsManager.h; sourceTree = "<group>"; };
 		02F454441A82F86100A689F3 /* MCSettingsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MCSettingsManager.m; sourceTree = "<group>"; };
@@ -287,6 +290,8 @@
 				02B1B5171A4B780E00474F4C /* MCViewController.m */,
 				0200368C1A99BC6D00362703 /* MCVoteView.h */,
 				0200368D1A99BC6D00362703 /* MCVoteView.m */,
+				02E7B14F1AAD1C51008DEFF6 /* NSAttributedString+MCMethods.h */,
+				02E7B1501AAD1C51008DEFF6 /* NSAttributedString+MCMethods.m */,
 				024E24F71A7B0F0C00976A9C /* NSString+MCMethods.h */,
 				024E24F81A7B0F0C00976A9C /* NSString+MCMethods.m */,
 				02B1B5181A4B780E00474F4C /* UIColor+MCColors.h */,
@@ -369,6 +374,7 @@
 				TargetAttributes = {
 					0228899B1A48BD47008A7D30 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = FGFSR7EX83;
 					};
 				};
 			};
@@ -453,6 +459,7 @@
 				02F454451A82F86100A689F3 /* MCSettingsManager.m in Sources */,
 				0200368E1A99BC6D00362703 /* MCVoteView.m in Sources */,
 				027DCC2A1A7EFC9D0054EEB8 /* MCPageView.m in Sources */,
+				02E7B1511AAD1C51008DEFF6 /* NSAttributedString+MCMethods.m in Sources */,
 				027DCC2D1A7F007A0054EEB8 /* MCNavigationBar.m in Sources */,
 				02B1B5271A4B783E00474F4C /* main.m in Sources */,
 				024E24F91A7B0F0C00976A9C /* NSString+MCMethods.m in Sources */,

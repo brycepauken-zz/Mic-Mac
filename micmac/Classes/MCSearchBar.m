@@ -32,7 +32,7 @@ static const int kTextfieldMargins = 2;
         _textField = [[UITextField alloc] init];
         [_textField setFont:[UIFont fontWithName:@"Avenir-Heavy" size:kFontSize]];
         [_textField setTextColor:[UIColor MCOffWhiteColor]];
-        [[UITextField appearance] setTintColor:[UIColor MCOffWhiteColor]];
+        [_textField setTintColor:[UIColor MCOffWhiteColor]];
         
         [self setBackgroundColor:[UIColor MCMainColor]];
         [self.layer setBorderColor:[UIColor MCOffWhiteColor].CGColor];

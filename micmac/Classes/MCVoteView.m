@@ -62,7 +62,7 @@ static const int kPointsMaxFontSize = 16;
     int fontSize = kPointsMaxFontSize;
     CGFloat innerRadius = MIN(self.bounds.size.width, self.bounds.size.height)/2-self.circleThickness+kPointsAdditionalSpace;
     innerRadius *= innerRadius;
-    NSString *pointsText = [NSString stringWithFormat:@"%li",points];
+    NSString *pointsText = [NSString stringWithFormat:@"%li",(long)points];
     while(fontSize>0) {
         CGSize pointsSize = [pointsText sizeWithFont:[UIFont fontWithName:_pointsLabelFontName size:fontSize] constrainedToWidth:MAXFLOAT];
         pointsSize.width/=2;

@@ -12,6 +12,7 @@
 
 - (void)dismiss;
 - (void)setPoint:(CGPoint)point;
+- (void)setTappedBlock:(void (^)())tappedBlock;
 - (void)setTitle:(NSString *)title;
 - (void)showInView:(UIView *)view;
 

@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 
 #import "MCAlertView.h"
+#import "NSAttributedString+MCMethods.h"
 #import "NSString+MCMethods.h"
 #import "UIColor+MCColors.h"
 

@@ -141,7 +141,7 @@ static const int kVoteViewSize = 32;
     }
     
     [self.contentLabel setText:content];
-    [self.infoLabel setText:[NSString stringWithFormat:@"%@ | %li Replies",[NSString timeToHumanReadableString:postTime],replies]];
+    [self.infoLabel setText:[NSString stringWithFormat:@"%@ | %li Replies",[NSString timeToHumanReadableString:postTime],(long)replies]];
     
     [self.voteView setVoteState:vote];
     [self.voteView setPoints:points];

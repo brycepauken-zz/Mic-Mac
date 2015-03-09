@@ -14,6 +14,7 @@
 
 @property (nonatomic) CGPoint point;
 @property (nonatomic, strong) CAShapeLayer *shapeLayer;
+@property (nonatomic, copy) void (^tappedBlock)();
 @property (nonatomic, strong) UILabel *titleLabel;
 
 @end
@@ -24,7 +25,7 @@ static const int kPointingViewArrowHeight = 8;
 static const int kPointingViewArrowWidth = 16;
 static const int kPointingViewBorderSize = 8;
 static const int kPointingViewCornerRadius = 4;
-static const int kPointingViewFontSize = 16;
+static const int kPointingViewFontSize = 14;
 static const int kPointingViewHorizontalMargin = 10;
 
 - (instancetype)initWithFrame:(CGRect)frame {
@@ -33,16 +34,19 @@ static const int kPointingViewHorizontalMargin = 10;
         _shapeLayer = [[CAShapeLayer alloc] init];
         [_shapeLayer setFillColor:[UIColor MCOffWhiteColor].CGColor];
         [_shapeLayer setShadowColor:[UIColor MCOffBlackColor].CGColor];
-        [_shapeLayer setShadowOffset:CGSizeMake(0, -1)];
-        [_shapeLayer setShadowOpacity:0.4];
+        [_shapeLayer setShadowOffset:CGSizeMake(0, 0)];
+        [_shapeLayer setShadowOpacity:1];
         [_shapeLayer setShadowRadius:1];
         [self.layer insertSublayer:_shapeLayer atIndex:0];
         
         _titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         [_titleLabel setBackgroundColor:[UIColor MCOffWhiteColor]];
         [_titleLabel setFont:[UIFont fontWithName:@"Avenir-Medium" size:kPointingViewFontSize]];
-        [_titleLabel setTextColor:[UIColor MCOffBlackColor]];
+        [_titleLabel setTextColor:[UIColor MCMainColor]];
         [self addSubview:_titleLabel];
+        
+        UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapped)];
+        [self addGestureRecognizer:tapRecognizer];
     }
     return self;
 }
@@ -53,11 +57,19 @@ static const int kPointingViewHorizontalMargin = 10;
 }
 
 - (void)layoutSubviews {
-    [self setFrame:CGRectMake(MAX(kPointingViewHorizontalMargin, self.point.x-self.titleLabel.frame.size.width/2-kPointingViewBorderSize), self.point.y, self.titleLabel.frame.size.width+kPointingViewBorderSize*2, kPointingViewArrowHeight+self.titleLabel.frame.size.height+kPointingViewBorderSize*2)];
+    CGFloat horizontalOffset = self.point.x-self.titleLabel.frame.size.width/2-kPointingViewBorderSize;
+    CGFloat width = self.titleLabel.frame.size.width+kPointingViewBorderSize*2;
+    
+    CGFloat superviewWidth = self.superview.bounds.size.width;
+    if([self.superview isKindOfClass:[UIScrollView class]]) {
+        superviewWidth = ((UIScrollView *)self.superview).contentSize.width;
+    }
+    
+    [self setFrame:CGRectMake(MAX(kPointingViewHorizontalMargin, MIN(superviewWidth-kPointingViewHorizontalMargin-width, horizontalOffset)), self.point.y, width, kPointingViewArrowHeight+self.titleLabel.frame.size.height+kPointingViewBorderSize*2)];
 }
 
 - (void)setTitle:(NSString *)title {
-    [self.titleLabel setText:title];
+    [self.titleLabel setText:[title uppercaseString]];
     [self.titleLabel sizeToFit];
     [self.titleLabel setFrame:CGRectMake(kPointingViewBorderSize, kPointingViewArrowHeight+kPointingViewBorderSize, self.titleLabel.frame.size.width, self.titleLabel.frame.size.height)];
 }
@@ -70,37 +82,16 @@ static const int kPointingViewHorizontalMargin = 10;
     [self updateMainViewMask];
 }
 
+- (void)tapped {
+    if(self.tappedBlock) {
+        self.tappedBlock();
+    }
+}
+
 - (void)updateMainViewMask {
-    CGPoint relativePoint = [self convertPoint:self.point toView:self];
+    CGPoint relativePoint = [self convertPoint:self.point fromView:self.superview];
     
     CGFloat rectHeight = self.bounds.size.height-kPointingViewArrowHeight;
-    
-    /*//just draw arrow
-    if(arrowHeight < kPointingViewArrowHeight) {
-        UIBezierPath *mask = [UIBezierPath bezierPath];
-        [mask moveToPoint:CGPointMake(relativePoint.x, 0)];
-        [mask addLineToPoint:CGPointMake(relativePoint.x+kPointingViewArrowWidth/2, arrowHeight)];
-        [mask addLineToPoint:CGPointMake(relativePoint.x-kPointingViewArrowWidth/2, arrowHeight)];
-        [mask closePath];
-        [self.mainViewBorder setPath:mask.CGPath];
-    }
-    //draw arrow and box
-    else {
-        UIBezierPath *mask = [UIBezierPath bezierPath];
-        [mask moveToPoint:CGPointMake(relativePoint.x, 0)];
-        [mask addLineToPoint:CGPointMake(relativePoint.x+kPointingViewArrowWidth/2, kPointingViewArrowHeight)];
-        [mask addLineToPoint:CGPointMake(self.mainView.bounds.size.width-kPointingViewCornerRadius, kPointingViewArrowHeight)];
-        [mask addArcWithCenter:CGPointMake(self.mainView.bounds.size.width-kPointingViewCornerRadius, kPointingViewArrowHeight+kPointingViewCornerRadius) radius:kPointingViewCornerRadius startAngle:M_PI*1.5 endAngle:M_PI*2 clockwise:YES];
-        [mask addLineToPoint:CGPointMake(self.mainView.bounds.size.width, kPointingViewArrowHeight+rectHeight-kPointingViewCornerRadius)];
-        [mask addArcWithCenter:CGPointMake(self.mainView.bounds.size.width-kPointingViewCornerRadius, kPointingViewArrowHeight+rectHeight-kPointingViewCornerRadius) radius:kPointingViewCornerRadius startAngle:0 endAngle:M_PI*0.5 clockwise:YES];
-        [mask addLineToPoint:CGPointMake(kPointingViewCornerRadius, kPointingViewArrowHeight+rectHeight)];
-        [mask addArcWithCenter:CGPointMake(kPointingViewCornerRadius, kPointingViewArrowHeight+rectHeight-kPointingViewCornerRadius) radius:kPointingViewCornerRadius startAngle:M_PI*0.5 endAngle:M_PI clockwise:YES];
-        [mask addLineToPoint:CGPointMake(0, kPointingViewArrowHeight+kPointingViewCornerRadius)];
-        [mask addArcWithCenter:CGPointMake(kPointingViewCornerRadius, kPointingViewArrowHeight+kPointingViewCornerRadius) radius:kPointingViewCornerRadius startAngle:M_PI endAngle:M_PI*1.5 clockwise:YES];
-        [mask addLineToPoint:CGPointMake(relativePoint.x-kPointingViewArrowWidth/2, arrowHeight)];
-        [mask closePath];
-        [self.mainViewBorder setPath:mask.CGPath];
-    }*/
     
     UIBezierPath *mask = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, kPointingViewArrowHeight, self.bounds.size.width, rectHeight) cornerRadius:kPointingViewCornerRadius];
     [mask moveToPoint:CGPointMake(relativePoint.x, 0)];
