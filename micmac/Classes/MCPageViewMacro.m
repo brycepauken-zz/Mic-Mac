@@ -185,7 +185,7 @@
     [self.navigationBar setRightButtonImage:[UIImage imageNamed:@"Accept"]];
     [self.navigationBar setRightButtonTapped:^{
         [weakSelf hideComposeView:weakSelf.composeView];
-        [MCAPIHandler makeRequestToFunction:@"Post" components:@[@"macro"] parameters:@{@"post":[weakSelf.composeView text]} completion:^(NSDictionary *data) {
+        [MCAPIHandler makeRequestToFunction:@"Post" components:@[@"macro"] parameters:@{@"post":[weakSelf.composeView text], @"groups":[weakSelf.composeView.selectedGroupIDs componentsJoinedByString:@","]} completion:^(NSDictionary *data) {
             
         }];
     }];

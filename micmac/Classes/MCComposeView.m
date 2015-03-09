@@ -133,7 +133,7 @@ static const int kSelectedGroupLabelPadding = 4;
             [labelContainer addSubview:label];
             [weakSelf.groupSelectionView addSubview:labelContainer];
             
-            [weakSelf.selectedGroups addObject:@{@"name":name, @"offset":@(existingText.length), @"labelContainer":labelContainer}];
+            [weakSelf.selectedGroups addObject:@{@"name":name, @"id":[[weakSelf.groups objectAtIndex:i] objectForKey:@"id"], @"offset":@(existingText.length), @"labelContainer":labelContainer}];
             
             [weakSelf.pointingView dismiss];
             
@@ -153,6 +153,16 @@ static const int kSelectedGroupLabelPadding = 4;
         return self.pointingView;
     }
     return [super hitTest:point withEvent:event];
+}
+
+- (NSArray *)selectedGroupIDs {
+    NSMutableArray *selectedGroupIDs = [[NSMutableArray alloc] initWithCapacity:self.selectedGroups.count];
+    
+    for(NSDictionary *selectedGroup in self.selectedGroups) {
+        [selectedGroupIDs addObject:[selectedGroup objectForKey:@"id"]];
+    }
+    
+    return selectedGroupIDs;
 }
 
 - (void)setGroups:(NSArray *)groups {

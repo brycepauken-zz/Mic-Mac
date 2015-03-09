@@ -12,6 +12,7 @@
 
 - (instancetype)initInView:(UIView *)view withPlaceholder:(NSString *)placeholder;
 - (void)dismiss;
+- (NSArray *)selectedGroupIDs;
 - (void)setGroups:(NSArray *)groups;
 - (void)show;
 - (NSString *)text;
